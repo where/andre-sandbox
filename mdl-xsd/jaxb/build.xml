@@ -1,0 +1,66 @@
+<project name="xsd-stubs" basedir="." default="all">
+
+  <property file="build.properties" />
+
+  <property name="build.dir" value="build" />
+  <property name="dist.dir" value="${build.dir}/dist" />
+  <property name="javadoc.dir" value="${build.dir}/javadoc" />
+  <property name="java.dir" value="${build.dir}/gen" />
+  <property name="classes.dir" value="${build.dir}/classes" />
+
+  <target name="all" depends="init,compile,jar,javadoc" 
+          description="Compile schema,and builds JAR with stubs and javadoc" />
+
+  <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+    <classpath>
+      <fileset dir="${jaxb.lib.dir}" includes="*.jar" />
+    </classpath>
+  </taskdef>
+
+  <target name="compile" description="Compile schema">
+    <delete dir="${build.dir}" />
+    <mkdir dir="${classes.dir}" />
+    <mkdir dir="${build.dir}/gen" />
+    <xjc schema="${xsd.file}" package="${package}" destdir="${build.dir}/gen" />
+  </target>
+
+  <target name="jar" description="Build JAR with client stubs" >
+    <javac destdir="${build.dir}/classes" debug="on">
+      <src path="${build.dir}/gen" />
+    </javac>
+    <jar destfile="${build.dir}/${jar.file}">
+      <fileset dir="${classes.dir}">
+          <include name="**/*.*" />
+        </fileset>
+    </jar>
+    <move file="${build.dir}/${jar.file}" preservelastmodified="true"
+      todir="${dist.dir}" overwrite="true"/>
+  </target>
+
+  <target name="init" depends="clean,mkdir" />
+  <target name="clean" >
+    <delete dir="${build.dir}" />
+  </target>
+  <target name="mkdir" >
+    <mkdir dir="${classes.dir}" />
+  </target>
+
+  <target name="javadoc" description="Generate JavaDoc for all subprojects">
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc sourcepath="${java.dir}" destdir="${javadoc.dir}"
+      windowtitle="${javadoc.title}" source="1.6" author="true"
+      version="true" use="true">
+        <doctitle>${javadoc.title}</doctitle>
+    </javadoc>
+  </target>
+
+  <target name="echo" >
+    <echo message="Properties:" />
+    <echo message="  basedir      = ${basedir}" />
+    <echo message="  xsd.file     = ${xsd.file}" />
+    <echo message="  jar.file     = ${jar.file}" />
+    <echo message="  package      = ${package}" />
+    <echo message="  jaxb.lib.dir = ${jaxb.lib.dir}" />
+  </target>
+
+</project>
