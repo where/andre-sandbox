@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account xmlns="urn:ebay:feeds:MDL:v1">
+    <id>HomeDepot</id>
+    <!-- FYI, in the PayPal Admin tool this is confusingly called both PayerID and ReferralID -->
+    <encryptedCustomerId>UMLP9VRLXYA6G</encryptedCustomerId>
+    <!-- The data in this section will come from what PP calls Supplementary Merchant Information -->
+    <!-- It has a 1:1 relationship to accounts -->
+    <name>HomeDepot</name>
+    <!-- The Account has an address itself, which may be different from the address of each store. -->
+    <!-- Where is probably only interested in the store addresses, but we can provide the account address -->
+    <!-- easily enough. -->
+    <address1>1234 Main Street/<address1>
+    <address2>ATTN: John Doe</address2>
+    <city>Atlanta</city>
+    <state>GA</state>
+    <zipCode>30339</zipCode>
+    <stores>
+    <!-- There is a many:1 relationship between stores and accounts.  The recommended integration is one store per PayPal account, -->
+    <!-- but there may be more.  Home Depot in particular has only one PayPal account, with many MERCHANT_STORE records attached to it -->
+        <store>
+            <id>store1</id>
+            <!-- encryptedCustomerId has been removed from the Store section because they will all be the same. -->
+            <!-- The encryptedCustomerId or PayerID is attached to an account, not to a store -->
+            <name>HomeDepot Watertown</name>
+            <merchantStoreId>11</merchantStoreId>
+            <!-- encryptedPrintId has also been removed.  It is the same for each store. -->
+            <storeType>big</storeType>
+            <address1>4700 Park Blvd<Address1>
+            <city>Watertown</city>
+            <state>MA</state>
+            <zipCode>02472</zipCode>
+            <generalAvailabilityFlag>1</generalAvailabilityFlag>
+        </store>
+        <store>
+            <id>store2</id>
+            <name>HomeDepot West Roxbury</name>
+            <location>HomeDepot West Roxbury</location>
+            <latitude>42.36</latitude>
+            <longitude>71.06</longitude>
+            <merchantStoreId>22</merchantStoreId>
+            <address1>19 Commerce Way</address1>
+            <address2>Ste. 3</address2>
+            <city>Boston</city>
+            <state>MA</state>
+            <zipCode>02132</zipCode>
+            <generalAvailabilityFlag>0</generalAvailabilityFlag>
+        </store>
+    </stores>
+    <relationships>
+        <!-- You will notice that Account Management appears twice here. -->
+        <!-- The only permission which is guaranteed to be granted to only one parent is Settlement Consolidation -->
+        <relationship>
+            <type>Account Management</type>
+            <parent>PFW3UAAX9XXC4</parent>
+        </relationship>
+        <relationship>
+            <type>Account Management</type>
+            <parent>LTT42BDPFNBZJ</parent>
+        </relationship>        <relationship>
+            <type>Settlement Consolidation</type>
+            <parent>3MFZZ5AMZXDZ8</parent>
+        </relationship>
+        <relationship>
+            <type>Settlement Consolidation</type>
+            <parent>3SFDNT27ZX8AJ</parent>
+        </relationship>
+        <relationship>
+            <type>Refund Sharing</type>
+            <parent>P2SHD2UWJGB64</parent>
+        </relationship>
+        <relationship>
+            <type>Merchant Specific Balance</type>
+            <parent>XDRY8GN95435L</parent>
+        </relationship>
+    </relationships>
+</account>
+

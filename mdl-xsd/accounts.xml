@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <accounts xmlns="urn:ebay:feeds:MDL:v1">
 	<account>
-    	<id>HomeDepot</id>
-<!--
-    	<encryptedCustomerId>UMLP9VRLXYA6G</encryptedCustomerId>
--->
-    	<name>HomeDepot</name>
-    	<address1>1234 Main Street/<address1>
-    	<address2>ATTN: John Doe</address2>
-    	<city>Atlanta</city>
-    	<state>GA</state>
-    	<zipCode>30339</zipCode>
+		<id>HomeDepot</id>
+		<name>HomeDepot</name>
+		<address1>1234 Main Street</address1>
+		<address2>ATTN: John Doe</address2>
+		<city>Atlanta</city>
+		<state>GA</state>
+		<zipCode>30339</zipCode>
 		<stores>
 			<store>
 				<id>99</id>

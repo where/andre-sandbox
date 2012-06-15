@@ -23,10 +23,14 @@
 	</xs:complexType>
 
 	<xs:complexType name="Account">
-		<xs:sequence>
-			<xs:element name="stores" type="tns:StoreList" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="relationships" type="tns:RelationshipList" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:extension base="tns:BaseRecord">
+				<xs:sequence>
+					<xs:element name="stores" type="tns:StoreList" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="relationships" type="tns:RelationshipList" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension >
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="Store">
