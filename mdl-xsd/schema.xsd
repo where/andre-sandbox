@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema 
+	targetNamespace="urn:ebay:feeds:MDL:v1" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:tns="urn:ebay:feeds:MDL:v1" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="accounts" type="tns:AccountList"/>
+
+	<xs:complexType name="BaseRecord">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="address1" type="xs:string" minOccurs="0" />
+			<xs:element name="address2" type="xs:string" minOccurs="0" />
+			<xs:element name="city" type="xs:string" minOccurs="0" />
+			<xs:element name="state" type="xs:string" minOccurs="0" />
+			<xs:element name="zipCode" type="xs:string" minOccurs="0" />
+			<xs:element name="encryptedMsbFunder" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Account">
+		<xs:sequence>
+			<xs:element name="stores" type="tns:StoreList" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="relationships" type="tns:RelationshipList" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Store">
+		<xs:complexContent>
+			<xs:extension base="tns:BaseRecord">
+				<xs:sequence>
+					<xs:element name="merchantStoreId" type="xs:integer" />
+					<xs:element name="storeType" type="xs:string" />
+					<xs:element name="generalAvailabilityFlag" type="xs:integer" />
+				</xs:sequence>
+			</xs:extension >
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Relationship">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element name="parent" type="xs:string"/>
+   		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AccountList">
+		<xs:sequence>
+			<xs:element name="account" type="tns:Account" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="StoreList">
+		<xs:sequence>
+			<xs:element name="store" type="tns:Store" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RelationshipList">
+		<xs:sequence>
+			<xs:element name="relationship" type="tns:Relationship" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

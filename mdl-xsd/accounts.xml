@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<accounts xmlns="urn:ebay:feeds:MDL:v1">
+	<account>
+    	<id>HomeDepot</id>
+<!--
+    	<encryptedCustomerId>UMLP9VRLXYA6G</encryptedCustomerId>
+-->
+    	<name>HomeDepot</name>
+    	<address1>1234 Main Street/<address1>
+    	<address2>ATTN: John Doe</address2>
+    	<city>Atlanta</city>
+    	<state>GA</state>
+    	<zipCode>30339</zipCode>
+		<stores>
+			<store>
+				<id>99</id>
+				<name>HomeDepot Watertown</name>
+				<address1>4700 Park Blvd</address1>
+				<city>Watertown</city>
+				<state>MA</state>
+				<zipCode>02472</zipCode>
+				<merchantStoreId>11</merchantStoreId>
+				<storeType>big</storeType>
+				<generalAvailabilityFlag>1</generalAvailabilityFlag>
+			</store>
+		</stores>
+		<relationships>
+			<relationship>
+				<type>Account Management</type>
+				<parent>PFW3UAAX9XXC4</parent>
+			</relationship>
+		</relationships>
+	</account>
+</accounts>
