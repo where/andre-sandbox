@@ -1,0 +1,14 @@
+
+file=wadl_documentation.xsl
+xsl=xsl/$file
+
+if [ $# -lt 1 ] ; then
+  echo "ERROR: Missing WADL file"
+  exit 1
+  fi
+wfile=$1
+
+xsltproc $xsl $wfile > $wfile.html
+
+echo "Output: $wfile.html XSL: $xsl"
+

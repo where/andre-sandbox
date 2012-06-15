@@ -1,0 +1,14 @@
+
+file=xs3p.xsl
+xsl=xsl/$file
+
+if [ $# -lt 1 ] ; then
+  echo "ERROR: Missing XSD file"
+  exit 1
+  fi
+xfile=$1
+
+xsltproc $xsl $xfile > $xfile.html
+
+echo "Output: $xfile.html XSL: $xsl"
+
