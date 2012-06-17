@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+  <xs:element name="Link" type="Link"/>
+
+  <xs:element name="offer" type="Offer"/>
+
+  <xs:element name="offers" type="offerList"/>
+
   <xs:element name="store" type="Store"/>
+
+  <xs:element name="stores" type="storeList"/>
 
   <xs:complexType name="Store">
     <xs:sequence>
@@ -9,6 +17,47 @@
       <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element name="id" type="xs:int"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Offer">
+    <xs:sequence>
+      <xs:element name="productId" type="xs:int"/>
+      <xs:element name="paypalId" type="xs:int"/>
+      <xs:element name="numberTotal" type="xs:int" minOccurs="0"/>
+      <xs:element name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="storeList">
+    <xs:complexContent>
+      <xs:extension base="pagedList">
+        <xs:sequence>
+          <xs:element ref="store" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="pagedList">
+    <xs:sequence>
+      <xs:element name="link" type="Link" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Link">
+    <xs:sequence/>
+    <xs:attribute name="href" type="xs:string" use="required"/>
+    <xs:attribute name="rel" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="offerList">
+    <xs:complexContent>
+      <xs:extension base="pagedList">
+        <xs:sequence>
+          <xs:element ref="offer" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 </xs:schema>
 

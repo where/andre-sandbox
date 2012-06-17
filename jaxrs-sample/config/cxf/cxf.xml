@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd">
+
+  <!-- do not use import statements if CXFServlet init parameters link to this beans.xml --> 
+  <import resource="classpath:META-INF/cxf/cxf.xml" />
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+  <jaxrs:server id="apiService" address="/">
+
+    <jaxrs:inInterceptors>
+       <ref bean="logInbound"/>
+     </jaxrs:inInterceptors>
+
+    <jaxrs:providers>
+      <ref bean="exceptionMapper"/>
+      <ref bean="exceptionMapper2"/>
+      <ref bean="javaSerializedReaderWriter"/>
+      <ref bean="jaxbProvider"/>
+<!--
+-->
+      <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+    </jaxrs:providers>
+
+    <jaxrs:serviceBeans>
+      <ref bean="storeResource" />
+      <ref bean="offerResource" />
+    </jaxrs:serviceBeans>
+
+    <jaxrs:schemaLocations>
+       <jaxrs:schemaLocation>classpath:schema.xsd</jaxrs:schemaLocation>
+    </jaxrs:schemaLocations>
+  </jaxrs:server>
+
+  <!-- only works for XML (pretty print will be slower) - TODO: find for JSON -->
+  <bean id="jaxbProvider" 
+     class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"> 
+        <property name="marshallerProperties"> 
+           <map> 
+             <entry key="jaxb.formatted.output"> 
+               <value type="java.lang.Boolean">true</value> 
+            </entry> 
+          </map> 
+        </property> 
+  </bean> 
+
+  <bean id="storeResource" class="com.andre.pphere.rest.StoreResource" >
+     <constructor-arg ref="storeDao" />
+  </bean >
+
+  <bean id="offerResource" class="com.andre.pphere.rest.OfferResource" >
+     <constructor-arg ref="offerDao" />
+  </bean >
+
+  <bean id="exceptionMapper" class="com.andre.rest.cxf.ValidationExceptionMapper" />
+  <bean id="exceptionMapper2" class="com.andre.rest.cxf.MyExceptionMapper" />
+  <bean id="javaSerializedReaderWriter" class="com.andre.rest.JavaSerializedReaderWriter" />
+
+  <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+  <bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+</beans>

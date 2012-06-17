@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
+  >
+
+<!-- **************** -->
+
+  <bean id="offerDao" class="com.andre.pphere.dao.mock.MockOfferDao">
+     <constructor-arg ref="offers" />
+  </bean>
+
+  <util:list id="offers" >
+     <bean class="com.andre.pphere.data.Offer">
+        <property name="productId" value="100" />
+        <property name="paypalId" value="101" />
+        <property name="numberTotal" value="19" />
+     </bean>
+     <bean class="com.andre.pphere.data.Offer">
+        <property name="productId" value="200" />
+        <property name="paypalId" value="201" />
+        <property name="numberTotal" value="29" />
+     </bean>
+  </util:list>
+
+<!-- **************** -->
+
+  <bean id="storeDao2" class="com.andre.pphere.dao.mock.MockStoreDao">
+     <constructor-arg value="${cfg.numStores}" />
+  </bean>
+
+  <bean id="storeDao" class="com.andre.pphere.dao.mock.MockStoreDao">
+     <constructor-arg ref="stores" />
+  </bean>
+
+  <util:list id="stores" >
+     <bean class="com.andre.pphere.data.Store">
+        <property name="name" value="EMS" />
+        <property name="description" value="EMS" />
+     </bean>
+     <bean class="com.andre.pphere.data.Store">
+        <property name="name" value="REI" />
+        <property name="description" value="REI" />
+     </bean>
+     <bean class="com.andre.pphere.data.Store">
+        <property name="name" value="Hiltons" />
+        <property name="description" value="Hiltons" />
+     </bean>
+  </util:list>
+
+</beans>
