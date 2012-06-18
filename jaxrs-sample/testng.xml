@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+  
+<suite name="JAXRS Test Suite" >
+  <test name="JAXRS Tests"   >
+    <groups>
+      <run>
+        <exclude name="fails" />
+      </run>
+    </groups>
+    <classes>
+      <class name="com.andre.pphere.rest.HttpTest" />
+      <class name="com.andre.pphere.rest.NegativeTest" />
+      <class name="com.andre.pphere.rest.cxf.CxfClientTest" />
+    </classes>
+  </test>
+</suite>
