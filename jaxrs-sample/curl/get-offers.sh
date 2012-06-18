@@ -1,8 +1,8 @@
 
 . ./common.env
 
-lat=42.3583 
-lng=71.0603
+lat=-56.93
+lng=-67.62
 #url=$URL/offer
 url="$URL/offer?radius=11&lat=$lat&lng=$lng"
 

@@ -1,12 +1,12 @@
 
 common.env
-  To toggle format (XML or JSON) change the "media" variable for Accept request header
+  To toggle request format (XML or JSON) change the "media" variable for Accept request header
 
-Log files
+Log files - output of shell scripts
   log-headers.txt - contains response headers - curl -D option
   log-body.txt - contains response body
 
-Scripts
+Shell Scripts
 
   getwadl.sh
 
