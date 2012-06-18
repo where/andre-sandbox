@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!-- build.xml - Andre' common stuff                            17 jun 2012 -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+
+<project name="andre-common" default="all" basedir=".">
+  <property file="build.properties"  />
+
+  <property name="build.dir"           value="build" />
+  <property name="build.classes.dir"   value="${build.dir}/classes" />
+  <property name="build.dist.dir"      value="${build.dir}/dist" />
+
+  <property name="main.java.dir"        value="src/main/java" />
+  <property name="main.config.dir"      value="config" />
+
+  <property name="test.java.dir"        value="src/test/java" />
+
+
+  <target name="all" depends="init,compile,build.jar"
+    description="init,build.jar,test" >
+  </target>
+
+
+  <path id="compile.classpath">
+    <fileset dir="${lib.dir}"   includes="**/*.jar" />
+    <pathelement path="${build.dir}/test-classes" />
+  </path>
+
+  
+  <target name="compile" depends="init"
+          description="Compile Java files" >
+    <javac
+        debug="on"
+        destdir="${build.classes.dir}" >
+      <compilerarg value="-Xlint:unchecked"/>
+      <compilerarg value="-Xlint:deprecation" />
+      <include name="**"  />
+      <classpath refid="compile.classpath" />
+      <src path="${main.java.dir}"/>
+      <src path="${test.java.dir}"/>
+    </javac>
+  </target>
+
+
+  <target name="build.jar" depends="compile" >
+    <mkdir dir="${build.dist.dir}" />
+    <jar destfile="${build.dist.dir}/${app.name}.jar">
+      <fileset dir="${build.classes.dir}"/>
+    </jar>
+  </target>
+
+  <target name="init" >
+    <delete dir="${build.dir}" />
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${build.classes.dir}" />
+  </target>
+
+  <target name="echo" description="Echo properties of interest" >
+    <echo message="BASIC:" />
+    <echo message="  basedir     = ${basedir}" />
+    <echo message="  lib.dir     = ${lib.dir}" />
+    <echo message="  os.name     = ${os.name}" />
+    <echo message="  os.arch     = ${os.arch}" />
+    <echo message="  os.version  = ${os.version}" />
+  </target>
+
+  <target name="echo.cp" description="Echo properties of interest" >
+    <pathconvert property="compile.classpath.string" refid="compile.classpath"
+       pathsep="${line.separator}    " />
+    <echo message="CLASSPATH:" />
+    <echo message="  compile.classpath  = ${compile.classpath.string}" />
+  </target>
+
+</project>
