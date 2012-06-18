@@ -40,7 +40,9 @@
       <include name="**"  />
       <classpath refid="compile.classpath" />
       <src path="${main.java.dir}"/>
+<!--
       <src path="${test.java.dir}"/>
+-->
     </javac>
   </target>
 
