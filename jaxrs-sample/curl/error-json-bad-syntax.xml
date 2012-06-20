@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Error>
+    <httpStatusCode>400</httpStatusCode>
+    <applicationCode>Unknown</applicationCode>
+    <message>com.ctc.wstx.exc.WstxUnexpectedCharException: Unexpected character '{' (code 123) in prolog; expected '&lt;'
+ at [row,col {unknown-source}]: [1,1]</message>
+</Error>
