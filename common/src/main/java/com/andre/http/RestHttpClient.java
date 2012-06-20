@@ -154,6 +154,14 @@ public class RestHttpClient {
 			return elts[0].getName();
 		}
 
+		@Override
+		public String toString() {
+			return 
+				"statusCode="+statusCode
+				+" method="+method
+				+" response="+new String(response)
+				;
+		}
 	}
 
 	private void addHeaders(HttpMethodBase method, Header [] headers) {

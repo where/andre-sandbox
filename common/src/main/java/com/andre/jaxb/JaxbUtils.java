@@ -53,6 +53,12 @@ public class JaxbUtils {
 		return readXmlStream(stream, JAXBContext.newInstance(clazz), schemaFile) ;
 	}
 
+
+	static public Object readXmlContent(String xmlContent, Class clazz, File schemaFile) throws IOException, ParsingException, Exception {
+		return readXmlStream(new ByteArrayInputStream(xmlContent.getBytes()), clazz, schemaFile) ;
+	}
+
+
 	static public Object readXmlStream(InputStream stream, JAXBContext context, File schemaFile) throws IOException, ParsingException, Exception {
 
 		Unmarshaller unmarshaller = context.createUnmarshaller();
