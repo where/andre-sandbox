@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stores>
+    <store>
+        <name>ems</name>
+        <location>
+            <street1>Main st</street1>
+            <street2>Test st</street2>
+        </location>
+        <phoneNumber>617 123-1234</phoneNumber>
+        <accountId>accountId</accountId>
+    </store>
+    <store>
+        <name>rei</name>
+        <location>
+            <street1>Main st</street1>
+            <street2>Test st</street2>
+        </location>
+        <phoneNumber>617 123-1234</phoneNumber>
+        <accountId>accountId</accountId>
+    </store>
+</stores>
+

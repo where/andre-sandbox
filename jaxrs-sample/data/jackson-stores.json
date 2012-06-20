@@ -1,0 +1,42 @@
+{
+    "stores": [
+        {
+            "accountId": "accountId", 
+            "id": null, 
+            "location": {
+                "city": null, 
+                "country": null, 
+                "lat": null, 
+                "lng": null, 
+                "neighborhood": null, 
+                "state": null, 
+                "street1": "Main st", 
+                "street2": "Test st", 
+                "zip": null
+            }, 
+            "name": "ems", 
+            "phoneNumber": "617 123-1234", 
+            "providerStoreId": null, 
+            "storeId": null
+        }, 
+        {
+            "accountId": "accountId", 
+            "id": null, 
+            "location": {
+                "city": null, 
+                "country": null, 
+                "lat": null, 
+                "lng": null, 
+                "neighborhood": null, 
+                "state": null, 
+                "street1": "Main st", 
+                "street2": "Test st", 
+                "zip": null
+            }, 
+            "name": "rei", 
+            "phoneNumber": "617 123-1234", 
+            "providerStoreId": null, 
+            "storeId": null
+        }
+    ]
+}
