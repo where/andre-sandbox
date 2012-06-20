@@ -10,8 +10,8 @@ import java.util.*;
  */
 public class MockStoreDao implements StoreDao {
 	private static final Logger logger = Logger.getLogger(MockStoreDao.class);
-	private Map<Integer,Store> stores = new LinkedHashMap<Integer,Store>();
-	private int currentStoreId = 0 ;
+	private Map<Long,Store> stores = new LinkedHashMap<Long,Store>();
+	private long currentStoreId = 0 ;
 
 	public MockStoreDao(List<Store> lstores) {
 		for (Store store: lstores) {
@@ -20,8 +20,8 @@ public class MockStoreDao implements StoreDao {
 		}
 	}
 
-	private Integer getStoreId(String name) {
-		for (Map.Entry<Integer,Store> entry : stores.entrySet()) {
+	private Long getStoreId(String name) {
+		for (Map.Entry<Long,Store> entry : stores.entrySet()) {
 			Store store = entry.getValue();
 			if (name.equals(store.getName())) {
 				return entry.getKey();
@@ -38,10 +38,13 @@ public class MockStoreDao implements StoreDao {
 	private void createStores(int numStores) {
 		for (int j=0 ; j < numStores ; j++) {
 			Store store = new Store();
-			store.setId(j);
+			store.setId((long)j);
 			store.setName("Store"+j);
-			store.setDescription("Desc"+j);
-			stores.put(j,store);
+			store.setPhoneNumber("123-1234");
+			store.setProviderStoreId("provStoreId");
+			store.setAccountId("AccountId"+j);
+			Location location = new Location();
+			stores.put((long)j,store);
 		}
 		currentStoreId = numStores ;
 		logger.debug("numStores="+numStores+" currentStoreId="+currentStoreId);
@@ -62,15 +65,15 @@ public class MockStoreDao implements StoreDao {
 		return list;
 	}
 
-	public Store getStore(int id) {
+	public Store getStore(long id) {
 		return stores.get(id);
 	}
 
-	public int createStore(Store store) {
+	public long createStore(Store store) {
 		logger.debug(": currentStoreId="+currentStoreId);
 		store.setId(currentStoreId);
 		stores.put(currentStoreId, store);
-		int oldId = currentStoreId ;
+		long oldId = currentStoreId ;
 		currentStoreId++;
 		logger.debug("currentStoreId="+currentStoreId+" oldId="+oldId);
 		return oldId;
@@ -81,7 +84,7 @@ public class MockStoreDao implements StoreDao {
 		stores.put(store.getId(), store);
 	}
 
-	public void deleteStore(int id) {
+	public void deleteStore(long id) {
 		stores.remove(id);
 	}
 }

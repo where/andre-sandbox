@@ -10,8 +10,8 @@ import com.andre.pphere.data.*;
  */
 public class MockOfferDao implements OfferDao {
 	private static final Logger logger = Logger.getLogger(MockOfferDao.class);
-	private Map<Integer,Offer> offers = new LinkedHashMap<Integer,Offer>();
-	private int currentOfferId = 0 ;
+	private Map<Long,Offer> offers = new LinkedHashMap<Long,Offer>();
+	private long currentOfferId = 0 ;
 
 	public MockOfferDao(List<Offer> loffers) {
 		for (Offer offer: loffers) {
@@ -20,8 +20,8 @@ public class MockOfferDao implements OfferDao {
 		}
 	}
 
-	private Integer getOfferId(String name) {
-		for (Map.Entry<Integer,Offer> entry : offers.entrySet()) {
+	private Long getOfferId(String name) {
+		for (Map.Entry<Long,Offer> entry : offers.entrySet()) {
 			Offer offer = entry.getValue();
 			if (name.equals(offer.getProductId())) {
 				return entry.getKey();
@@ -38,10 +38,10 @@ public class MockOfferDao implements OfferDao {
 	private void createOffers(int numOffers) {
 		for (int j=0 ; j < numOffers ; j++) {
 			Offer offer = new Offer();
-			offer.setId(j);
+			offer.setId((long)j);
 			offer.setProductId(j);
 			offer.setPaypalId(j);
-			offers.put(j,offer);
+			offers.put((long)j,offer);
 		}
 		currentOfferId = numOffers ;
 		logger.debug("numOffers="+numOffers+" currentOfferId="+currentOfferId);
@@ -52,15 +52,15 @@ public class MockOfferDao implements OfferDao {
 		return list;
 	}
 
-	public Offer getOffer(int id) {
+	public Offer getOffer(long id) {
 		return offers.get(id);
 	}
 
-	 public int createOffer(Offer offer) {
+	 public long createOffer(Offer offer) {
 		logger.debug("currentOfferId="+currentOfferId);
 		offer.setId(currentOfferId);
 		offers.put(currentOfferId, offer);
-		int oldId = currentOfferId ;
+		long oldId = currentOfferId ;
 		currentOfferId++;
 		logger.debug("currentOfferId="+currentOfferId+" oldId="+oldId);
 		return oldId;
@@ -71,7 +71,7 @@ public class MockOfferDao implements OfferDao {
 		offers.put(offer.getId(), offer);
 	}
 
-	 public void deleteOffer(int id) {
+	 public void deleteOffer(long id) {
 		offers.remove(id);
 	}
 }

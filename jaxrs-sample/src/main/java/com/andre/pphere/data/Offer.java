@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Offer extends BaseObject {
 	public Offer() {} 
 
-	public Offer(Integer id) {
+	public Offer(Long id) {
 		setId(id);
 	}
 

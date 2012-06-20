@@ -23,13 +23,13 @@ public class CxfClientTest extends BaseTest {
 	private ServiceProxy proxy ;
 
 	@BeforeClass void beforeClass() throws Exception {
-        proxy = JAXRSClientFactory.create(baseUrl, ServiceProxy.class);
+		proxy = JAXRSClientFactory.create(baseUrl, ServiceProxy.class);
 		logger.debug("proxy="+proxy);
 	}
 
 	@Test
 	public void testStores() throws Exception {
-        StoreList stores = proxy.getStores();
+		StoreList stores = proxy.getStores();
 		logger.debug("stores="+stores);
 	}
 }

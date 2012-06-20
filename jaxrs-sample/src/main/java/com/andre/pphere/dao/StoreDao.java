@@ -8,8 +8,8 @@ import java.util.*;
  */
 public interface StoreDao {
 	public List<Store> getStores() ;
-	public Store getStore(int id) ;
-	public int createStore(Store store);
+	public Store getStore(long id) ;
+	public long createStore(Store store);
 	public void updateStore(Store store);
-	public void deleteStore(int id);
+	public void deleteStore(long id);
 }

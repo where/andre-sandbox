@@ -58,7 +58,11 @@ public class ResponseUtils {
 	}
 
 	public static Response createClientError(String applicationCode, String msg) {
-		Response.ResponseBuilder rb = Response.status(Response.Status.BAD_REQUEST);
+		return createClientError(applicationCode, msg, Response.Status.BAD_REQUEST);
+	}
+	public static Response createClientError(String applicationCode, String msg, Response.Status status) {
+		Response.ResponseBuilder rb = Response.status(status);
+
 		Error error = new Error(Response.Status.BAD_REQUEST.getStatusCode(),applicationCode,msg);
 		rb.entity(error);
 		//rb.header(HEADER_APP_ERROR, msg);

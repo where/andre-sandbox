@@ -69,7 +69,7 @@ public class OfferResource {
 	@Descriptions({ 
 		@Description(value = "Gets Offer", target = DocTarget.METHOD),
 	})
-	public Offer getOffer(@PathParam("id") Integer id, 
+	public Offer getOffer(@PathParam("id") Long id, 
 			@Context HttpHeaders headers,
 			@Context Request request
 		) {
@@ -89,7 +89,7 @@ public class OfferResource {
 	})
 	public Response create(Offer obj, @Context HttpHeaders headers) {
 		try {
-			int id = dao.createOffer(obj);
+			long id = dao.createOffer(obj);
 			obj.setId(id);
 			return ResponseUtils.createPost(""+uriInfo.getAbsolutePath(), ""+id,obj);
 		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class OfferResource {
 	@Descriptions({ 
 		@Description(value = "Updates offer", target = DocTarget.METHOD)
 	})
-	public Response update(@PathParam("id") Integer id, Offer obj) {
+	public Response update(@PathParam("id") Long id, Offer obj) {
 		try {
 			obj.setId(id);
 			dao.updateOffer(obj);
@@ -119,7 +119,7 @@ public class OfferResource {
 	@Descriptions({ 
 		@Description(value = "Deletes offer", target = DocTarget.METHOD),
 	})
-	public Response delete(@PathParam("id") Integer id) {
+	public Response delete(@PathParam("id") Long id) {
 		dao.deleteOffer(id);
 		return ResponseUtils.createDelete();
 	}

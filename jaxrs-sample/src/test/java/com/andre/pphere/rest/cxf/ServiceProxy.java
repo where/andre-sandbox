@@ -12,8 +12,8 @@ import com.andre.pphere.data.Store;
 import com.andre.pphere.data.StoreList;
 
 public interface ServiceProxy {
-    @GET
-    @Path("store")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public StoreList getStores();
+	@GET
+	@Path("store")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public StoreList getStores();
 }

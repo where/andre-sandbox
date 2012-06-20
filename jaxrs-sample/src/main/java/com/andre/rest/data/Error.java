@@ -18,10 +18,15 @@ public class Error implements java.io.Serializable {
 	public Error() {
 	}
 
-	public Error(int httpStatusCode, String applicationCode, String message) {
+	public Error(int httpStatusCode, String message) {
 		this.httpStatusCode = httpStatusCode ;
-		this.applicationCode = applicationCode ;
 		this.message = message ;
+	}
+
+	public Error(int httpStatusCode, String message, String applicationCode) {
+		this.httpStatusCode = httpStatusCode ;
+		this.message = message ;
+		this.applicationCode = applicationCode ;
 	}
 
 	private int httpStatusCode;
@@ -30,7 +35,7 @@ public class Error implements java.io.Serializable {
 	public void setHttpStatusCode(int val) { httpStatusCode=val; } 
 
 	private String applicationCode;
-	@XmlElement(required=true)
+	@XmlElement(required=false)
 	public String getApplicationCode() { return applicationCode; }
 	public void setApplicationCode(String val) { applicationCode=val; } 
 

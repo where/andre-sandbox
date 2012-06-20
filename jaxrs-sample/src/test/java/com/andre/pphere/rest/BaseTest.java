@@ -7,26 +7,34 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
-import com.amm.httpclient.ByteHttpClient;
 import org.apache.commons.httpclient.Header;
 import com.andre.http.RestHttpClient;
-import com.andre.rest.reader.jaxb.JaxbReader;
-import com.andre.rest.reader.json.JsonReader;
-import com.andre.rest.reader.ObjectReader;
+
+import com.andre.mapper.jaxb.JaxbObjectMapper;
+import com.andre.mapper.jackson.JsonObjectMapper;
+import com.andre.mapper.ObjectMapper;
 
 public class BaseTest {
 	private static final Logger logger = Logger.getLogger(BaseTest.class);
 	private static String [] configFiles = { 
 		"appContext-test.xml",
 	} ;
- 	static ByteHttpClient byteHttpClient = new ByteHttpClient();
- 	static RestHttpClient httpClient = new RestHttpClient();
+ 	public static RestHttpClient httpClient = new RestHttpClient();
  	public static String baseUrl ;
-	static String storeUrl ;
+	public static String storeUrl ;
  	private static TestConfig config ;
-	private static File schemaFile = new File("config/schema.xsd");
-	private static String pkg = "com.andre.pphere.data";
-	private static Map<String,ObjectReader> objectReaders = new HashMap<String,ObjectReader>();
+	public static File schemaFile = new File("config/schema.xsd");
+
+	public static String pkg = "com.andre.pphere.data";
+	public static String pkgRestData = "com.andre.rest.data";
+
+	static Random random = new Random(2012);
+	public static final String CONTENT_JSON = "application/json" ;
+	public static final String CONTENT_XML = "application/xml";
+
+	public static ObjectMapper jsonMapper ;
+	public static ObjectMapper xmlMapper ;
+	private static Map<String,ObjectMapper> objectMappers = new HashMap<String,ObjectMapper>();
 
 	@BeforeSuite
 	public static void beforeSuite() throws Exception {
@@ -34,9 +42,13 @@ public class BaseTest {
 		baseUrl = config.getBaseUrl();
 		storeUrl = baseUrl + "/store" ;
  		Class clazz = com.andre.pphere.data.Store.class ;
-		objectReaders.put("application/json",new JsonReader(clazz));
-		objectReaders.put("application/xml",new JaxbReader(schemaFile,clazz,pkg));
 		logger.debug("baseUrl="+baseUrl);
+
+		jsonMapper = new JsonObjectMapper();
+		logger.debug("jsonMapper="+jsonMapper);
+		xmlMapper = new JaxbObjectMapper(schemaFile);
+		objectMappers.put("application/json",jsonMapper);
+		objectMappers.put("application/xml",xmlMapper);
 	}
 
 	@AfterSuite
@@ -67,6 +79,14 @@ public class BaseTest {
 		 return System.currentTimeMillis() ;
 	}
 
+	public static String maketRandomValue() {
+		return ""+Math.abs(random.nextInt());
+	}
+	public static Long makeRandomLong() {
+		return Math.abs(random.nextLong());
+	}
+
+
 	public static void assertStatus(int statusCode) {
 		Assert.assertTrue(!isError(statusCode),"StatusCode="+statusCode);
 		//Assert.assertFalse(isError(statusCode));
@@ -91,12 +111,26 @@ public class BaseTest {
 		return headers ;
 	}
 
-	public Object readObject(String contentType, String content) throws Exception {
-		ObjectReader objectReader = objectReaders.get(contentType);
-		if (null == objectReader)
-			throw new Exception("No objectReader for "+contentType);
-		return objectReader.read(content);
+	public Object readObject(String contentType, String content, Class clazz) throws Exception {
+		ObjectMapper objectMapper = objectMappers.get(contentType);
+		if (null == objectMapper)
+			throw new Exception("No objectMapper for "+contentType);
+		return objectMapper.toObject(content,clazz);
 	}
 
-	public static ContentFactory contentFactory = new ContentFactory();
+
+	@DataProvider(name = "contentTypes") 
+	public Object[][] contentTypes() {
+		return new Object[][] {
+			{ CONTENT_XML }
+			,{ CONTENT_JSON }
+		};
+	}
+
+	@DataProvider(name = "contentTypesXml") 
+	public Object[][] contentTypesXml() {
+		return new Object[][] {
+			{ CONTENT_XML }
+		};
+	}
 }

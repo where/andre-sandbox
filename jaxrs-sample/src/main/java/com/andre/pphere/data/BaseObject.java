@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlTransient
 public class BaseObject {
-	protected Integer id;
-	@XmlElement(required=true)
-	public Integer getId() { return id; }
-	public void setId(Integer id) { this.id=id; } 
+	protected Long id;
+	@XmlElement(required=false)
+	public Long getId() { return id; }
+	public void setId(Long id) { this.id=id; } 
  
 	public BaseObject() {}
 
-	public BaseObject(Integer id) {
+	public BaseObject(Long id) {
 		this.id = id ;
 	}
 

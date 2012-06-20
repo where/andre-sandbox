@@ -29,6 +29,7 @@ import com.andre.pphere.data.Store;
 import com.andre.pphere.data.StoreList;
 import com.andre.pphere.dao.StoreDao;
 import com.andre.rest.ResponseUtils;
+import com.andre.rest.ApplicationErrors;
 import com.andre.rest.data.Link;
 
 @Path("/store/")
@@ -48,13 +49,13 @@ public class StoreResource {
 	@Descriptions({ 
 		@Description(value = "Get Stores", target = DocTarget.METHOD),
 		})
-	public StoreList getStores(
+	public Response getStores(
 				@QueryParam("lat") Double lat,
 				@QueryParam("lng") Double lng,
 				@QueryParam("radius") Double radius)
 		{
 		StoreList list = new StoreList(dao.getStores());
-		return list;
+		return ResponseUtils.createGet(list);
 	}
 
 	@GET
@@ -63,7 +64,7 @@ public class StoreResource {
 	@Descriptions({ 
 		@Description(value = "Get Store", target = DocTarget.METHOD),
 	})
-	public Store getStore(@PathParam("id") Integer id, 
+	public Store getStore(@PathParam("id") Long id, 
 			@Context HttpHeaders headers,
 			@Context Request request
 		) {
@@ -71,6 +72,7 @@ public class StoreResource {
 		if (obj == null) 
 			throw new WebApplicationException(Response.Status.NOT_FOUND); 
 		return obj;
+		//return ResponseUtils.createGet(obj);
 	}
 
 	@POST
@@ -83,7 +85,7 @@ public class StoreResource {
 		})
 	public Response create(Store obj, @Context HttpHeaders headers) {
 		try {
-			int id = dao.createStore(obj);
+			long id = dao.createStore(obj);
 			obj.setId(id);
 			return ResponseUtils.createPost(""+uriInfo.getAbsolutePath(), ""+id,obj);
 		} catch (Exception e) {
@@ -97,7 +99,7 @@ public class StoreResource {
 	@Descriptions({ 
 		@Description(value = "Updates store", target = DocTarget.METHOD)
 	})
-	public Response update(@PathParam("id") Integer id, Store obj) {
+	public Response update(@PathParam("id") Long id, Store obj) {
 		obj.setId(id);
 		dao.updateStore(obj);
 		return ResponseUtils.createPut();
@@ -108,7 +110,7 @@ public class StoreResource {
 	@Descriptions({ 
 		@Description(value = "Deletes a Store", target = DocTarget.METHOD),
 	})
-	public Response delete(@PathParam("id") Integer id) {
+	public Response delete(@PathParam("id") Long id) {
 		dao.deleteStore(id);
 		return ResponseUtils.createDelete();
 	}

@@ -6,7 +6,7 @@ import java.util.List;
 import com.andre.rest.data.PagedList;
 
 @XmlRootElement(name="offers")
-public class OfferList extends PagedList {
+public class OfferList { // extends PagedList {
 	private List<Offer> offers;
 
 	public OfferList() {
