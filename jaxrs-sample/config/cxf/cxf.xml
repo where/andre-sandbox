@@ -19,12 +19,9 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
      </jaxrs:inInterceptors>
 
     <jaxrs:providers>
-      <ref bean="exceptionMapper"/>
-      <ref bean="exceptionMapper2"/>
+      <ref bean="exceptionMapper.WebApplication"/>
       <ref bean="javaSerializedReaderWriter"/>
       <ref bean="jaxbProvider"/>
-<!--
--->
       <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
     </jaxrs:providers>
 
@@ -47,6 +44,13 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
                <value type="java.lang.Boolean">true</value> 
             </entry> 
           </map> 
+<!--
+  <property name="outTransformElements">
+    <map>
+      <entry key="{http://stores}*" value="{http://store}*"/> 
+    </map>
+  </property>
+-->
         </property> 
   </bean> 
 
@@ -58,8 +62,9 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
      <constructor-arg ref="offerDao" />
   </bean >
 
-  <bean id="exceptionMapper" class="com.andre.rest.cxf.ValidationExceptionMapper" />
-  <bean id="exceptionMapper2" class="com.andre.rest.cxf.MyExceptionMapper" />
+  <bean id="exceptionMapper.Validation" class="com.andre.rest.cxf.ValidationExceptionMapper" />
+  <bean id="exceptionMapper.WebApplication" class="com.andre.rest.cxf.WebApplicationExceptionMapper" />
+  <bean id="exceptionMapper.Default" class="com.andre.rest.cxf.DefaultExceptionMapper" />
   <bean id="javaSerializedReaderWriter" class="com.andre.rest.JavaSerializedReaderWriter" />
 
   <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>

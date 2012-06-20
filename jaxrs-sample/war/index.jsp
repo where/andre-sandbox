@@ -6,6 +6,7 @@
 <ul>
 <li><a href="api/?_wadl"">WADL</a>
  - <a href="api/services">api/services</a> 
+<li><a href="schema.xsd">schema.xsd</a>
 </ul>
 
 <h4>Resources</h4>

@@ -39,17 +39,49 @@
 
   <util:list id="stores" >
      <bean class="com.andre.pphere.data.Store">
-        <property name="name" value="EMS" />
-        <property name="description" value="EMS" />
+        <property name="name" value="EMS Comm Ave" />
+        <property name="accountId" value="EMS" />
+        <property name="phoneNumber" value="617 123-0000" />
+        <property name="providerStoreId" value="psid-1776" />
+        <property name="location">
+            <bean class="com.andre.pphere.data.Location">
+              <property name="street1" value="1041 Comm Ave" />
+              <property name="neighborhood" value="Allston" />
+              <property name="city" value="Allston" />
+              <property name="state" value="MA" />
+              <property name="zip" value="02115" />
+            </bean>
+        </property>
      </bean>
      <bean class="com.andre.pphere.data.Store">
-        <property name="name" value="REI" />
-        <property name="description" value="REI" />
+        <property name="name" value="REI Sears Building" />
+        <property name="accountId" value="REI" />
+        <property name="phoneNumber" value="617 123-1111" />
+        <property name="providerStoreId" value="psid-1812" />
+        <property name="location">
+            <bean class="com.andre.pphere.data.Location">
+              <property name="street1" value="405 Park Drive" />
+              <property name="neighborhood" value="Fenway" />
+              <property name="city" value="Boston" />
+              <property name="state" value="MA" />
+              <property name="zip" value="02115" />
+            </bean>
+        </property>
      </bean>
      <bean class="com.andre.pphere.data.Store">
-        <property name="name" value="Hiltons" />
-        <property name="description" value="Hiltons" />
+        <property name="name" value="Hilton's Tent City" />
+        <property name="accountId" value="psid-1848" />
      </bean>
+<!--
+     <bean class="com.andre.pphere.data.Store">
+        <property name="name" value="Boulder Army Store" />
+        <property name="accountId" value="psid-1865" />
+     </bean>
+     <bean class="com.andre.pphere.data.Store">
+        <property name="name" value="Pro Mountain Sports" />
+        <property name="accountId" value="psid-1899" />
+     </bean>
+-->
   </util:list>
 
 </beans>
