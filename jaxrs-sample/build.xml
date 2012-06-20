@@ -2,7 +2,7 @@
 
 <!-- ====================================================================== -->
 <!--                                                                        -->
-<!-- build.xml - PPHere sample JAX-RS                           17 jun 2012 -->
+<!-- build.xml - PPHere sample JAX-RS                           20 jun 2012 -->
 <!--                                                                        -->
 <!-- ====================================================================== -->
 
@@ -14,8 +14,8 @@
 <!-- ============================================================== -->
 
 <project name="pphere" default="all" basedir=".">
-  <property file="${os.name}.properties"  />
   <property file="build.properties"  />
+  <property file="user.properties"  />
 
   <property name="build.dir"           value="build" />
   <property name="build.classes.dir"   value="${build.dir}/classes" />

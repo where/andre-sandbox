@@ -126,7 +126,8 @@
   </target>
 
   <target name="deploy.war"  
-                description="Deploy War to tomcat webapp"  >
+                description="Deploy War to tomcat webapp"  
+                if="deploy.dir" >
     <copy todir="${deploy.dir}" preservelastmodified="true"
            file="${war.path}" />
   </target>

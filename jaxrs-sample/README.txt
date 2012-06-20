@@ -22,6 +22,10 @@ Scripts
   gen-schema.sh - Generates schema from annotated JAXB data classes - output in tmp/
   run-jetty.sh - Launches Jetty HTTP server with sample war as http://localhost:8080/pphere/api
 
+ant
+  if you want the default ant target to deploy your WAR, set deploy.dir in user.properties. For example:
+     deploy.dir=$TOMCAT_HOME/webapps
+
 Data Format
   JSON and XML are used in this sample. Traditional JAXB annotations are used.
   Validation is also used - see config/cxf/cxf.xml for configuration.
