@@ -76,8 +76,8 @@
   </target>
 
   <target name="copy.jaxb.files" depends="" >
-    <copy todir="${build.classes.dir}/${pkg.dir}" preservelastmodified="true"
-          file="${main.java.dir}/${pkg.dir}/jaxb.index" >
+    <copy todir="${build.classes.dir}" preservelastmodified="true" >
+      <fileset dir="${main.java.dir}" includes="**/*.index" />
     </copy>
   </target>
 
@@ -88,7 +88,7 @@
   <target name="build.jar" depends="compile" >
     <mkdir dir="${build.dist.dir}" />
     <jar destfile="${build.dist.dir}/${app.name}.jar">
-      <fileset dir="${build.classes.dir}"/>
+       <fileset dir="${build.classes.dir}"/>
     </jar>
   </target>
 
