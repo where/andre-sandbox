@@ -159,4 +159,19 @@ public class ObjectTest extends BaseTest {
 		String [] toks =  url.split("/");
 		return Long.parseLong(toks[toks.length-1]);
 	}
+
+	@AfterClass
+	void afterClass() throws Exception {
+		for (String url : urlsPosted) {
+			RestHttpClient.Result result = httpClient.delete(url) ;
+			Assert.assertEquals(result.statusCode,200);
+		}
+	}
+
+	private List<String> urlsPosted = new ArrayList<String>();
+	private RestHttpClient.Result post(String storeUrl, String content, String contentType) throws Exception {
+		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
+		urlsPosted.add(storeUrl);
+		return result ;
+	}
 }
