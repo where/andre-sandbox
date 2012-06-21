@@ -15,6 +15,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.Produces;
 import org.xml.sax.SAXParseException;
 import com.ctc.wstx.exc.WstxUnexpectedCharException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.JsonParseException;
 
 /** 
  * Customize exception handling - Illegal syntax and Validation failured.  
@@ -40,7 +42,20 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 
 		String appError = null;
 		Throwable cause = ex.getCause();
-		if (status == 400 && cause != null ) {
+		logger.debug("cause="+cause);
+
+		// WORKAROUND for JSON illegal type for field is 500 instead of 400
+		if (cause instanceof JsonMappingException) {
+			appError = ApplicationErrors.VALIDATION_FAILED ;
+			status = 400 ; 
+
+		// WORKAROUND for JSON illegal syntax
+		} else if (cause instanceof JsonParseException) {
+			appError = ApplicationErrors.ILLEGAL_SYNTAX ;
+			status = 400 ; 
+
+		// XML
+		} if (status == 400 && cause != null ) {
 			if (cause instanceof SAXParseException) {
 				appError = ApplicationErrors.VALIDATION_FAILED ;
 			} else if (cause instanceof WstxUnexpectedCharException) {

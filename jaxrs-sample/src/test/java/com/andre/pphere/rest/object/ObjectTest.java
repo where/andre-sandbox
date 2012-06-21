@@ -12,6 +12,7 @@ import com.andre.pphere.data.StoreList;
 import com.andre.pphere.data.*;
 import com.andre.rest.ApplicationErrors;
 import com.andre.jaxb.JaxbUtils;
+import com.andre.mapper.ObjectMapper;
 import com.andre.pphere.rest.BaseTest;
 
 /**
@@ -23,11 +24,10 @@ public class ObjectTest extends BaseTest {
 	private long key = makeUniqueKey();
 	private String lastPostUrl  ;
 
-	@Test(dataProvider = "contentTypesXml")
-	public void getStores(String contentType) throws Exception {
-		String url = storeUrl;
-		//String contentType = CONTENT_XML ;
-		RestHttpClient.Result result = httpClient.get(url,makeHeaders(contentType));
+	@Test(dataProvider = "objectMappers")
+	public void getStores(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
+		RestHttpClient.Result result = httpClient.get(storeUrl,makeHeaders(contentType));
 		assertStatus(result.statusCode);
 		Assert.assertNotNull(result.response);
 		String sresponse = new String(result.response);
@@ -36,13 +36,13 @@ public class ObjectTest extends BaseTest {
 		//StoreList storeList = (StoreList)obj;
 	}
 
-	@Test(dataProvider = "contentTypesXml")
-	public void testPost_Get(String contentType) throws Exception {
+	@Test(dataProvider = "objectMappers")
+	public void testPost_Get(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
 		// Post the data
 		Store store = Utils.createStore(maketRandomValue());
 		String content = JaxbUtils.toString(store);
-		String url = storeUrl;
-		RestHttpClient.Result result = httpClient.post(url,content.getBytes(),makeHeaders(contentType));
+		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
 		assertStatus(result);
 
 		// Get URL of new resource from Location header
@@ -57,7 +57,7 @@ public class ObjectTest extends BaseTest {
 
 		// Compare
 		Store store2 = convertStore(contentType, result.response);
-		Assert.assertEquals(store2.getId(),getId(locationUrl));
+		Assert.assertEquals(store2.getId(),extractId(locationUrl));
 		Assert.assertEquals(store.getName(),store2.getName());
 		Assert.assertEquals(store.getStoreId(),store2.getStoreId());
 		Location location = store.getLocation();
@@ -67,8 +67,9 @@ public class ObjectTest extends BaseTest {
 		//Assert.assertEquals(location,location2); // Fails - hmm...
 	}
 
-	@Test(dataProvider = "contentTypesXml", dependsOnMethods="testPost_Get")
-	public void testPut_Get(String contentType) throws Exception {
+	@Test(dataProvider = "objectMappers", dependsOnMethods="testPost_Get")
+	public void testPut_Get(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
 		RestHttpClient.Result result ;
 		String url = lastPostUrl;
 
@@ -91,26 +92,46 @@ public class ObjectTest extends BaseTest {
 		Assert.assertEquals(location.getStreet2(),location2.getStreet2());
 	}
 
-	@Test(dataProvider = "contentTypesXml")
-	public void testPost_ValidationFailure(String contentType) throws Exception {
+	@Test(dataProvider = "objectMappers")
+	public void testPost_ValidationFailure_RequiredField(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
 		Store store = Utils.createStore(null); // Name is required per schema - this will cause validation failure
-		String content = JaxbUtils.toString(store);
-		String url = storeUrl;
-		RestHttpClient.Result result = httpClient.post(url,content.getBytes(),makeHeaders(contentType));
+		String content = mapper.toString(store);
+		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
 
-		Assert.assertEquals(result.statusCode,400);
+		int statusCode = 400 ;
+		Assert.assertEquals(result.statusCode,statusCode);
 		String sresponse = new String(result.response);
 		Error error = convertError(contentType, result.response);
-		Assert.assertEquals(error.getHttpStatusCode(),400);
+		Assert.assertEquals(error.getHttpStatusCode(),statusCode);
 		Assert.assertEquals(error.getApplicationCode(),ApplicationErrors.VALIDATION_FAILED);
 	}
 
-	@Test(dataProvider = "contentTypesXml")
-	public void testPost_IllegalSyntax(String contentType) throws Exception {
+	@Test(dataProvider = "objectMappers")
+	public void testPost_ValidationFailure_BadValue(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
+		Store store = Utils.createStore("foo"); 
+		
+		long value = random.nextLong();
+		store.setId(value);
+		String content = mapper.toString(store);
+		content = content.replace(""+value,"\"NON_NUMERIC\"");
+		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
+
+		int statusCode = 400 ;
+		Assert.assertEquals(result.statusCode,statusCode);
+		String sresponse = new String(result.response);
+		Error error = convertError(contentType, result.response);
+		Assert.assertEquals(error.getHttpStatusCode(),statusCode);
+		Assert.assertEquals(error.getApplicationCode(),ApplicationErrors.VALIDATION_FAILED);
+	}
+
+	@Test(dataProvider = "objectMappers")
+	public void testPost_IllegalSyntax(ObjectMapper mapper) throws Exception {
+		String contentType = mapper.getContentType();
 		Store store = Utils.createStore(null); // Name is required per schema
 		String content = "North End Church" ;
-		String url = storeUrl;
-		RestHttpClient.Result result = httpClient.post(url,content.getBytes(),makeHeaders(contentType));
+		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
 
 		Assert.assertEquals(result.statusCode,400);
 		String sresponse = new String(result.response);
@@ -134,7 +155,7 @@ public class ObjectTest extends BaseTest {
 		return (Error)obj;
 	}
 
-	public Long getId(String url) {
+	public Long extractId(String url) {
 		String [] toks =  url.split("/");
 		return Long.parseLong(toks[toks.length-1]);
 	}

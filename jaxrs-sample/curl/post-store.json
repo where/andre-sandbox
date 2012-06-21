@@ -1,5 +1,13 @@
 {
-    "name": "Black Diamond",
-    "description": "Created by curl POST", 
-    "id": 1
+    "accountId": "EMS - CURL POST", 
+    "location": {
+        "city": "Allston", 
+        "neighborhood": "Allston", 
+        "state": "MA", 
+        "street1": "1041 Comm Ave", 
+        "zip": "02115"
+    }, 
+    "name": "EMS Comm Ave - CURL POST", 
+    "phoneNumber": "617 123-0000", 
+    "providerStoreId": "psid-1776"
 }

@@ -21,14 +21,6 @@ import com.andre.pphere.data.Location;
 public class ObjectMapperTest extends BaseTest {
 	private static final Logger logger = Logger.getLogger(ObjectMapperTest.class);
 
-	@DataProvider(name = "objectMappers")
-	public Object[][] objectMappers() {
-		return new Object[][] {
-			{ jsonMapper }
-			,{ xmlMapper }
-		};
-	}
-
 	@Test(dataProvider = "objectMappers")
 	public void store(ObjectMapper mapper) throws Exception {
 		Store obj1 = Utils.createStore("foo");
@@ -63,7 +55,6 @@ public class ObjectMapperTest extends BaseTest {
 		Location loc2 = (Location)mapper.toObject(lstr1,Location.class);
 		assertEquals(loc1,loc2);
 	}
-
 
 	@Test
 	public void storeFile() throws Exception {

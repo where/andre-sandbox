@@ -28,7 +28,7 @@ public class BaseTest {
 	public static String pkg = "com.andre.pphere.data";
 	public static String pkgRestData = "com.andre.rest.data";
 
-	static Random random = new Random(2012);
+	public static Random random = new Random(2012);
 	public static final String CONTENT_JSON = "application/json" ;
 	public static final String CONTENT_XML = "application/xml";
 
@@ -45,7 +45,6 @@ public class BaseTest {
 		logger.debug("baseUrl="+baseUrl);
 
 		jsonMapper = new JsonObjectMapper();
-		logger.debug("jsonMapper="+jsonMapper);
 		xmlMapper = new JaxbObjectMapper(schemaFile);
 		objectMappers.put("application/json",jsonMapper);
 		objectMappers.put("application/xml",xmlMapper);
@@ -133,4 +132,18 @@ public class BaseTest {
 			{ CONTENT_XML }
 		};
 	}
+	@DataProvider(name = "contentTypesJson") 
+	public Object[][] contentTypesJson() {
+		return new Object[][] {
+			{ CONTENT_JSON }
+		};
+	}
+
+    @DataProvider(name = "objectMappers")
+    public Object[][] objectMappers() {
+        return new Object[][] {
+            { jsonMapper }
+            //,{ xmlMapper }
+        };
+    }
 }
