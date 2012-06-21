@@ -26,6 +26,10 @@ public class JaxbObjectMapper implements ObjectMapper {
 		return JaxbUtils.toString(obj);
 	}
 
+    public String getContentType() {
+        return "application/xml" ;
+    }
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName();

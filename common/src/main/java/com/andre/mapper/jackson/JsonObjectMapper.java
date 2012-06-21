@@ -18,6 +18,11 @@ public class JsonObjectMapper implements com.andre.mapper.ObjectMapper {
 		return value;
 	}
 
+	public String getContentType() {
+		return "application/json" ;
+	}
+
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName();
