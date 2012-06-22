@@ -11,7 +11,6 @@ import com.andre.pphere.data.Store;
 import com.andre.pphere.data.StoreList;
 import com.andre.pphere.data.*;
 import com.andre.rest.ApplicationErrors;
-import com.andre.jaxb.JaxbUtils;
 import com.andre.mapper.ObjectMapper;
 import com.andre.pphere.rest.BaseTest;
 
@@ -41,7 +40,7 @@ public class ObjectTest extends BaseTest {
 		String contentType = mapper.getContentType();
 		// Post the data
 		Store store = Utils.createStore(maketRandomValue());
-		String content = JaxbUtils.toString(store);
+		String content = mapper.toString(store);
 		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
 		assertStatus(result);
 
@@ -74,7 +73,7 @@ public class ObjectTest extends BaseTest {
 		String url = lastPostUrl;
 
 		Store store = Utils.createStore(maketRandomValue());
-		String content = JaxbUtils.toString(store);
+		String content = mapper.toString(store);
 
 		result = httpClient.put(url,content.getBytes(),makeHeaders(contentType));
 		assertStatus(result);
@@ -149,7 +148,6 @@ public class ObjectTest extends BaseTest {
 
 	private Error convertError(String contentType, byte [] content) throws Exception {
 		String scontent = new String(content); 
-		//Object obj = readObject(contentType+"2", scontent, Error.class); // TODO: HACK to fix
 		Object obj = readObject(contentType, scontent, Error.class); // TODO: HACK to fix
 		Assert.assertTrue(obj instanceof Error);
 		return (Error)obj;
