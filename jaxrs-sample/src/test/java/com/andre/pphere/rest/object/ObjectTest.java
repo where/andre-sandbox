@@ -97,7 +97,7 @@ public class ObjectTest extends BaseTest {
 		String contentType = mapper.getContentType();
 		Store store = Utils.createStore(null); // Name is required per schema - this will cause validation failure
 		String content = mapper.toString(store);
-		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
+		RestHttpClient.Result result = post(storeUrl,content,contentType);
 
 		int statusCode = 400 ;
 		Assert.assertEquals(result.statusCode,statusCode);
@@ -116,7 +116,7 @@ public class ObjectTest extends BaseTest {
 		store.setId(value);
 		String content = mapper.toString(store);
 		content = content.replace(""+value,"\"NON_NUMERIC\"");
-		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
+		RestHttpClient.Result result = post(storeUrl,content,contentType);
 
 		int statusCode = 400 ;
 		Assert.assertEquals(result.statusCode,statusCode);
@@ -131,7 +131,7 @@ public class ObjectTest extends BaseTest {
 		String contentType = mapper.getContentType();
 		Store store = Utils.createStore(null); // Name is required per schema
 		String content = "North End Church" ;
-		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
+		RestHttpClient.Result result = post(storeUrl,content,contentType);
 
 		Assert.assertEquals(result.statusCode,400);
 		String sresponse = new String(result.response);
@@ -163,15 +163,20 @@ public class ObjectTest extends BaseTest {
 	@AfterClass
 	void afterClass() throws Exception {
 		for (String url : urlsPosted) {
+			logger.debug(">> url="+url);
 			RestHttpClient.Result result = httpClient.delete(url) ;
 			Assert.assertEquals(result.statusCode,200);
 		}
 	}
 
 	private List<String> urlsPosted = new ArrayList<String>();
+
 	private RestHttpClient.Result post(String storeUrl, String content, String contentType) throws Exception {
 		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
-		urlsPosted.add(storeUrl);
+        String locationUrl = result.getHeaderValue("Location");
+		logger.debug(">> locationUrl="+locationUrl);
+		if (locationUrl != null)
+			urlsPosted.add(locationUrl);
 		return result ;
 	}
 }
