@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+  
+<suite name="JSON Schema Test Suite" >
+  <test name="JSON Schema Tests"   >
+    <classes>
+      <class name="com.andre.jsonschema.JsonSchemaTest" />
+    </classes>
+  </test>
+</suite>
