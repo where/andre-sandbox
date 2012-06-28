@@ -1,0 +1,38 @@
+{
+  "description" : "MDL JSON Schema",
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "title": "ID",
+      "type" : "string",
+      "optional" : false
+    },
+    "encryptedCustomerId" : {
+      "title" : "EncryptedCustomerId",
+      "type" : "string"
+    },
+    "name" : {
+      "title" : "name",
+      "type" : "string",
+      "optional": true
+    },
+    "description" : {
+      "title" : "name",
+      "type" : "string",
+      "optional": true
+    },
+    "location" : {
+      "title" : "location",
+      "type" : "string",
+      "optional": true
+    },
+    "continentCode": {
+        "type": "integer" ,
+        "enum":[1 ,2 ,3 ,4 ,5,6,7],
+        "optional": true
+    },
+    "latitude": {"type": "number" , "minimum": -90 , "minimumCanEqual": true , "maximum": 90} ,
+    "longitude": {"type": "number" , "minimum": -180 , "minimumCanEqual": true , "maximum": 180} 
+  },
+  "additionalProperties" : false
+}
