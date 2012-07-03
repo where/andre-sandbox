@@ -13,6 +13,9 @@ public class JaxbObjectMapper implements ObjectMapper {
 	private static final Logger logger = Logger.getLogger(ObjectMapper.class);
 	private File schemaFile ;
 
+	public JaxbObjectMapper() throws Exception {
+	}
+
 	public JaxbObjectMapper(File schemaFile) throws Exception {
 		this.schemaFile = schemaFile;
 	}
@@ -22,8 +25,17 @@ public class JaxbObjectMapper implements ObjectMapper {
 		return obj ;
 	}
 
+	public Object toObject(byte [] content, Class clazz) throws Exception {
+		Object obj = JaxbUtils.readXmlContent(new String(content),clazz,schemaFile);
+		return obj ;
+	}
+
 	public String toString(Object obj) throws Exception {
 		return JaxbUtils.toString(obj);
+	}
+
+	public byte [] toBytes(Object obj) throws Exception {
+		return JaxbUtils.toString(obj).getBytes();
 	}
 
     public String getContentType() {

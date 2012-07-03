@@ -60,9 +60,14 @@ public class JaxbUtils {
 
 
 	static public Object readXmlStream(InputStream stream, JAXBContext context, File schemaFile) throws IOException, ParsingException, Exception {
+		//logger.debug("schemaFile="+schemaFile);
+		if (stream == null)
+  			throw new ParsingException("No content to parse");
 
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Schema schema = unmarshaller.getSchema();
+		if (unmarshaller == null)
+  			throw new ParsingException("unmarshaller is null");
+		//Schema schema = unmarshaller.getSchema();
 
 		try {
 			if (schemaFile == null) {

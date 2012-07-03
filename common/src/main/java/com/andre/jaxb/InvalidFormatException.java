@@ -1,6 +1,7 @@
 package com.andre.jaxb;
 
 import java.util.*;
+import com.andre.util.CollectionUtils;
 
 /**
  * Schema validation failure.
