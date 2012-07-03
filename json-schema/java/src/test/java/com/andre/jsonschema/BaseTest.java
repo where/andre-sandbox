@@ -7,16 +7,14 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
+import com.andre.util.CollectionUtils;
 
 public class BaseTest {
 	private static final Logger logger = Logger.getLogger(BaseTest.class);
- 	private static TestConfig config ;
-	private static File schemaFileRef ;
+ 	static TestConfig config ;
 	static File schemaFile;
 	static File baseDir ;
-
 	static JsonValidator validatorMain;
-	static JsonValidator validatorRef ;
 	static JsonValidator validatorRoot ;
 
 	private static String [] configFiles = { 
@@ -28,11 +26,8 @@ public class BaseTest {
 		initSpring();
 		baseDir = new File(config.getBaseDir());
 		schemaFile = new File(config.getSchemaFile());
-		schemaFileRef = new File(config.getSchemaFileRef());
 		logger.debug("config="+config);
 		logger.debug("schemaFile="+schemaFile);
-		logger.debug("schemaFileRef="+schemaFileRef);
-		validatorRef = validatorRoot.createInstance(schemaFileRef);
 		validatorMain = validatorRoot.createInstance(schemaFile);
 	}
 
@@ -58,13 +53,15 @@ public class BaseTest {
 
 	public void testOk(JsonValidator validator, File instanceFile) throws Exception {
 		List<String> results = validator.validate(instanceFile);
-		Assert.assertEquals(results.size(),0);
+		String emsg = CollectionUtils.toString(results);
+		Assert.assertEquals(results.size(),0,emsg);
 		JsonValidatorUtils.report(instanceFile, results);
 	}
 
 	public void testBad(File instanceFile) throws Exception {
 		List<String> results = validatorMain.validate(instanceFile);
 		JsonValidatorUtils.report(instanceFile, results);
-		Assert.assertTrue(results.size() > 0);
+		//Assert.assertTrue(results.size() > 0);
+		Assert.assertTrue(results.size() == 1);
 	}
 }

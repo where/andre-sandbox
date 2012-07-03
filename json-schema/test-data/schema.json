@@ -5,7 +5,7 @@
     "id" : {
       "title": "ID",
       "type" : "string",
-      "optional" : false
+      "required" : true
     },
     "encryptedCustomerId" : {
       "title" : "EncryptedCustomerId",
@@ -13,24 +13,52 @@
     },
     "name" : {
       "title" : "name",
-      "type" : "string",
-      "optional": true
+      "type" : "string"
     },
     "description" : {
       "title" : "name",
-      "type" : "string",
-      "optional": true
+      "type" : "string"
     },
     "location" : {
       "title" : "location",
-      "type" : "string",
-      "optional": true
+      "type" : "string"
     },
     "continentCode": {
         "type": "integer" ,
-        "enum":[1 ,2 ,3 ,4 ,5,6,7],
-        "optional": true
+        "enum":[1 ,2 ,3 ,4 ,5,6,7]
     },
+    "email" : {
+      "title" : "Email",
+      "type" : "string",
+      "format" : "email"
+    },
+    "uri" : {
+      "title" : "uri",
+      "type" : "string",
+      "format" : "uri"
+    },
+
+    "startDateTime" : {
+      "title" : "Sample DateTime",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "startDate" : {
+      "title" : "Sample Date",
+      "type" : "string",
+      "format" : "date"
+    },
+    "startTime" : {
+      "title" : "Sample Time",
+      "type" : "string",
+      "format" : "time"
+    },
+    "startUtcMillis" : {
+      "title" : "Sample UtcMillis - millis since 1 jan 1970 UTC - int or float!",
+      "type" : "number",
+      "format" : "utc-millisec"
+    },
+
     "latitude": {"type": "number" , "minimum": -90 , "minimumCanEqual": true , "maximum": 90} ,
     "longitude": {"type": "number" , "minimum": -180 , "minimumCanEqual": true , "maximum": 180} 
   },

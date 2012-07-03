@@ -50,9 +50,4 @@ public class JsonSchemaTest extends BaseTest {
 	public void testBadFile(String filename) throws Exception {
 		testBad(new File(badDir,filename));
 	}
-
-	@Test(groups = { "ref" })
-	public void testOkRef() throws Exception {
-		testOk(validatorRef, new File(baseDir,schemaFile.getName())) ;
-	}
 }

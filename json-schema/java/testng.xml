@@ -2,8 +2,16 @@
   
 <suite name="JSON Schema Test Suite" >
   <test name="JSON Schema Tests"   >
+    <groups>
+      <run>
+        <exclude name="ref" />
+<!--
+-->
+      </run>
+    </groups>
     <classes>
       <class name="com.andre.jsonschema.JsonSchemaTest" />
+      <class name="com.andre.jsonschema.RefSchemaTest" />
     </classes>
   </test>
 </suite>

@@ -1,9 +1,5 @@
 
 {
   "id" : "store99",
-  "encryptedCustomerId" : "qwerty",
-  "name" : "Home Depot",
-  "description" : "Home Depot",
-  "latitude": -400,
-  "longitude": 72
+  "latitude": -400
 }

@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 public class JsonValidatorDriver {
 	private static final Logger logger = Logger.getLogger(JsonValidatorDriver.class);
-	JsonValidator validator;
+	private JsonValidator validator;
 	private String [] configFiles = { "appContext.xml", } ;
 	private String validatorPropName = "cfg.jsonValidator" ;
 	private String validatorBeanName ;
@@ -25,6 +25,7 @@ public class JsonValidatorDriver {
 		}
 		initSpring();
 		validate(new File(args[0]), new File(args[1])) ;
+		logger.debug("validator="+validator.getClass().getName());
 	}
 
 	public void validate(File schemaFile, File instanceFile) throws Exception {
@@ -49,10 +50,11 @@ public class JsonValidatorDriver {
 
 	void initSpring() {
 		String pval = System.getProperty(validatorPropName);
+		logger.debug(validatorPropName+"="+pval);
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
 		validator = context.getBean("validator",JsonValidator.class);
-		logger.debug("validator="+validator);
+		logger.debug("validator="+validator.getClass().getName());
 	}
 	
 	void error(Object o) { System.out.println("ERROR: "+o);}
