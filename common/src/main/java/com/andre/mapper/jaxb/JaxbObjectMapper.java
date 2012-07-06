@@ -20,14 +20,12 @@ public class JaxbObjectMapper implements ObjectMapper {
 		this.schemaFile = schemaFile;
 	}
 
-	public Object toObject(String xml, Class clazz) throws Exception {
-		Object obj = JaxbUtils.readXmlContent(xml,clazz,schemaFile);
-		return obj ;
+    public <T> T toObject(String content, Class<T> clazz) throws Exception  {
+		return JaxbUtils.readXmlContent(content,clazz,schemaFile); 
 	}
 
-	public Object toObject(byte [] content, Class clazz) throws Exception {
-		Object obj = JaxbUtils.readXmlContent(new String(content),clazz,schemaFile);
-		return obj ;
+    public <T> T toObject(byte [] content, Class<T> clazz) throws Exception  {
+		return JaxbUtils.readXmlContent(new String(content),clazz,schemaFile);
 	}
 
 	public String toString(Object obj) throws Exception {
