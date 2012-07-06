@@ -54,10 +54,10 @@ public class JaxbUtils {
 	}
 
 
-	static public Object readXmlContent(String xmlContent, Class clazz, File schemaFile) throws IOException, ParsingException, Exception {
-		return readXmlStream(new ByteArrayInputStream(xmlContent.getBytes()), clazz, schemaFile) ;
+	@SuppressWarnings("unchecked")
+	static public <T> T readXmlContent(String xmlContent, Class<T> clazz, File schemaFile) throws IOException, ParsingException, Exception {
+		return (T)readXmlStream(new ByteArrayInputStream(xmlContent.getBytes()), clazz, schemaFile) ;
 	}
-
 
 	static public Object readXmlStream(InputStream stream, JAXBContext context, File schemaFile) throws IOException, ParsingException, Exception {
 		//logger.debug("schemaFile="+schemaFile);
