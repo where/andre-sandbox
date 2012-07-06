@@ -1,0 +1,21 @@
+{
+  "description" : "Geographic Location",
+  "type" : "object",
+  "properties" : {
+    "lat" : {
+        "title" : "Latitude",
+        "required" : "true",
+        "type" : "number",
+        "minimum" : -90.00,
+        "maximum" : 90.00
+    },
+    "lng" : {
+        "title" : "Longitude",
+        "required" : "true",
+        "type" : "number",
+        "minimum" : -180.00,
+        "maximum" : 180.00
+    }
+  },
+  "additionalProperties" : false
+}

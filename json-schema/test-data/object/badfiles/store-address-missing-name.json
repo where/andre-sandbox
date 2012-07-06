@@ -1,0 +1,12 @@
+{
+	"name" : "EMS",
+    "phone" : "617 123-1234",
+	"address" : {
+		"city" : "boston",
+		"state": "MA",
+        "location" : {
+            "lat" : 42.357778,
+            "lng" : 71.061667
+        }
+	}
+}
