@@ -5,12 +5,8 @@ import com.andre.mapper.ObjectMapper;
 import javax.xml.bind.JAXBElement;
 import java.util.*;
 import java.io.*;
-import org.apache.log4j.Logger;
-
-// TODO: How to read JSON using JAXB?
 
 public class JaxbObjectMapper implements ObjectMapper {
-	private static final Logger logger = Logger.getLogger(ObjectMapper.class);
 	private File schemaFile ;
 
 	public JaxbObjectMapper() throws Exception {
@@ -20,11 +16,11 @@ public class JaxbObjectMapper implements ObjectMapper {
 		this.schemaFile = schemaFile;
 	}
 
-    public <T> T toObject(String content, Class<T> clazz) throws Exception  {
+	public <T> T toObject(String content, Class<T> clazz) throws Exception  {
 		return JaxbUtils.readXmlContent(content,clazz,schemaFile); 
 	}
 
-    public <T> T toObject(byte [] content, Class<T> clazz) throws Exception  {
+	public <T> T toObject(byte [] content, Class<T> clazz) throws Exception  {
 		return JaxbUtils.readXmlContent(new String(content),clazz,schemaFile);
 	}
 
@@ -36,9 +32,9 @@ public class JaxbObjectMapper implements ObjectMapper {
 		return JaxbUtils.toString(obj).getBytes();
 	}
 
-    public String getContentType() {
-        return "application/xml" ;
-    }
+	public String getContentType() {
+		return "application/xml" ;
+	}
 
 	@Override
 	public String toString() {

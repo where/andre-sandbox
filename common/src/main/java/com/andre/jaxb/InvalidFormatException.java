@@ -19,9 +19,8 @@ public class InvalidFormatException extends ParsingException {
 		this.errors = errors ;
 	}
 
-	public InvalidFormatException(String msg)
-	{
-		super(msg);
+	public InvalidFormatException(String message) {
+		super(message);
 	}
 
 	public InvalidFormatException(Throwable throwable) {
@@ -32,13 +31,15 @@ public class InvalidFormatException extends ParsingException {
 	public InvalidFormatException(String message, Throwable throwable) {
 		super(message,throwable);
 	}
+
+	public String getMessage() {
+		String msg = super.getMessage();
+		msg = msg!=null ? msg : (errors.size() > 0 ? errors.get(0) : "");
+		return msg;
+	}
  
 	@Override
 	public String toString() {
-		return
-				"#errors="+errors.size()
-			+ " ERRORS: "+CollectionUtils.toString(errors)
-			//+ " msg='"+getMessage()+"'"
-			;
+		return getMessage() ;
 	}
 }

@@ -8,12 +8,12 @@ import com.andre.mapper.ObjectMapper;
 public class JavaSerObjectMapper implements ObjectMapper {
 
 	@SuppressWarnings("unchecked")
-    public <T> T toObject(String content, Class<T> clazz) throws Exception  {
+	public <T> T toObject(String content, Class<T> clazz) throws Exception  {
 		return (T)ObjectMapperUtils.objectFromBytes(content.getBytes());
 	}
 
 	@SuppressWarnings("unchecked")
-    public <T> T toObject(byte [] content, Class<T> clazz) throws Exception  {
+	public <T> T toObject(byte [] content, Class<T> clazz) throws Exception  {
 		return (T)ObjectMapperUtils.objectFromBytes(content);
 	}
 
@@ -21,7 +21,7 @@ public class JavaSerObjectMapper implements ObjectMapper {
 		return new String(ObjectMapperUtils.objectToBytes(obj));
 	}
 
-    public byte [] toBytes(Object obj) throws Exception {
+	public byte [] toBytes(Object obj) throws Exception {
 		return ObjectMapperUtils.objectToBytes(obj);
 	}
 
