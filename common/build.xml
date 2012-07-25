@@ -31,7 +31,6 @@
     <fileset dir="${lib.dir}"   includes="**/*.jar" />
     <pathelement path="${build.dir}/test-classes" />
   </path>
-
   
   <target name="compile" depends="init"
           description="Compile Java files" >
