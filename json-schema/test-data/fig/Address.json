@@ -1,0 +1,14 @@
+{
+  "description" : "Address JSON Schema",
+  "type" : "object",
+  "properties" : {
+    "streetLine1" : { "type" : "string", "required" : true },
+    "streetLine2" : { "type" : "string", "required" : true },
+    "neighborhood" : { "type" : "string", "required" : false },
+    "city" : { "type" : "string", "required" : true },
+    "state" : { "type" : "string", "required" : true },
+    "country" : { "type" : "string", "required" : true },
+    "zip" : { "type" : "string", "required" : true }
+    },
+  "additionalProperties" : false
+}
