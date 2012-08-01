@@ -11,6 +11,7 @@ import com.andre.mapper.jackson.JacksonObjectMapper;
 import com.where.pphere.api.data.*;
 
 public class ObjectValidatorDriver {
+/* TODO
 	ObjectMapper mapper = new JacksonObjectMapper(true);
 	private static final Logger logger = Logger.getLogger(ObjectValidatorDriver.class);
 	private JsonValidator validator;
@@ -70,4 +71,5 @@ public class ObjectValidatorDriver {
 	}
 	
 	void error(Object o) { System.out.println("ERROR: "+o);}
+*/
 }
