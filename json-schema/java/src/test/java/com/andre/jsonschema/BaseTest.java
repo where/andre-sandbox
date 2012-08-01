@@ -75,6 +75,11 @@ public class BaseTest {
 		return objects;
 	}
 
+	void assertDir(File dir) {
+		Assert.assertTrue(dir.exists(),"Directory "+dir.getAbsolutePath()+" does not exist");
+	}
+
+
 	class MyFilenameFilter implements FilenameFilter {
 		public boolean accept(File dir, String name) {
 			return name.endsWith(".json");

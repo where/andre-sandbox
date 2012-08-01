@@ -18,6 +18,9 @@ public class JsonSchemaTest extends BaseTest {
 		badDir = new File(rootDir,"badfiles");
 		okDir = new File(rootDir,"okfiles");
 		optionalFormatDir = new File(rootDir,"optional-format");
+		assertDir(badDir);
+		assertDir(okDir);
+		assertDir(optionalFormatDir);
 		logger.debug("optionalFormatSupported="+optionalFormatSupported);
 	}
 
