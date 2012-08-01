@@ -1,3 +1,4 @@
+JSON Schema tests - Java Provider - 31 July 2012
 
 Overview
   Tests various Java JSON Schema providers.
@@ -27,20 +28,20 @@ Two JSON schema validator providers:
     Works with Schema version 2
     http://gitorious.org/json-schema-validation-in-java
 
-Avoid vahlasJsonValidator - use equalExpertsJsonValidator. 
-The main difference is that v.2 'optional' has been replaced in v. 3 with 'required'
+  Avoid vahlasJsonValidator - use equalExpertsJsonValidator. 
+  The main difference is that v.2 'optional' has been replaced in v. 3 with 'required'
 
-http://tools.ietf.org/html/draft-zyp-json-schema-02#section-5.4
+  http://tools.ietf.org/html/draft-zyp-json-schema-02#section-5.4
 
-  5.4.  optional
+    5.4.  optional
 
-     This indicates that the instance property in the instance object is
-     optional.  This is false by default.
+       This indicates that the instance property in the instance object is
+       optional.  This is false by default.
 
-http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.7
+  http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.7
 
-  5.7.  required
+    5.7.  required
 
-     This attribute indicates if the instance must have a value, and not
-     be undefined.  This is false by default, making the instance optional.
+       This attribute indicates if the instance must have a value, and not
+       be undefined.  This is false by default, making the instance optional.
 

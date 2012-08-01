@@ -6,10 +6,14 @@ import java.io.*;
 public class JsonValidatorUtils {
 	
 	public static void report(File instanceFile, List<String> array) {
+		report(""+instanceFile,array);
+	}
+	public static void report(String msg, List<String> array) {
 		if (0 == array.size()) {
-			info(instanceFile+" validates");
+			info("VALID: "+msg);
+			//info(msg+" validates");
 		} else {
-			info(array.size()+ " Errors: ");
+			info(array.size()+ " ERRORS: ");
 			for (String str : array)
 				info("  "+str);
 		}

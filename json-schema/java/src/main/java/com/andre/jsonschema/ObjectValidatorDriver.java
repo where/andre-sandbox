@@ -6,31 +6,41 @@ import java.io.*;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.ApplicationContext;
+import com.andre.mapper.ObjectMapper;
+import com.andre.mapper.jackson.JacksonObjectMapper;
+import com.where.pphere.api.data.*;
 
-public class JsonValidatorDriver {
-	private static final Logger logger = Logger.getLogger(JsonValidatorDriver.class);
+public class ObjectValidatorDriver {
+	ObjectMapper mapper = new JacksonObjectMapper(true);
+	private static final Logger logger = Logger.getLogger(ObjectValidatorDriver.class);
 	private JsonValidator validator;
 	private String [] configFiles = { "appContext.xml", } ;
 	private String validatorPropName = "cfg.jsonValidator" ;
 	private String validatorBeanName ;
 
 	public static void main(String [] args) throws Exception {
-		(new JsonValidatorDriver()).process(args);
+		(new ObjectValidatorDriver()).process(args);
 	}
 
 	public void process(String [] args) throws Exception {
-		if (args.length < 2) {
-			error("Expecting SCHEMA_FILE INSTANCE_FILE");
+		if (args.length < 1) {
+			error("Expecting SCHEMA_FILE");
 			return;
 		}
 		initSpring();
-		validate(new File(args[0]), new File(args[1])) ;
-		//logger.debug("validator="+validator.getClass().getName());
+
+		process(new File(args[0]));
 	}
 
-	public void validate(File schemaFile, File instanceFile) throws Exception {
+	public void process(File schemaFile) throws Exception {
+		Object obj = getObject() ;
+		String content = mapper.toString(obj);
+		validate(schemaFile, content) ;
+	}
+
+	public void validate(File schemaFile, String content) throws Exception {
 		logger.debug("Schema file="+schemaFile);
-		logger.debug("Instance file="+instanceFile);
+		logger.debug("content="+content);
 
 		if (!schemaFile.exists()) {
 			throw new IOException("Schema file "+schemaFile+" does not exist");
@@ -38,14 +48,9 @@ public class JsonValidatorDriver {
 		validator = validator.createInstance(schemaFile);
 		logger.debug("Validator="+validator);
 
-		if (!instanceFile.exists()) {
-			throw new IOException("Instance file "+instanceFile+" does not exist");
-		}
-
 		String schema = new String(Files.toByteArray(schemaFile));
-		String json = new String(Files.toByteArray(instanceFile));
-		List<String> results = validator.validate(instanceFile);
-		JsonValidatorUtils.report(instanceFile, results);
+		List<String> results = validator.validate(content);
+		JsonValidatorUtils.report("Result", results);
 	}
 
 	void initSpring() {
@@ -55,6 +60,13 @@ public class JsonValidatorDriver {
 		ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
 		validator = context.getBean("validator",JsonValidator.class);
 		logger.debug("validator="+validator.getClass().getName());
+	}
+
+	Object getObject() {
+		//Location obj = new Location();
+		//Address obj = new Address();
+		Store obj = new Store();
+		return obj ;
 	}
 	
 	void error(Object o) { System.out.println("ERROR: "+o);}

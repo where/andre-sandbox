@@ -41,6 +41,7 @@
         debug="on"
         destdir="${build.classes.dir}" >
       <classpath refid="compile.classpath"/>
+      <src path="."/>
       <src path="${main.java.dir}"/>
       <src path="${test.java.dir}"/>
     </javac>

@@ -5,8 +5,9 @@
 
 PGM=com.andre.jsonschema.JsonValidatorDriver
 
-schema=../test-data/schema.json
-file=../test-data/okfiles/ok.json
+schema=../test-data/basic/schema.json
+file=../test-data/basic/okfiles/ok.json
+file=../test-data/basic/okfiles/null-property.json
 
 if [ $# -gt 0 ] ; then
   file=$1

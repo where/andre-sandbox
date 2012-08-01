@@ -11,6 +11,7 @@
     </groups>
     <classes>
       <class name="com.andre.jsonschema.JsonSchemaTest" />
+      <class name="com.andre.jsonschema.ObjectTest" />
       <class name="com.andre.jsonschema.RefSchemaTest" />
     </classes>
   </test>

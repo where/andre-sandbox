@@ -26,7 +26,9 @@
 
   <bean id="testConfig" class="com.andre.jsonschema.TestConfig">
      <property name="baseDir" value="${cfg.baseDir}" />
+<!--
      <property name="schemaFile" value="${cfg.schema}" />
+-->
      <property name="schemaFileRef" value="${cfg.schemaRef}" />
   </bean>
 

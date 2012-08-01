@@ -3,11 +3,17 @@
 
 . ./common.env
 
-PGM=com.andre.jsonschema.bean.BeanGenerator
+PGM=com.andre.jsonschema.bean.BeanGeneratorDriver
 
-schema=../test-data/schema.json
+#schema=../test-data/schema.json
+
+class=Location
+class=Address
+class=Store
+schema=../json-schemas/fig/$class.json
 pkg=com.where.pphere.api.data
-class=Offer
 
-java $PROPS -classpath $CPATH $PGM -s $schema -p $pkg -c $class 
+OPTS="--jaxb"
+
+java $PROPS -classpath $CPATH $PGM -s $schema -p $pkg -c $class $OPTS
 

@@ -14,6 +14,7 @@ public class BaseTest {
  	static TestConfig config ;
 	static File schemaFile;
 	static File baseDir ;
+	static File rootDir ;
 	static JsonValidator validatorMain;
 	static JsonValidator validatorRoot ;
 
@@ -25,9 +26,12 @@ public class BaseTest {
 	public static void beforeSuite() throws Exception {
 		initSpring();
 		baseDir = new File(config.getBaseDir());
-		schemaFile = new File(config.getSchemaFile());
+		rootDir = new File(baseDir,"basic");
+		logger.debug("rootDir="+rootDir);
 		logger.debug("config="+config);
 		logger.debug("schemaFile="+schemaFile);
+		schemaFile = new File(rootDir,"schema.json");
+		Assert.assertTrue(schemaFile.exists());
 		validatorMain = validatorRoot.createInstance(schemaFile);
 	}
 
@@ -42,15 +46,6 @@ public class BaseTest {
 		logger.debug("validatorRoot="+validatorRoot);
 	}
 
-	public static Object[][] createObjectArray(Collection coll) {
-		Assert.assertNotNull(coll,"Internal error - BaseTest.createObjectArray cannot accept null collection");
-		Object[][] objects = new Object[coll.size()][1];
-		int j=0;
-		for (Object obj : coll)
-			objects[j++][0] = obj ;
-		return objects;
-	}
-
 	public void testOk(JsonValidator validator, File instanceFile) throws Exception {
 		List<String> results = validator.validate(instanceFile);
 		String emsg = CollectionUtils.toString(results);
@@ -59,9 +54,30 @@ public class BaseTest {
 	}
 
 	public void testBad(File instanceFile) throws Exception {
-		List<String> results = validatorMain.validate(instanceFile);
+		testBad(validatorMain,instanceFile);
+	}
+
+	public void testBad(JsonValidator validator,File instanceFile) throws Exception {
+		List<String> results = validator.validate(instanceFile);
 		JsonValidatorUtils.report(instanceFile, results);
 		//Assert.assertTrue(results.size() > 0);
 		Assert.assertTrue(results.size() == 1);
 	}
+
+	public Object[][] createFiles(File dir) {
+		Assert.assertTrue(dir.exists(),"Directory "+dir.getAbsolutePath()+" does not exist");
+		String [] filenames = dir.list(new MyFilenameFilter());
+		Object[][] objects = new Object[filenames.length][1];
+		int j=0;
+		for (String filename : filenames)
+			objects[j++][0] = filename;
+		return objects;
+	}
+
+	class MyFilenameFilter implements FilenameFilter {
+		public boolean accept(File dir, String name) {
+			return name.endsWith(".json");
+		}
+	}
+
 }

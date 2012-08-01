@@ -9,7 +9,6 @@ import org.testng.annotations.*;
 @Test(groups = { "ref" })
 public class RefSchemaTest extends BaseTest {
 	private static final Logger logger = Logger.getLogger(BaseTest.class);
-
 	private File schemaFileRef ;
 	JsonValidator validatorRef ;
 

@@ -9,7 +9,10 @@
 
   <property name="src.test.dir"           value="${basedir}/test" />
   <property name="src.test.config.dir"    value="${src.config.dir}/test" />
-  <property name="title"                  value="" />
+<!--
+  <property name="title"                  value="${jsonValidator}" />
+-->
+  <property name="title"                  value="${jsonValidator}" />
 
   <!-- Classpaths -->
 

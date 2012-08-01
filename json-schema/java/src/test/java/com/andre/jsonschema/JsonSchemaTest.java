@@ -2,17 +2,23 @@ package com.andre.jsonschema;
 
 import java.util.*;
 import java.io.*;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class JsonSchemaTest extends BaseTest {
+	private static final Logger logger = Logger.getLogger(JsonSchemaTest.class);
 	private File badDir ;
 	private File okDir ;
+	private File optionalFormatDir ;
+	private boolean optionalFormatSupported = false ;
 
 	@BeforeClass
 	void beforeClass() {
-		badDir = new File(baseDir,"badfiles");
-		okDir = new File(baseDir,"okfiles");
+		badDir = new File(rootDir,"badfiles");
+		okDir = new File(rootDir,"okfiles");
+		optionalFormatDir = new File(rootDir,"optional-format");
+		logger.debug("optionalFormatSupported="+optionalFormatSupported);
 	}
 
 	@DataProvider(name = "okFiles") 
@@ -25,20 +31,9 @@ public class JsonSchemaTest extends BaseTest {
 		return createFiles(badDir) ;
 	}
 
-	public Object[][] createFiles(File dir) {
-		Assert.assertTrue(dir.exists(),"Directory "+dir.getAbsolutePath()+" does not exist");
-		String [] filenames = dir.list(new MyFilenameFilter());
-		Object[][] objects = new Object[filenames.length][1];
-		int j=0;
-		for (String filename : filenames)
-			objects[j++][0] = filename;
-		return objects;
-	}
-
-	class MyFilenameFilter implements FilenameFilter {
-		public boolean accept(File dir, String name) {
-			return name.endsWith(".json");
-		}
+	@DataProvider(name = "optionalFormatFiles") 
+	public Object[][] optionalFormatFiles() {
+		return createFiles(optionalFormatDir) ;
 	}
 
 	@Test(dataProvider = "okFiles")
@@ -49,5 +44,13 @@ public class JsonSchemaTest extends BaseTest {
 	@Test(dataProvider = "badFiles")
 	public void testBadFile(String filename) throws Exception {
 		testBad(new File(badDir,filename));
+	}
+
+	@Test(dataProvider = "optionalFormatFiles")
+	public void testOptionalFormatFiles(String filename) throws Exception {
+		if (optionalFormatSupported)
+			testBad(new File(optionalFormatDir,filename));
+		else
+			testOk(validatorMain,new File(optionalFormatDir,filename));
 	}
 }
