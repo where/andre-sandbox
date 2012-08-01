@@ -23,13 +23,11 @@ public class JsonSchemaTest extends BaseTest {
 
 	@DataProvider(name = "okFiles") 
 	public Object[][] okFiles() {
-        Assert.assertTrue(okDir.exists(),"Directory "+okDir.getAbsolutePath()+" does not exist");
 		return createFiles(okDir) ;
 	}
 
 	@DataProvider(name = "badFiles") 
 	public Object[][] badFiles() {
-        Assert.assertTrue(badDir.exists(),"Directory "+badDir.getAbsolutePath()+" does not exist");
 		return createFiles(badDir) ;
 	}
 
