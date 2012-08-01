@@ -1,0 +1,16 @@
+
+{
+  "id" : "store99",
+  "encryptedCustomerId" : "qwerty",
+  "name" : "Home Depot",
+  "description" : "Home Depot",
+  "continentCode": 1,
+  "latitude": 42,
+  "longitude": 70,
+  "email": "newman@northchurch.org",
+  "uri": "http://www.northchurch.org",
+  "startTime": "15:30:19",
+  "startDate": "2012-07-02",
+  "startDateTime": "2012-07-02T15:30:19Z",
+  "startUtcMillis": 1776
+}
