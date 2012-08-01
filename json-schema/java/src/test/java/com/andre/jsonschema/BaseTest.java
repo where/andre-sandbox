@@ -65,7 +65,7 @@ public class BaseTest {
 	}
 
 	public Object[][] createFiles(File dir) {
-		Assert.assertNotNull(dir,"Directory "+dir+" is null");
+		Assert.assertNotNull(dir,"Directory is null");
 		Assert.assertTrue(dir.exists(),"Directory "+dir.getAbsolutePath()+" does not exist");
 		String [] filenames = dir.list(new MyFilenameFilter());
 		Object[][] objects = new Object[filenames.length][1];
