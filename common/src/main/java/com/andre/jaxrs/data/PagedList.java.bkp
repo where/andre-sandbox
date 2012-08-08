@@ -7,10 +7,10 @@ import java.util.*;
 @XmlTransient
 public class PagedList<T> {
 	private List<Link> links = new ArrayList<Link>();
-	private List<T> list ;
+    private List<T> list ;
 
 	public PagedList() {
-		list = new ArrayList<T>();
+    	list = new ArrayList<T>();
 	}
 
 	public PagedList(List<T> list) {
@@ -21,35 +21,35 @@ public class PagedList<T> {
 	  return list;
 	}
 
-	@XmlElement(required=true)
-	public int getCount() { 
+    @XmlElement(required=true)
+    public int getCount() { 
 		return list.size(); 
 	}
-	public void setCount(int count) { 
+    public void setCount(int count) { 
 		// NOOP for JAXB complaint
 	}
 
 	Integer startIndex ;
-	@XmlElement(required=false)
-	public Integer getStartIndex() { 
+    @XmlElement(required=false)
+    public Integer getStartIndex() { 
 		return startIndex;
 	}
-	public void setStartIndex(Integer startIndex) { 
+    public void setStartIndex(Integer startIndex) { 
 		this.startIndex = startIndex;
 	}
 
 	Integer totalResults ;
-	@XmlElement(required=false)
-	public Integer getTotalResults() { 
+    @XmlElement(required=false)
+    public Integer getTotalResults() { 
 		return totalResults;
 	}
-	public void setTotalResults(Integer totalResults) { 
+    public void setTotalResults(Integer totalResults) { 
 		this.totalResults = totalResults;
 	}
 
-	public void add(T obj) {
-		list.add(obj);
-	}
+    public void add(T obj) {
+        list.add(obj);
+    }
 
 	@XmlElement(name="link")
 	public List<Link> getLinks() {
