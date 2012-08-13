@@ -1,0 +1,4 @@
+{
+  "description" : "Product Report",
+   "type" : "array" ,"items": { "$ref": "BuyItem.json" }
+}

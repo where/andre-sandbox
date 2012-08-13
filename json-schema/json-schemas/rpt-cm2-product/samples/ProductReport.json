@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1" ,
+    "days" : [ 
+       {
+           "impressionCount": 1, 
+           "clickCount": 1, 
+           "saveCount": 1, 
+           "redemptionCount": 1, 
+           "startTime": "2011-01-01T00:00:00-04:00",
+           "endTime":   "2011-01-02T00:00:00-04:00"
+       },
+       {
+           "impressionCount": 2, 
+           "clickCount": 2, 
+           "saveCount": 2, 
+           "redemptionCount": 2, 
+           "startTime": "2011-01-02T00:00:00-04:00",
+           "endTime":   "2011-01-03T00:00:00-04:00"
+       }
+    ]
+  },
+  {
+    "id": "2" ,
+    "days" : [ 
+       {
+           "impressionCount": 1, 
+           "clickCount": 1, 
+           "saveCount": 1, 
+           "redemptionCount": 1, 
+           "startTime": "2011-01-01T00:00:00-04:00",
+           "endTime":   "2011-01-02T00:00:00-04:00"
+       },
+       {
+           "impressionCount": 2, 
+           "clickCount": 2, 
+           "saveCount": 2, 
+           "redemptionCount": 2, 
+           "startTime": "2011-01-02T00:00:00-04:00",
+           "endTime":   "2011-01-03T00:00:00-04:00"
+       }
+    ]
+  }
+]

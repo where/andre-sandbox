@@ -1,0 +1,14 @@
+{
+  "description" : "Day",
+  "type" : "object",
+  "properties" : {
+    "clickCount" : { "required" : true, "type" : "number" },
+    "impressionCount" : { "required" : true, "type" : "number" },
+    "redemptionCount" : { "required" : true, "type" : "number" },
+    "saveCount" : { "required" : true, "type" : "number" },
+    "endTime" : { "required" : true, "type" : "string", "format": "date-time" },
+    "startTime" : { "required" : true, "type" : "string", "format": "date-time" }
+    }
+  },
+  "additionalProperties" : false
+}

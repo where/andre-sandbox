@@ -1,0 +1,54 @@
+[
+    {
+        "buyItems": {
+            "days": [
+                {
+                    "clickCount": 1, 
+                    "endTime": "2011-01-02T00:00:00-04:00", 
+                    "impressionCount": 1, 
+                    "redemptionCount": 1, 
+                    "saveCount": 1, 
+                    "startTime": "2011-01-01T00:00:00-04:00"
+                }
+            ], 
+            "id": "1"
+        }, 
+        "id": "1"
+    }, 
+    {
+        "buyItems": {
+            "days": [
+                {
+                    "clickCount": 2, 
+                    "endTime": "2011-01-02T00:00:00-04:00", 
+                    "impressionCount": 2, 
+                    "redemptionCount": 2, 
+                    "saveCount": 2, 
+                    "startTime": "2011-01-01T00:00:00-04:00"
+                }
+            ], 
+            "id": "2"
+        }, 
+        "id": "2"
+    }, 
+    {
+        "buyItems": {
+            "days": [
+                {
+                    "clickCount": 3, 
+                    "endTime": "2011-01-02T00:00:00-04:00", 
+                    "impressionCount": 3, 
+                    "redemptionCount": 3, 
+                    "saveCount": 3, 
+                    "startTime": "2011-01-01T00:00:00-04:00"
+                }
+            ], 
+            "id": "3"
+        }, 
+        "id": "3"
+    }, 
+    {
+        "buyItems": {}, 
+        "id": "4"
+    }
+]
