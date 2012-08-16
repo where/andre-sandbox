@@ -1,12 +1,19 @@
 
-# Validate some fig samples
+# Validate some fig JSON Schema samples
 
-. ./common.env
+bdir=../../../java
+CPATH=.
+CPATH="$CPATH:$bdir/config"
+CPATH="$CPATH:$bdir/build/classes"
+
+for file in `find $bdir/lib -name *.jar` ; do
+  CPATH="$CPATH:$file" ; done
 
 PGM=com.andre.jsonschema.JsonValidatorDriver
 
-schemaDir=../json-schemas/fig
-dataDir=../json-schemas/fig/samples
+schemaDir=..
+instanceDir=.
 
-java $PROPS -classpath $CPATH $PGM $schemaDir/Store.json $dataDir/store.json | tee log.txt
+java $PROPS -classpath $CPATH $PGM $schemaDir/Store.json $instanceDir/store.json | tee log.txt
 
+#java $PROPS -classpath $CPATH $PGM $schemaDir/Store.json $instanceDir/badfiles/bad-store.json | tee log.txt
