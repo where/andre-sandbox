@@ -1,0 +1,62 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+     version="2.4">
+
+  <display-name>ajaxrs</display-name>
+  <description>ajaxrs</description>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/appContext.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>ajaxrs</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+
+<!-- ************ Filters ************ -->
+
+<!-- ************ Servlets ************ -->
+
+   <servlet>
+     <servlet-name>cxf</servlet-name>
+     <display-name>cxf</display-name>
+     <description>Apache CXF WS Servlet</description>
+     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+
+     <!-- registers extension mappings -->
+     <init-param>
+      <param-name>jaxrs.extensions</param-name>
+      <param-value>
+        xml=application/xml
+        json=application/json
+      </param-value>
+     </init-param>
+
+     <load-on-startup>1</load-on-startup>
+  </servlet>
+
+
+<!-- ************ Servlet Mapping ************ -->
+
+  <servlet-mapping>
+    <servlet-name>cxf</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+
+
+<!-- ************ Other ************ -->
+
+  <session-config>
+      <session-timeout>60</session-timeout>
+  </session-config>
+
+</web-app>
