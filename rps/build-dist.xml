@@ -1,0 +1,50 @@
+
+  <property name="assemble.root.dir" value="build/assemble" />
+  <property name="assemble.dir" value="build/assemble/rps-client" />
+
+  <target name="build.dist"  depends="dist.copy.jars, dist.copy.scripts,dist.copy.curl,dist.copy.config" >
+    <copy todir="${assemble.dir}/lib" preservelastmodified="true" flatten="no" >
+      <fileset dir="${build.dir}/dist" includes="**/*.jar" />
+    </copy >
+  </target>
+
+  <target name="dist.copy.jars"  depends="" >
+    <copy todir="${assemble.dir}/lib" preservelastmodified="true" flatten="no" >
+      <fileset dir="${lib.dir}/common" includes="**/*.jar" />
+      <fileset dir="${lib.dir}/client" includes="**/*.jar" />
+    </copy >
+  </target>
+
+  <target name="dist.copy.scripts"  >
+    <copy todir="${assemble.dir}" preservelastmodified="true" flatten="no" >
+      <fileset dir="." includes="*.sh" />
+      <fileset dir="dist" includes="*.env" />
+    </copy >
+  </target>
+
+  <target name="dist.copy.curl"  depends="" >
+    <copy todir="${assemble.dir}/curl" preservelastmodified="true" flatten="no" >
+      <fileset dir="curl" includes="*.env" />
+      <fileset dir="curl" includes="*.sh" />
+      <fileset dir="curl" includes="*.json" />
+      <fileset dir="curl" includes="*.xml" />
+      <fileset dir="curl" includes="*.html" />
+    </copy >
+  </target>
+
+  <target name="dist.copy.config"  depends="" >
+    <copy todir="${assemble.dir}/config" preservelastmodified="true" flatten="no" >
+      <fileset dir="config" includes="*.xml" />
+      <fileset dir="config" includes="*.properties" />
+      <fileset dir="config/client" includes="*.xml" />
+      <fileset dir="config/client" includes="*.properties" />
+    </copy >
+  </target>
+
+  <target name="dist.zip"  depends="" >
+     <tar destfile="${build.dir}/rps-client.tar.gz" 
+        basedir="${assemble.root.dir}" 
+        compression="gzip"
+        >
+    </tar>
+  </target>

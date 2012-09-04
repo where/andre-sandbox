@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<!-- ============================================================== -->
+<!--                                                                -->
+<!-- build.xml - RPS Prototype                                      -->
+<!--                                                                -->
+<!-- ============================================================== -->
+
+<!DOCTYPE project [
+  <!ENTITY build-test  SYSTEM "build-test.xml">
+  <!ENTITY build-war   SYSTEM "build-war.xml">
+  <!ENTITY build-dist  SYSTEM "build-dist.xml">
+]>
+
+<project name="json-schema" default="all" basedir=".">
+
+  <!-- Property file with required environment-specific properties -->
+  
+  <property name="propfile"  value="build.properties"/>
+  <property file="${propfile}" />
+  <property file="user.properties" />
+  <property file="config/common.properties" />
+  
+  <!-- App name-dependent settings. -->
+  
+  <property name="jar.name"    value="${app.name}.jar"/>
+  
+  <!-- Source file location. -->
+  
+  <property name="main.java.dir"       value="src/main/java"  />
+  <property name="test.java.dir"       value="src/test/java"  />
+  
+  <!-- Destination directory for the build -->
+  
+  <property name="build.dir"          value="build"/>
+  <property name="build.classes.dir"  value="${build.dir}/classes"/>
+  <property name="build.dist.dir"     value="${build.dir}/dist"/>
+  
+  <!-- ======================================================= -->
+  <!-- Compile all classes.                                    -->
+  <!-- ======================================================= -->
+  
+  <target name="compile" depends="clean,prepare" >
+    <javac
+        debug="on"
+        destdir="${build.classes.dir}" >
+      <classpath refid="compile.classpath"/>
+      <src path="."/>
+      <src path="${main.java.dir}"/>
+      <src path="${test.java.dir}"/>
+    </javac>
+  </target>
+  
+  <path id="compile.classpath">
+    <fileset dir="${lib.dir}"  includes="**/*.jar" />
+  </path>
+  
+  <!-- =================================================================== -->
+  <!-- Creates the jar archive                                             -->
+  <!-- =================================================================== -->
+  
+  <target name="build.jar" depends="compile">
+    <mkdir dir="${build.dist.dir}"/>
+    <jar jarfile="${build.dist.dir}/${app.name}.jar">
+    <fileset dir="${build.classes.dir}" includes="**/*" />
+    </jar>
+  </target>
+
+  <path id="runtime.classpath">
+    <path refid="compile.classpath"/>
+    <pathelement location="${src.config.dir}" />
+    <pathelement location="${build.classes.dir}"/>
+    <pathelement location="config" />
+    <fileset dir="${lib.dir}"   includes="*.jar" />
+  </path>
+
+  <target name="run" depends=""
+          description="Run simple driver" >
+    <java classname="com.andre.jsonschema.JsonValidator" fork="true" >
+       <classpath refid="runtime.classpath" />
+    </java>
+  </target>
+  
+  <!-- ======================================================= -->
+  <!-- prepare                                                 -->
+  <!-- ======================================================= -->
+  
+  <target name="prepare" >
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.classes.dir}"/>
+    <mkdir dir="${build.dist.dir}"/>
+  </target >
+  
+  <target name="clean" depends="" >
+    <delete dir="${build.dir}" />
+  </target >
+  
+  <!-- ======================================================= -->
+  <!-- echo                                                    -->
+  <!-- ======================================================= -->
+  
+  <target name="echo" description="Echo properties of interest" >
+    <echo message="APP PROPERTIES: " />
+    <echo message="  basedir=${basedir}" />
+    <echo message="  daoProvider=${daoProvider}" />
+    <echo message="  serviceUrl=${serviceUrl}" />
+    <echo message="BUILD PROPERTIES: " />
+    <echo message="  build.dir=${build.dir}" />
+    <echo message="  build.classes.dir=${build.classes.dir}" />
+    <echo message="  main.java.dir=${main.java.dir}" />
+    <echo message="  lib.dir=${lib.dir}" />
+    <echo message="SYSTEM PROPERTIES:" />
+    <echo message="  ant.java.version=${ant.java.version}" />
+    <echo message="  os.name=${os.name}" />
+    <echo message="  user.home=${user.home}" />
+  </target> 
+
+  <pathconvert property="compile.classpath.string" refid="compile.classpath"
+     pathsep="${line.separator}    " />
+  <target name="echo.cp" description="Echo classpath" >
+    <echo message="CLASSPATH:" />
+    <echo message="  compile.classpath  = ${compile.classpath.string}" />
+  </target> 
+  
+  <target name="all" depends="clean,compile,build.jar" />
+
+  &build-test;
+  &build-war;
+  &build-dist;
+
+</project>
