@@ -1,0 +1,50 @@
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+  >
+
+<!-- ** Task Config ***************************** -->
+
+  <bean id="taskConfig" class="com.paypal.ppmn.rps.vtest.MyTaskConfig" scope="prototype" >
+<!--
+    <constructor-arg ref="keyValueDao" />
+-->
+    <property name="keyGenerator"   ref="${cfg.keyGenerator}" />
+    <property name="valueGenerator" ref="${cfg.valueGenerator}" />
+    <property name="valueSize"      value="${cfg.valueSize}" />
+  </bean>
+
+  <bean id="base.task" abstract="true" >
+    <constructor-arg ref="serviceClient" />
+    <constructor-arg ref="taskConfig" />
+  </bean>
+
+<!-- ** Jobs ***************************** -->
+
+  <alias alias="job" name="sql.task" />
+
+  <util:list id="crud.job"  >
+    <ref bean="put.task" />
+    <ref bean="get.task" />
+<!--
+    <ref bean="update.task" />
+    <ref bean="delete.task" />
+    <ref bean="getAfterDelete.task" />
+-->
+  </util:list>
+
+  <util:list id="put-get.job"  >
+    <ref bean="put.task" />
+    <ref bean="get.task" />
+  </util:list>
+
+  <bean id="put.task" class="com.paypal.ppmn.rps.vtest.PutTask" scope="prototype" parent="base.task"/>
+  <bean id="get.task" class="com.paypal.ppmn.rps.vtest.GetTask" scope="prototype" parent="base.task"/>
+  <bean id="ping.task" class="com.paypal.ppmn.rps.vtest.PingTask" scope="prototype" parent="base.task"/>
+
+
+</beans>
