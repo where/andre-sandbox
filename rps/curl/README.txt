@@ -17,4 +17,5 @@ Scripts:
 
 Files
   put-profile.json - Template to PUT a new profile
+  sample-get-profile.json - Sample JSON returned by GET
 
