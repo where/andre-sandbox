@@ -107,6 +107,7 @@ public class DbCompare {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private	void initSpring() throws Exception {
 		//logger.debug("configFiles="+Arrays.toString(configFiles));
 		ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
