@@ -12,8 +12,8 @@ import org.springframework.context.ApplicationContext;
 
 public class DbCompare {
 	private static Logger logger = Logger.getLogger(DbCompare.class);
-	private Options options = new Options();
-	private JCommander jcommander;
+	//private Options options = new Options();
+	//private JCommander jcommander;
 
 	private String [] configFiles = { "appContext.xml" };
 	private List<String> queries ;
