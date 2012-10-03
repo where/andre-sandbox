@@ -44,6 +44,7 @@ public class DbCompare {
 
 		thread1.start();
 		thread2.start();
+		thread1.join();
 		thread2.join();
 
 		ResultSetMetaData meta = task1.rs.getMetaData();
