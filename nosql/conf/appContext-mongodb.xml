@@ -12,11 +12,6 @@
 
 <!-- DAO -->
 
-  <bean id="userProfileDao" class="com.amm.nosql.dao.mongodb.MongodbUserProfileDao">
-    <constructor-arg ref="userProfile.collectionFactory" />
-    <constructor-arg ref="mongoObjectMapper" />
-  </bean>
-
   <bean id="keyValueDao" class="com.amm.nosql.dao.mongodb.MongodbKeyValueDao">
     <constructor-arg ref="keyValue.collectionFactory" />
     <constructor-arg ref="mongo.keyValueMapper" />
@@ -32,25 +27,6 @@
   <!-- KeyValue -->
   <bean id="mongo.keyValueMapper" class="com.amm.nosql.dao.mongodb.KeyValueMapper" />
   <bean id="mongo.keyStringValueMapper" class="com.amm.nosql.dao.mongodb.KeyStringValueMapper" />
-
-  <!-- UserProfile -->
-
-  <alias alias="mongoObjectMapper" name="${mongodb.useProfileAttrMapper}" />
-<!--
-  <alias alias="mongoObjectMapper" name="userProfileAttrMapper" />
-  <alias alias="mongoObjectMapper" name="userProfileBlobMapper" />
--->
-
-  <bean id="baseMapper" abstract="true" >
-    <property name="useDateTimestamp" value="${mongodb.useDateTimestamp}" />
-    <property name="useAutoTimestamp" value="${mongodb.useAutoTimestamp}" />
-  </bean>
-
-  <bean id="userProfileBlobMapper" class="com.amm.nosql.dao.mongodb.UserProfileBlobMapper" parent="baseMapper">
-    <constructor-arg ref="userProfileObjectMapper" />
-  </bean>
-
-  <bean id="userProfileAttrMapper" class="com.amm.nosql.dao.mongodb.UserProfileAttrMapper" parent="baseMapper"/>
 
 <!-- Mongo config  -->
 

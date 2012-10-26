@@ -41,7 +41,7 @@ while getopts $opts opt
     i) iterations=$OPTARG ;;
     s) seedKey=$OPTARG ;;
     S) seedValue=$OPTARG ;;
-    p) providerConfigFile=applicationContext-$OPTARG.xml 
+    p) providerConfigFile=appContext-$OPTARG.xml 
        PROPS="$PROPS -DproviderConfigFile=$providerConfigFile"
        ;;
     d) daoConfigFile=$OPTARG.xml 

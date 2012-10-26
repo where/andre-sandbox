@@ -17,7 +17,7 @@ public class KeyValueShell {
 	private static final Logger logger = Logger.getLogger(KeyValueShell.class);
 	private Options options = new Options();
 	private JCommander jcommander;
-    private static final String ROOT_CONFIG_FILE = "applicationContext.xml" ;
+    private static final String ROOT_CONFIG_FILE = "appContext.xml" ;
     private static final String PROPERTY_PROVIDER_CONFIG_FILE = "providerConfigFile";
     private KeyValueDao keyValueDao;
 
@@ -173,7 +173,7 @@ public class KeyValueShell {
 		initSpring() ;
 	}
 
-	private String [] configFiles = { "applicationContext.xml" } ;
+	private String [] configFiles = { "appContext.xml" } ;
 
     private void initSpring() {
         String providerConfigFile = System.getProperty(PROPERTY_PROVIDER_CONFIG_FILE);
@@ -182,32 +182,21 @@ public class KeyValueShell {
         String [] configFiles = new String[2];
         configFiles[0] = ROOT_CONFIG_FILE;
         configFiles[1] = providerConfigFile ;
-        debug("initSpring: configFiles="+Arrays.toString(configFiles));
+        logger.debug("initSpring: configFiles="+Arrays.toString(configFiles));
 
         ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
         keyValueDao = context.getBean("keyValueDao",KeyValueDao.class);
-        debug("initSpring: keyValueDao="+keyValueDao);
-        debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
+        logger.debug("initSpring: keyValueDao="+keyValueDao);
+        logger.debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
 	}
 
 	class Options {
 		@Parameter(names = { "-f", "--file" }, description = "Put file" )
 		public String file = "curl/sample.json" ;
-/*
-		@Parameter(names = { "-m", "--method" }, description = "Method" )
-		public String method = "default" ;
-
-        @Parameter(names = { "-k", "--key" }, description = "Key", required = true )
-        public String key ;
-
-        @Parameter(names = { "-v", "--value" }, description = "Value: ex: \"attr=value\" ")
-        public String value ;
-*/
 	}
 
 	void print(Object o) { System.out.print(o);}
 	void info(Object o) { System.out.println(o);}
 	void error(Object o) { System.out.println("ERROR: "+ o);}
-	void debug(Object o) { System.out.println(">> "+ o);}
 
 }

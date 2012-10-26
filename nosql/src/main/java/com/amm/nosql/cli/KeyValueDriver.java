@@ -1,6 +1,7 @@
 package com.amm.nosql.cli;
 
 import java.util.*;
+import org.apache.log4j.Logger;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,11 +15,12 @@ import com.amm.nosql.dao.KeyValueDao;
  * @author amesarovic
  */
 public class KeyValueDriver {
+	private static final Logger logger = Logger.getLogger(KeyValueShell.class);
 	private KeyValueDao keyValueDao;
 	private Options options = new Options();
 	private JCommander jcommander;
 
-	String CONFIG_ROOT = "applicationContext.xml" ;
+	String CONFIG_ROOT = "appContext.xml" ;
 	String PROP_CONFIG = "providerConfigFile";
 
 	void process(String [] args) throws Exception {
@@ -102,12 +104,12 @@ public class KeyValueDriver {
 		String [] configFiles = new String[2];
 		configFiles[0] = CONFIG_ROOT;
 		configFiles[1] = cfgFile ;
-		debug("initSpring: configFiles="+Arrays.toString(configFiles));
+		logger.debug("initSpring: configFiles="+Arrays.toString(configFiles));
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
 		keyValueDao = context.getBean("keyValueDao",KeyValueDao.class);
-		debug("initSpring: keyValueDao="+keyValueDao);
-		debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
+		logger.debug("initSpring: keyValueDao="+keyValueDao);
+		logger.debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
 	}
 
 	public static void main(String [] args) throws Exception {
@@ -146,6 +148,5 @@ public class KeyValueDriver {
 	}
 
 	void info(Object o) { System.out.println(o);}
-	void debug(Object o) { System.out.println(">> "+o);}
 	void error(Object o) { System.out.println("ERROR: "+o);}
 }

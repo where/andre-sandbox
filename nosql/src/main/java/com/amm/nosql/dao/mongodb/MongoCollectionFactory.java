@@ -30,8 +30,7 @@ public class MongoCollectionFactory {
 		collection = database.getCollection(collectionName);
 
 		this.slaveOk = slaveOk ;
-		logger.debug("==>> DEBUG: MongoCollectionFactory: slaveOk="+slaveOk);
-		System.out.println("==>> OUT: MongoCollectionFactory: slaveOk="+slaveOk);
+		logger.debug("MongoCollectionFactory: slaveOk="+slaveOk);
 		if (slaveOk) {
 			//mongo.slaveOk(); // 2.6.5
 			mongo.setReadPreference(ReadPreference.SECONDARY);
