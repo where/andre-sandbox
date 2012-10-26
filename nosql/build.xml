@@ -1,0 +1,97 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="hello-ivy" default="all">
+  <property file="build.properties" />
+  <property name="jar.name"    value="${app.name}.jar"/>
+  <property name="main.java.dir"       value="src/main/java"  />
+  <property name="test.java.dir"       value="src/test/java"  />
+  <property name="build.dir"          value="build" />
+  <property name="build.classes.dir"  value="${build.dir}/classes"/>
+  <property name="build.dist.dir"     value="${build.dir}"/>
+
+  <!-- ======================================================= -->
+  <!-- All                                                     -->
+  <!-- ======================================================= -->
+
+  <target name="all" depends="prep.lib,all2"
+     description="Download 3rd party jars and builds" />
+
+  <target name="all2" depends="clean,compile,jar" 
+     description="Build jar in build" />
+  
+  <!-- ======================================================= -->
+  <!-- Compile all classes.                                    -->
+  <!-- ======================================================= -->
+  
+  <target name="compile" depends="clean,prepare" >
+    <javac
+        debug="on"
+        destdir="${build.classes.dir}" >
+      <classpath refid="compile.classpath"/>
+      <src path="${main.java.dir}"/>
+    </javac>
+  </target>
+  
+  <path id="compile.classpath">
+    <fileset dir="lib"  includes="**/*.jar" />
+    <fileset dir="lib2"  includes="**/*.jar" />
+  </path>
+  
+  <!-- =================================================================== -->
+  <!-- Creates the jar archive                                             -->
+  <!-- =================================================================== -->
+  
+  <target name="jar" depends="compile">
+    <mkdir dir="${build.dist.dir}"/>
+    <jar jarfile="${build.dist.dir}/${app.name}.jar">
+      <fileset dir="${build.classes.dir}" includes="**/*" />
+    </jar>
+    <copy file="${build.dist.dir}/${app.name}.jar"
+          tofile="${lib.dir}/${app.name}.jar" />
+  </target>
+
+  <!-- ======================================================= -->
+  <!-- prepare                                                 -->
+  <!-- ======================================================= -->
+  
+  <target name="prepare" >
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.classes.dir}"/>
+    <mkdir dir="${build.dist.dir}"/>
+  </target >
+  
+  <target name="clean" depends="" >
+    <delete dir="${build.dir}" />
+  </target >
+
+  <target name="prep.lib" depends="clean.lib,resolve" >
+    <copy todir="lib" preservelastmodified="true">
+       <fileset dir="lib2" includes="*"/>
+     </copy>
+    <delete> <fileset dir="lib" includes="*sources*.jar"/> </delete>
+    <delete> <fileset dir="lib" includes="*javadoc*.jar"/> </delete>
+  </target >
+
+  <target name="clean.lib" depends="" >
+    <delete dir="lib" />
+    <mkdir dir="lib" />
+  </target >
+
+  <target name="resolve" description="Retrieve dependencies with ivy" depends="" >
+    <ivy:retrieve />
+<!--
+    <ivy:retrieve type="jar"/>
+-->
+  </target>
+  
+  <!-- ======================================================= -->
+  <!-- echo                                                    -->
+  <!-- ======================================================= -->
+  
+  <pathconvert property="compile.classpath.string" refid="compile.classpath"
+     pathsep="${line.separator}    " />
+  <target name="echo" description="Echo classpath" >
+    <echo message="CLASSPATH:" />
+    <echo message="  compile.classpath  = ${compile.classpath.string}" />
+  </target> 
+  
+
+</project>
