@@ -9,8 +9,8 @@
   <bean id="keyValueDao" class="com.amm.nosql.dao.citrusleaf.CitrusleafKeyValueDao" >
     <constructor-arg ref="citrusleafClient" />
     <constructor-arg value="${citrusleaf.namespace}" />
-    <constructor-arg value="${citrusleaf.bin}" />
     <constructor-arg value="${citrusleaf.set}" />
+    <constructor-arg value="${citrusleaf.bin}" />
     <constructor-arg ref="keyValueMapper" />
   </bean>
 

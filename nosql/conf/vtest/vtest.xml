@@ -26,58 +26,7 @@
   <import resource="${providerConfigFile}"/>
   <import resource="${daoConfigFile}"/>
   <import resource="classpath:appContext-nosql.xml" />
-
-<!-- ** Key Generators ****************** -->
-
-  <bean id="fixedKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.FixedKeyGenerator" scope="prototype">
-     <constructor-arg value="${cfg.keyGenerator.size}" />
-     <constructor-arg value="0" />
-     <property name="doReset" value="${cfg.fixedKeyGenerator.reset}" />
-  </bean>
-
-  <bean id="randomKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="prototype">
-     <constructor-arg value="${cfg.keyGenerator.size}" />
-     <constructor-arg value="${cfg.key.seed}" />
-     <property name="cycleMax" value="${cfg.randomGenerator.cycleMax}" />
-     <property name="doReset" value="${cfg.randomKeyGenerator.reset}" />
-  </bean>
-
-  <bean id="randomKeyGeneratorFail" 
-        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="prototype">
-     <constructor-arg value="${cfg.keyGenerator.size}" />
-     <constructor-arg value="918273645" />
-  </bean>
-
-  <bean id="uuidKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.UuidKeyGenerator" scope="prototype">
-  </bean>
-
-  <bean id="MD5KeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.MD5KeyGenerator" scope="prototype">
-     <constructor-arg value="${cfg.key.seed}" />
-  </bean>
-
-<!-- ** Value Generators ****************** -->
-
-  <bean id="fixedValueGenerator" 
-        class="com.amm.vtest.plugins.datagen.FixedValueGenerator" scope="prototype">
-     <constructor-arg value="${cfg.valueGenerator.size}" />
-  </bean>
-
-  <bean id="randomValueGenerator" 
-        class="com.amm.vtest.plugins.datagen.RandomValueGenerator" scope="prototype">
-     <constructor-arg value="${cfg.valueGenerator.size}" />
-     <constructor-arg value="${cfg.value.seed}" />
-  </bean>
-
-  <bean id="randomValueSizeGenerator" 
-        class="com.amm.vtest.plugins.datagen.RandomValueSizeGenerator" scope="prototype">
-     <constructor-arg value="${cfg.value.seed}" />
-     <constructor-arg value="${cfg.valueGenerator.baseSize}" />
-     <constructor-arg value="${cfg.valueGenerator.range}" />
-  </bean>
+  <import resource="classpath:datagen.xml" />
 
 <!-- ** VTest **************** -->
 
@@ -101,7 +50,7 @@
         class="com.amm.vtest.services.callstats.CallStatsWriter" scope="prototype">
     <property name="showRatio" value="false" />
     <property name="showMean" value="true" />
-    <property name="showStdDev" value="true" />
+    <property name="showStdDev" value="false" />
     <property name="labelErrors" value="Err" />
     <property name="labelFailures" value="Fail" />
     <property name="labelSummary" value="Summary" />
@@ -124,8 +73,8 @@
 <!--
     <entry key="valueSize" value="${cfg.valueSize}" />
 -->
-    <entry key="valueGenerator.baseSize" value="${cfg.valueGenerator.baseSize}" />
-    <entry key="valueGenerator.range" value="${cfg.valueGenerator.range}" />
+    <entry key="random.valueGenerator.baseSize" value="${cfg.random.valueGenerator.baseSize}" />
+    <entry key="random.valueGenerator.range" value="${cfg.random.valueGenerator.range}" />
     <entry key="warmup" value="${cfg.warmup}" />
     <entry key="requestsWarmup" value="${cfg.requestsWarmup}" />
     <entry key="rampupTime" value="${cfg.fixedKeyGenerator.rampupTime}" />

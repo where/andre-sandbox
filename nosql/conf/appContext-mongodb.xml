@@ -15,11 +15,21 @@
   <bean id="keyValueDao" class="com.amm.nosql.dao.mongodb.MongodbKeyValueDao">
     <constructor-arg ref="keyValue.collectionFactory" />
     <constructor-arg ref="mongo.keyValueMapper" />
+<!--
+-->
+    <property name="writeConcern" ref="writeConcern"  />
   </bean>
 
   <bean id="keyStringValueDao" class="com.amm.nosql.dao.mongodb.MongodbKeyStringValueDao">
     <constructor-arg ref="keyStringValue.collectionFactory" />
     <constructor-arg ref="mongo.keyStringValueMapper" />
+  </bean>
+
+  <bean id="writeConcern" class="com.mongodb.WriteConcern" >
+     <constructor-arg value="${mongodb.writeConcern.w}" />
+     <constructor-arg value="${mongodb.writeConcern.wtimeout}" />
+     <constructor-arg value="${mongodb.writeConcern.fsync}" />
+     <constructor-arg value="${mongodb.writeConcern.j}" />
   </bean>
 
 <!-- MongoDB Object Mappers  -->
@@ -29,16 +39,6 @@
   <bean id="mongo.keyStringValueMapper" class="com.amm.nosql.dao.mongodb.KeyStringValueMapper" />
 
 <!-- Mongo config  -->
-
-  <bean id="userProfile.collectionFactory" lazy-init="false"
-      factory-bean="userProfile.collectionFactory2"
-      factory-method="getCollection"/>
-  <bean id="userProfile.collectionFactory2" class="com.amm.nosql.dao.mongodb.MongoCollectionFactory" scope="prototype" >
-     <constructor-arg ref="${mongodb.mongo}" />
-     <constructor-arg value="${mongodb.database}" />
-     <constructor-arg value="${mongodb.collection.userProfile}" />
-     <constructor-arg value="${mongodb.slaveOk}" />
-  </bean>
 
   <bean id="keyValue.collectionFactory" lazy-init="false"
       factory-bean="keyValue.collectionFactory2"
