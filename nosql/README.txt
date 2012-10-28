@@ -1,6 +1,6 @@
 ******************************************************************
 *
-* nosql README.txt                                     26 oct 2012
+* nosql README.txt                                     28 oct 2012
 *
 ******************************************************************
 
@@ -20,6 +20,10 @@ Shell scripts
   cli.sh - Command line program to get and put keys.
     cli.sh -m get -k MyKey
     cli.sh -m put -k MyKey -v MyValue
+
+  cleaf.sh - Citrusleaf server info
+ 
+  dump-keys.sh - Dump some key values for Key Generators
 
 vtest 
 
