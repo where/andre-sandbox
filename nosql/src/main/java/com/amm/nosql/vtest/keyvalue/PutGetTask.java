@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class PutGetTask extends KeyValueTask {
 	private static final Logger logger = Logger.getLogger(PutGetTask.class);
-	private volatile AtomicLong count = new AtomicLong(-1);
+	private volatile AtomicLong count = new AtomicLong(0);
 	private boolean debug = logger.isDebugEnabled();
 	private boolean checkValue ;
 
@@ -24,9 +24,12 @@ public class PutGetTask extends KeyValueTask {
 	}
 
 	public void execute(CallStats stats) throws FailureException, Exception {
-		count.getAndIncrement();
-		KeyValue keyValue = put();
-		get(keyValue);
+		try {
+			KeyValue keyValue = put();
+			get(keyValue);
+		} finally  {
+			count.getAndIncrement();
+		}
 	}
 
 	private KeyValue put() throws FailureException, Exception {

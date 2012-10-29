@@ -23,17 +23,20 @@ public class PutTask extends KeyValueTask {
 	}
 
 	public void execute(CallStats stats) throws FailureException, Exception {
-		String key = getNextKey();
-		byte [] value = getValue().getBytes();
+		try {
+			String key = getNextKey();
+			byte [] value = getValue().getBytes();
 
-		KeyValue keyValue = new KeyValue(key,value);
-		if (debug)
-			logger.debug("count="+count + " keySize="+key.length() +" valueSize="+value.length
-				+" key="+key
-				+" value="+new String(value)
-				);
+			KeyValue keyValue = new KeyValue(key,value);
+			if (debug)
+				logger.debug("count="+count + " keySize="+key.length() +" valueSize="+value.length
+					+" key="+key
+					+" value="+new String(value)
+					);
 
-		getKeyValueDao().put(keyValue);
-		count.getAndIncrement();
+			getKeyValueDao().put(keyValue);
+		} finally {
+			count.getAndIncrement();
+		}
 	}
 }
