@@ -2,10 +2,12 @@
   <property name="assemble.root.dir" value="build/assemble" />
   <property name="assemble.dir" value="build/assemble/rps-client" />
 
-  <target name="build.dist"  depends="dist.copy.jars, dist.copy.scripts,dist.copy.curl,dist.copy.config" >
+  <target name="build.client.dist"  depends="dist.copy.jars, dist.copy.scripts,dist.copy.curl,dist.copy.config" >
     <copy todir="${assemble.dir}/lib" preservelastmodified="true" flatten="no" >
       <fileset dir="${build.dir}/dist" includes="**/*.jar" />
     </copy >
+    <copy todir="${assemble.dir}" preservelastmodified="true" 
+      file="README.txt" />
   </target>
 
   <target name="dist.copy.jars"  depends="" >
@@ -38,6 +40,10 @@
       <fileset dir="config" includes="*.properties" />
       <fileset dir="config/client" includes="*.xml" />
       <fileset dir="config/client" includes="*.properties" />
+      <fileset dir="config/memcached" includes="*.xml" />
+      <fileset dir="config/citrusleaf" includes="*.xml" />
+      <fileset dir="config/vtest" includes="*.xml" />
+      <fileset dir="config/vtest" includes="*.properties" />
     </copy >
   </target>
 

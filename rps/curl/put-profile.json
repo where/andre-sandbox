@@ -1,6 +1,15 @@
 {
-    "ad": "Put- {TOKEN}",
-    "cd": "Put- {TOKEN}",
-    "id": "ignored koz taken from URL", 
-    "providers": {}
+    "id": "foo", 
+    "ids": {
+        "es1": [
+            "aa", 
+            "bb"
+        ], 
+        "ms1": [
+            "22", 
+            "11"
+        ]
+    }, 
+    "created": "2012-10-23T15:58:07.019+0000", 
+    "updated": "2012-10-23T15:58:07.019+0000"
 }

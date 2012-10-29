@@ -11,53 +11,21 @@ public class ProfileServiceImpl implements ProfileService {
 
 	public ProfileServiceImpl(KeyValueDao keyValueDao) {
 		this.keyValueDao = keyValueDao;
+		logger.debug("keyValueDao="+keyValueDao.getClass().getName());
 	}
 
-/*
-	public Profile get(String id) throws Exception {
-		logger.debug("id="+id);
-		Map<String,Object> fields = keyValueDao.get(id);
-		logger.debug("fields.size="+fields.size());
-	}
-*/
 
 	public Profile get(String id) throws Exception {
 		logger.debug("id="+id);
-		Map<String,Object> fields = (Map<String,Object>)keyValueDao.get(id);
-		logger.debug("fields="+fields);
-
-		if (fields == null) {
-			return null;
-		}
-		logger.debug("fields.size="+fields.size());
-		
-		Profile profile =  new Profile();
-		profile.id = id;
-		profile.cd = (String)fields.get("cd");
-		profile.ad = (String)fields.get("ad");
+		Profile profile = (Profile)keyValueDao.get(id);
+		logger.debug("profile="+profile);
 		return profile;
 	}
 
 	public Profile save(Profile profile) throws Exception {
 		logger.debug("profile="+profile);
-
-		Profile profile2 = get(profile.id);
-		logger.debug("profile2="+profile2);
-		if (profile2 != null) {
-			profile2.ad = profile.ad;
-			profile2.cd = profile.cd;
-		} else {
-			profile2 = profile;
-		}
-
-		Map<String,Object> fields = new HashMap<String, Object>();
-		fields.put("ad",profile2.ad);
-		fields.put("cd",profile2.cd);
-
-		logger.debug("#fields="+fields.size());
-		keyValueDao.put(profile2.id, fields);
-
-		return profile2;
+		keyValueDao.put(profile.id, profile);
+		return profile;
 	}
 
 	public void delete(String id) throws Exception {

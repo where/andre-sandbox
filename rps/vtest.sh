@@ -105,5 +105,7 @@ echo "PROPS=$PROPS"
 echo "providerConfigFile=$providerConfigFile"
 echo "daoConfigFile=$daoConfigFile"
 
+echo "iterations=$iterations" >> log.txt
+
 cp -p log.txt $logdir
 mv log-*.xml $logdir

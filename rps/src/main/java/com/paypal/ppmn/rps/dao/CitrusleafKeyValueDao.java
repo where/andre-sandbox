@@ -40,7 +40,6 @@ public class CitrusleafKeyValueDao implements KeyValueDao {
 		return value;
 	}
 
-	//public void put(String id, Map<String,Object> attrs) {
 	public void put(String id, Object value) {
 		ClResultCode resultCode = client.set(namespace, set, id, binName, value, null, null);
 

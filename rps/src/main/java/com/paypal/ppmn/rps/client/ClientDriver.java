@@ -115,17 +115,8 @@ public class ClientDriver {
 
 	Profile newProfile(String key) {
 		Profile profile = new Profile(key);
-		String provider = "MyProvider";
-		String dt = "myDt";
-		String field = "myField";
-		String value = options.value;
-		profile.add(provider, dt+"0", field, value+"0");
-		profile.add(provider, dt+"1", field+"1", value+"1");
-
-		provider = "YourProvider";
-		profile.add(provider, dt, field, value);
-		profile.add(provider, dt+"2", field+"2", value+"2");
-
+		profile.addId("es1","aa","bb");
+		profile.addId("ms1","11","22");
 		return profile;
 	}
 

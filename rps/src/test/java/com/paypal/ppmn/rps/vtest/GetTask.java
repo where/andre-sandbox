@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 public class GetTask extends ProfileBaseTask {
 	private static final Logger logger = Logger.getLogger(GetTask.class);
-	private volatile AtomicLong count = new AtomicLong();
+	private volatile AtomicLong count = new AtomicLong(-1);
 	private boolean debug = logger.isDebugEnabled();
 	private String name = "Get";
 
@@ -23,12 +23,14 @@ public class GetTask extends ProfileBaseTask {
 	}
 
 	public void execute(CallStats stats) throws FailureException, Exception {
+		count.getAndIncrement();
 		String key = getNextKey();
 
 		Profile profile = client.get(key);
 		logger.debug("count="+count+" key="+key+" profile=["+profile+"]");
+		if (profile == null)
+			throw new FailureException("No value for key="+key);
 
-		count.getAndIncrement();
 	}
 
 	public String getName() { return name ; }

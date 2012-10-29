@@ -37,12 +37,13 @@ public class ProfileResource extends BaseResource {
 	@Path("/{id}/")
 	@Produces({ MediaType.APPLICATION_JSON, CONTENT_PROTOBUF })
 	public Profile getProfile(@PathParam("id") String id) throws Exception { 
-		Profile obj = profileService.get(id);
-		logger.debug("id="+id+" obj="+obj);
+		logger.debug("id="+id);
+		Profile profile = profileService.get(id);
+		logger.debug("id="+id+" profile="+profile);
 
-		if (obj == null) 
+		if (profile == null) 
 			throw new WebApplicationException(Response.Status.NOT_FOUND); 
-		return obj;
+		return profile;
 	}
 
 	@PUT
@@ -52,6 +53,7 @@ public class ProfileResource extends BaseResource {
 		logger.debug("id="+id+" profile="+profile);
 		profile.id = id ;
 		profileService.save(profile);
+		logger.debug("2: id="+id+" profile="+profile);
 		return ResponseUtils.createPut();
 	}
 

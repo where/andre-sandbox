@@ -32,6 +32,7 @@ public class PingResource {
 	@Path("/")
 	//@Produces({ MediaType.APPLICATION_JSON, CONTENT_PROTOBUF })
 	public void getProfile() { 
-		logger.debug("ping");
+		String now = ""+new Date();
+		logger.debug("ping: "+now);
 	}
 }

@@ -18,7 +18,7 @@ public class BaseRestTest extends BaseTest {
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
-		profileUrl = baseUrl + "/profile" ;
+		profileUrl = baseUrl + "/api/profile" ;
 	}
 
 	//public static void assertStatus(int statusCode) {
@@ -26,7 +26,7 @@ public class BaseRestTest extends BaseTest {
 	//}
 
 	public static void assertStatus(int statusCode) {
-		Assert.assertFalse(isError(statusCode));
+		Assert.assertFalse(isError(statusCode),"StatusCode="+statusCode);
 	}
 	public static boolean isError(int statusCode) {
 		return statusCode < 200 || statusCode > 299 ;

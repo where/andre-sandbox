@@ -10,6 +10,7 @@ import net.spy.memcached.ConnectionFactoryBuilder;
 import net.spy.memcached.ConnectionFactory;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import com.paypal.ppmn.rps.data.Profile;
 
 public class MemcachedKeyValueDao implements KeyValueDao {
 	private static final Map<String,Object> MAP = new HashMap<String,Object>();
@@ -31,17 +32,15 @@ public class MemcachedKeyValueDao implements KeyValueDao {
 		logger.debug("client="+client+" expiration="+expiration+" timeout="+timeout);
 	}
 
- 	//public Map<String,Object> get(String id) throws Exception {
  	public Object get(String id) throws Exception {
 		byte [] value = (byte[])client.get(id);
 		logger.debug("get: id="+id+" value="+value);
 		if (value == null)
 			return null ;
-		Map<String,Object> fields = mapper.toObject(value, MAP.getClass());
-		return fields;
+        Profile profile = mapper.toObject(value, Profile.class);
+		return profile;
 	}
 
-	//public void put(String id, Map<String,Object> fields) throws Exception {
 	public void put(String id, Object obj) throws Exception {
 		final byte [] value = mapper.toBytes(obj);
 		logger.debug("put: id="+id+" value.length="+value.length);

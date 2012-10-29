@@ -20,6 +20,19 @@ public class FormatUtils {
 		} else {
 			info("Profile "+msg+":");
 			info("  id="+profile.id);
+			info("  Created="+profile.getCreated());
+			info("  Updated="+profile.getUpdated());
+			Map<String,Set<String>> ids = profile.getIds() ;
+			info("  Ids:");
+			for (Map.Entry<String,Set<String>> entry : ids.entrySet()) {
+				System.out.print("    id="+entry.getKey());
+				System.out.print("  values=");
+				for (String str : entry.getValue()) {
+					System.out.print(str+" ");
+				}
+				System.out.println();
+			}
+/*
 			info("  cd="+profile.cd);
 			info("  ad="+profile.ad);
 			Map<String,Map<String,Entry>> providers = profile.providers ;
@@ -34,6 +47,7 @@ public class FormatUtils {
 					info("	  KEY="+entry2.getKey()+" VALUE=["+entry2.getValue()+"]");
 				}
 			}
+*/
 		}
 	}
 	static void info(Object o) { System.out.println(o);}

@@ -11,13 +11,13 @@
 -->
     <classes>
 <!--
+      <class name="com.paypal.ppmn.rps.dao.LoadTest" />
+      <class name="com.paypal.ppmn.rps.api.ThreadLoadTest" />
+      <class name="com.paypal.ppmn.rps.dao.ThreadLoadTest" />
+-->
+      <class name="com.paypal.ppmn.rps.api.RestTest" />
       <class name="com.paypal.ppmn.rps.mapper.MapperTest" />
       <class name="com.paypal.ppmn.rps.dao.DaoTest" />
-      <class name="com.paypal.ppmn.rps.dao.LoadTest" />
-      <class name="com.paypal.ppmn.rps.dao.ThreadLoadTest" />
-      <class name="com.paypal.ppmn.rps.api.ThreadLoadTest" />
-      <class name="com.paypal.ppmn.rps.api.RestTest" />
--->
       <class name="com.paypal.ppmn.rps.client.SimpleTest" />
       <class name="com.paypal.ppmn.rps.client.ThreadLoadTest" />
     </classes>
