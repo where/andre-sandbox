@@ -1,26 +1,36 @@
 
-# Dump some keys
+# Dump keys and values
 
 . ./common.env
 
 CPATH="$CPATH:conf/vtest"
-
-PGM=com.amm.vtest.plugins.datagen.KeyGeneratorDriver
+PGM=com.amm.vtest.plugins.datagen.KeyValueGeneratorDriver
 
 max=10
 if [ $# -gt 0 ] ; then
   max=$1
   fi
 
-OPTS="$OPTS --index"
+#OPTS="$OPTS --filterIndex 5"
+OPTS="$OPTS --showIndex"
+OPTS="$OPTS --showOnlyValueSize"
+#OPTS="$OPTS --donotShowData"
 
-#bean=fixedKeyGenerator
-#bean=MD5KeyGenerator
-bean=randomKeyGenerator
+kbean=randomKeyGeneratorFail
+kbean=randomKeyGenerator
+kbean=fixedKeyGenerator
+kbean=MD5KeyGenerator
+kbean=uuidKeyGenerator
+OPTS="$OPTS --beanKeyGenerator $kbean"
 
-configFiles=appContext-datagen.xml
+vbean=fixedValueGenerator
+vbean=randomValueGenerator
+vbean=randomValueSizeGenerator
+OPTS="$OPTS --beanValueGenerator $vbean"
+
+configFile=appContext-datagen.xml
 
 #echo "PROPS=$PROPS"
 
-java $PROPS -cp $CPATH $PGM $OPTS -m $max -b $bean -c $configFiles | tee oo
-cp oo keys-dump-$bean.txt
+java $PROPS -cp $CPATH $PGM $OPTS -m $max -c $configFile | tee oo
+#cp oo keys-dump-$bean.txt
