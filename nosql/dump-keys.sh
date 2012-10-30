@@ -22,5 +22,5 @@ configFiles=appContext-datagen.xml
 
 #echo "PROPS=$PROPS"
 
-java $PROPS -cp $CPATH $PGM $OPTS -m $max -b $bean -c $configFiles | tee oo
-cp oo keys-dump-$bean.txt
+java $PROPS -cp $CPATH $PGM $OPTS -m $max -b $bean -c $configFiles | tee log.txt
+cp log.txt keys-dump-$bean.txt
