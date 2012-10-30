@@ -17,10 +17,10 @@ OPTS="$OPTS --showOnlyValueSize"
 #OPTS="$OPTS --donotShowData"
 
 kbean=randomKeyGeneratorFail
-kbean=randomKeyGenerator
 kbean=fixedKeyGenerator
 kbean=MD5KeyGenerator
 kbean=uuidKeyGenerator
+kbean=randomKeyGenerator
 OPTS="$OPTS --beanKeyGenerator $kbean"
 
 vbean=fixedValueGenerator
