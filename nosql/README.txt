@@ -1,12 +1,12 @@
 ******************************************************************
 *
-* nosql README.txt                                     28 oct 2012
+* nosql README.txt                                     29 oct 2012
 *
 ******************************************************************
 
-To configure:
+Configuration
 
-  common.env - Common stuff for shell scripts
+  common.env - Common stuff for all shell scripts
     Toggle properties:
       providerConfigFile - NoSQL provider
       hosts - URL for server
@@ -15,15 +15,18 @@ To configure:
 
 Shell scripts
 
-  shell.sh - Shell to interactively get and put keys.
+  shell.sh - Shell to interactively manipulate items (put, get and delete).
 
-  cli.sh - Command line program to get and put keys.
+  cli.sh - Command line program to manipulate items.
     cli.sh -m get -k MyKey
     cli.sh -m put -k MyKey -v MyValue
+    cli.sh -m delete -k MyKey
 
   cleaf.sh - Citrusleaf server info
  
-  dump-keys.sh - Dump some key values for Key Generators
+  dump-keys.sh - Dump some keys for Key Generators
+
+  dump-keyvalues.sh - Dump some key and values for Key Generator and ValueGenerator.
 
 vtest 
 
@@ -38,4 +41,5 @@ vtest
     tasks-keyvalue.xml - tasks for KeyValue tests
     vtest.properties - core vtest properties
     vtest.xml - core vtest beans
+    datagen.xml - Key and value generator beans
 
