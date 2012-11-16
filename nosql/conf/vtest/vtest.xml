@@ -70,14 +70,14 @@
     <entry key="valueGenerator" value="${cfg.valueGenerator}" />
     <entry key="key.seed" value="${cfg.key.seed}" />
     <entry key="value.seed" value="${cfg.value.seed}" />
-<!--
     <entry key="valueSize" value="${cfg.valueSize}" />
+<!--
 -->
     <entry key="random.valueGenerator.baseSize" value="${cfg.random.valueGenerator.baseSize}" />
     <entry key="random.valueGenerator.range" value="${cfg.random.valueGenerator.range}" />
     <entry key="warmup" value="${cfg.warmup}" />
     <entry key="requestsWarmup" value="${cfg.requestsWarmup}" />
-    <entry key="rampupTime" value="${cfg.fixedKeyGenerator.rampupTime}" />
+    <entry key="rampupTime" value="${cfg.rampupTime}" />
     <entry key="getTask.checkSize" value="${cfg.getTask.checkSize}" />
     <entry key="getTask.checkValue" value="${cfg.getTask.checkValue}" />
 <!--
@@ -101,7 +101,8 @@
     <property name="numRequests"     value="${cfg.requests}" />
     <property name="threadPoolSize"  value="${cfg.threadPoolSize}" />
     <property name="logModulo"       value="${cfg.logModulo}" />
-    <property name="rampupTime"      value="${cfg.fixedKeyGenerator.rampupTime}" />
+    <property name="rampupTime"      value="${cfg.rampupTime}" />
+    <property name="exceptionCountThreshold" value="${cfg.exceptionCountThreshold}" />
   </bean>
 
 <!-- ** Warmup **************** -->
