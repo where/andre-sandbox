@@ -26,7 +26,7 @@ public class KeyValueDriver {
 	void process(String [] args) throws Exception {
 		init(args);
 		info("currentMillis="+System.currentTimeMillis());
-		info("method="+options.method+" key="+options.key+" attrs=["+options.value+"]+ iterations="+options.iterations);
+		info("method="+options.method+" key="+options.key+" value=["+options.value+"] iterations="+options.iterations);
 
 		try {
 			processKeyValueDao();
@@ -108,8 +108,8 @@ public class KeyValueDriver {
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
 		keyValueDao = context.getBean("keyValueDao",KeyValueDao.class);
-		logger.debug("initSpring: keyValueDao="+keyValueDao);
-		logger.debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
+		info("keyValueDao:       "+keyValueDao);
+		info("keyValueDao.class: "+keyValueDao.getClass().getName());
 	}
 
 	public static void main(String [] args) throws Exception {

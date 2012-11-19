@@ -135,8 +135,8 @@ public class KeyStringValueShell {
 
 	void status() {
 		info("Status:");
-        info("  keyValueDao.class="+keyValueDao.getClass().getName());
-        info("  keyValueDao="+keyValueDao);
+        info("  keyValueDao.class: "+keyValueDao.getClass().getName());
+        info("  keyValueDao:       "+keyValueDao);
 	}
 	
 	String getKey(String [] tokens) {

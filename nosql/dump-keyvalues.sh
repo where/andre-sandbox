@@ -21,11 +21,15 @@ kbean=fixedKeyGenerator
 kbean=MD5KeyGenerator
 kbean=uuidKeyGenerator
 kbean=randomKeyGenerator
+kbean=skipKeyGenerator
 OPTS="$OPTS --beanKeyGenerator $kbean"
 
 vbean=fixedValueGenerator
 vbean=randomValueGenerator
 vbean=randomValueSizeGenerator
+vbean=randomValueSizePerfectGenerator
+vbean=randomValueSize2Generator
+#vbean=skipValueSizeGenerator
 OPTS="$OPTS --beanValueGenerator $vbean"
 
 configFile=appContext-datagen.xml

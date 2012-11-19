@@ -15,7 +15,10 @@
   </bean>
 
   <bean id="citrusleafClient" class="net.citrusleaf.CitrusleafClient" >
+<!--
     <constructor-arg value="${citrusleaf.host}" />
+-->
+    <constructor-arg value="${hosts}" />
     <constructor-arg value="${citrusleaf.port}" />
   </bean>
 

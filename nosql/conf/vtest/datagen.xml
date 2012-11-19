@@ -39,6 +39,12 @@
      <constructor-arg value="${cfg.key.seed}" />
   </bean>
 
+  <bean id="skipKeyGenerator" 
+        class="com.amm.vtest.plugins.datagen.SkipKeyGenerator" scope="prototype">
+     <constructor-arg ref="randomKeyGenerator" />
+     <constructor-arg value="5" />
+  </bean>
+
 <!-- ** Value Generators ****************** -->
 
   <bean id="fixedValueGenerator" 
@@ -57,6 +63,25 @@
      <constructor-arg value="${cfg.value.seed}" />
      <constructor-arg value="${cfg.random.valueGenerator.baseSize}" />
      <constructor-arg value="${cfg.random.valueGenerator.range}" />
+  </bean>
+
+  <bean id="randomValueSize2Generator" 
+        class="com.amm.vtest.plugins.datagen.RandomValueSize2Generator" scope="prototype">
+     <constructor-arg value="${cfg.value.seed}" />
+     <constructor-arg value="${cfg.random.valueGenerator.meanSize}" />
+     <constructor-arg value="${cfg.random.valueGenerator.variation}" />
+  </bean>
+  <bean id="randomValueSizePerfectGenerator" 
+        class="com.amm.vtest.plugins.datagen.RandomValueSizePerfectGenerator" scope="prototype">
+     <constructor-arg value="${cfg.value.seed}" />
+     <constructor-arg value="${cfg.random.valueGenerator.meanSize}" />
+     <constructor-arg value="${cfg.random.valueGenerator.variation}" />
+  </bean>
+
+  <bean id="skipValueGenerator" 
+        class="com.amm.vtest.plugins.datagen.SkipValueGenerator" scope="prototype">
+     <constructor-arg ref="randomValueSize2Generator" />
+     <constructor-arg value="5" />
   </bean>
 
 </beans>

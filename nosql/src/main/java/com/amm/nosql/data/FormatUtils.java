@@ -6,6 +6,9 @@ import org.apache.commons.lang.StringUtils;
 public class FormatUtils {
 
 	public static void format(KeyValue keyValue) {
+		format(keyValue,-1);
+	}
+	public static void format(KeyValue keyValue, int maxToDisplay) {
 		if (keyValue == null) {
 			info("KeyValue: null");
 		} else {
@@ -13,6 +16,8 @@ public class FormatUtils {
 			info("  key="+keyValue.getKey());
 			byte [] value = keyValue.getValue() ;
 			String str = new String(value);
+			if (maxToDisplay > -1 && str.length() > maxToDisplay)
+				str = str.substring(0,maxToDisplay)+"...";
 			//if (StringUtils.isAsciiPrintable(str))
 			if (isAsciiPrintable(str)) {
 				info("   #bytes="+value.length);

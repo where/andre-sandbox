@@ -85,7 +85,8 @@ public class CitrusleafDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		return 
 			" namespace="+namespace
 			+" set="+set
-			+ " bin="+bin
+			+" bin="+bin
+			+" client="+client
 		;
 	}
 }

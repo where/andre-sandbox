@@ -27,8 +27,8 @@ seedKey=1776
 seedValue=1776
 #seedValue=-1
 
-keySize=32
-valueSize=1000
+keySize=20
+#valueSize=1000
 logModulo=50000
 
 opts="r:t:v:i:b:s:S:p:d:"
@@ -37,7 +37,7 @@ while getopts $opts opt
   case $opt in
     r) requests=$OPTARG ;;
     t) threadPoolSize=$OPTARG ;;
-    v) valueSize=$OPTARG ;;
+#    v) valueSize=$OPTARG ;;
     i) iterations=$OPTARG ;;
     s) seedKey=$OPTARG ;;
     S) seedValue=$OPTARG ;;
@@ -67,7 +67,7 @@ cycleMax=$requests
 
 PROPS="$PROPS -Dcfg.requests=$requests"
 PROPS="$PROPS -Dcfg.threadPoolSize=$threadPoolSize"
-PROPS="$PROPS -Dcfg.valueSize=$valueSize"
+#PROPS="$PROPS -Dcfg.valueSize=$valueSize"
 PROPS="$PROPS -Dcfg.keyGenerator.size=$keySize"
 PROPS="$PROPS -Dcfg.key.seed=$seedKey"
 PROPS="$PROPS -Dcfg.value.seed=$seedValue"
@@ -94,4 +94,4 @@ echo "providerConfigFile=$providerConfigFile"
 echo "daoConfigFile=$daoConfigFile"
 
 cp -p log.txt $logdir
-mv log-*.xml $logdir
+mv log-*.xml log-*.json $logdir

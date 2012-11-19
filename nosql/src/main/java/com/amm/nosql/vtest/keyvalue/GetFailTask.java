@@ -7,6 +7,9 @@ import com.amm.vtest.TaskConfig;
 import com.amm.vtest.FailureException;
 import com.amm.vtest.services.callstats.CallStats;
 
+/**
+ * Ensures that a key does not exist.
+ */
 public class GetFailTask extends KeyValueTask {
 	private static final Logger logger = Logger.getLogger(GetFailTask.class);
 

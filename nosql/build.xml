@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="hello-ivy" default="all">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="nosql" default="all">
   <property file="build.properties" />
   <property name="jar.name"    value="${app.name}.jar"/>
   <property name="main.java.dir"       value="src/main/java"  />
@@ -11,7 +11,9 @@
   <!-- All                                                     -->
   <!-- ======================================================= -->
 
-  <target name="all" depends="prep.lib,all2"
+  <target name="all" depends="all2" />
+
+  <target name="_all" depends="prep.lib,all2"
      description="Download 3rd party jars and builds" />
 
   <target name="all2" depends="clean,compile,jar" 

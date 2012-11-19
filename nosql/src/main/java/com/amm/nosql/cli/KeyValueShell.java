@@ -114,7 +114,7 @@ public class KeyValueShell {
 		String key = getKey(tokens);
 		KeyValue keyValue = keyValueDao.get(key);
 		String sts = keyValue==null ? "NOT FOUND" : "FOUND";
-		FormatUtils.format(keyValue); // AMM TODO
+		FormatUtils.format(keyValue,options.maxToDisplay); 
 	}
 
 	void delete(String [] tokens) throws Exception { 
@@ -122,22 +122,11 @@ public class KeyValueShell {
 		keyValueDao.delete(key);
 	}
 
-/*
-	private KeyValue newKeyValue(String key, int n) {
-		KeyValue keyValue = new KeyValue(key);
-		Map<String,String> attrs = new HashMap<String,String>();
-		for (int j=0 ; j < n ; j++) {
-			String attr  = "attr"+j;
-			attrs.put(attr, "value-"+j);
-		}
-		return keyValue;
-	}
-*/
-
 	void status() {
 		info("Status:");
-        info("  keyValueDao.class="+keyValueDao.getClass().getName());
-        info("  keyValueDao="+keyValueDao);
+        info("  keyValueDao.class: "+keyValueDao.getClass().getName());
+        info("  keyValueDao:       "+keyValueDao);
+        info("  maxToDisplay:      "+options.maxToDisplay);
 	}
 	
 	String getKey(String [] tokens) {
@@ -193,6 +182,9 @@ public class KeyValueShell {
 	class Options {
 		@Parameter(names = { "-f", "--file" }, description = "Put file" )
 		public String file = "curl/sample.json" ;
+
+		@Parameter(names = { "-m", "--maxToDisplay" }, description = "maximum characters of value to display" )
+		public int maxToDisplay = 100 ;
 	}
 
 	void print(Object o) { System.out.print(o);}

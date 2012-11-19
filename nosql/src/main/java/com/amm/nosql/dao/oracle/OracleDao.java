@@ -27,7 +27,8 @@ public class OracleDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 
 	public OracleDao(String url, String storeName, ObjectMapper<T> objectMapper) {
 		this.objectMapper = objectMapper;
-		//debug("url="+url);
+		logger.debug("url="+url+" store="+storeName);
+		System.out.println(">> url="+url+" store="+storeName);
 		store = KVStoreFactory.getStore(new KVStoreConfig(storeName, url));
 	}
 

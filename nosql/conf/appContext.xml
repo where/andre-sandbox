@@ -19,7 +19,6 @@
     </property>
   </bean>
 
-
   <import resource="classpath:appContext-nosql.xml" />
 
 </beans>
