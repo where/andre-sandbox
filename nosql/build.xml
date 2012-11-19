@@ -11,13 +11,11 @@
   <!-- All                                                     -->
   <!-- ======================================================= -->
 
-  <target name="all" depends="all2" />
+  <target name="all" depends="clean,compile,jar" 
+     description="Compile and Build jar" />
 
-  <target name="_all" depends="prep.lib,all2"
-     description="Download 3rd party jars and builds" />
-
-  <target name="all2" depends="clean,compile,jar" 
-     description="Build jar in build" />
+  <target name="all.resolve" depends="prep.lib,all"
+     description="Download 3rd party jars and builds jar" />
   
   <!-- ======================================================= -->
   <!-- Compile all classes.                                    -->

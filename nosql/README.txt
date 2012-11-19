@@ -1,8 +1,15 @@
 ******************************************************************
 *
-* nosql README.txt                                     29 oct 2012
+* nosql README.txt                                     18 nov 2012
 *
 ******************************************************************
+
+ant
+  all          Compile and Build jar
+  all.resolve  Download 3rd party jars and builds jar
+  echo         Echo classpath
+  resolve      Retrieve dependencies with ivy
+  Default target: all
 
 Configuration
 
