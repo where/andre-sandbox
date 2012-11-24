@@ -5,10 +5,10 @@ import org.apache.commons.lang.StringUtils;
 
 public class FormatUtils {
 
-	public static void format(KeyValue keyValue) {
-		format(keyValue,-1);
+	public static void print(KeyValue keyValue) {
+		print(keyValue,-1);
 	}
-	public static void format(KeyValue keyValue, int maxToDisplay) {
+	public static void print(KeyValue keyValue, int maxToDisplay) {
 		if (keyValue == null) {
 			info("KeyValue: null");
 		} else {
@@ -18,18 +18,24 @@ public class FormatUtils {
 			String str = new String(value);
 			if (maxToDisplay > -1 && str.length() > maxToDisplay)
 				str = str.substring(0,maxToDisplay)+"...";
-			//if (StringUtils.isAsciiPrintable(str))
-			if (isAsciiPrintable(str)) {
-				info("   #bytes="+value.length);
-				info("  value="+str);
-			} else {
-				info("  value: #bytes="+value.length);
-				//info("  value="+str);
-			}
+			print(str,value);
 		}
 	}
 
-	public static void format(KeyStringValue keyValue) {
+	public static void print(String str) {
+		print(str,str.getBytes());
+	}
+	public static void print(String str, byte [] value) {
+		if (isAsciiPrintable(str)) {
+			info("  #valueBytes="+value.length);
+			info("  value="+str);
+		} else {
+			info("  value: #bytes="+value.length);
+			//info("  value="+str);
+		}
+	}
+
+	public static void print(KeyStringValue keyValue) {
 		if (keyValue == null) {
 			info("KeyValue: null");
 		} else {
@@ -51,6 +57,13 @@ public class FormatUtils {
 			}
 		}
 		return true ;
+	}
+
+	public static void dump(byte [] content) {
+		info("Dump bytes - length="+content.length);
+		for (int j=0 ; j < content.length ; j++) {
+			info("  "+j+". "+content[j]);
+		}
 	}
 
 	private static void info(Object o) { System.out.println(o);}

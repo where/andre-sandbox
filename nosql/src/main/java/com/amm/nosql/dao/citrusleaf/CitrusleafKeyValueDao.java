@@ -6,7 +6,7 @@ import com.amm.nosql.data.KeyValue;
 import com.amm.mapper.ObjectMapper;
 
 public class CitrusleafKeyValueDao extends CitrusleafDao<KeyValue> implements KeyValueDao {
-    public CitrusleafKeyValueDao(CitrusleafClient client, String namespace, String bin, String set, ObjectMapper<KeyValue> mapper) throws Exception {
-		super(client, namespace, bin, set, mapper);
+    public CitrusleafKeyValueDao(CitrusleafClient client, String namespace, String set, String bin, ObjectMapper<KeyValue> mapper) throws Exception {
+		super(client, namespace, set, bin, mapper);
 	}
 }

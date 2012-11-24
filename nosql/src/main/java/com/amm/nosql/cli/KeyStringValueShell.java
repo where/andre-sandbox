@@ -113,7 +113,7 @@ public class KeyStringValueShell {
 		String key = getKey(tokens);
 		KeyStringValue keyValue = keyValueDao.get(key);
 		String sts = keyValue==null ? "NOT FOUND" : "FOUND";
-		FormatUtils.format(keyValue); // AMM TODO
+		FormatUtils.print(keyValue); // AMM TODO
 	}
 
 	void delete(String [] tokens) throws Exception { 

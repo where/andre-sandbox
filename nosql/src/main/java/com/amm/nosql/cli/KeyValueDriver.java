@@ -23,6 +23,10 @@ public class KeyValueDriver {
 	String CONFIG_ROOT = "appContext.xml" ;
 	String PROP_CONFIG = "providerConfigFile";
 
+	public static void main(String [] args) throws Exception {
+		(new KeyValueDriver()).process(args);
+	}
+
 	void process(String [] args) throws Exception {
 		init(args);
 		info("currentMillis="+System.currentTimeMillis());
@@ -112,10 +116,6 @@ public class KeyValueDriver {
 		info("keyValueDao.class: "+keyValueDao.getClass().getName());
 	}
 
-	public static void main(String [] args) throws Exception {
-		(new KeyValueDriver()).process(args);
-	}
-
 	class Options {
 		@Parameter(names = { "-m", "--method" }, description = "Method", required = true )
 		public String method = "help";
@@ -129,6 +129,9 @@ public class KeyValueDriver {
 		@Parameter(names = { "-i", "--iterations" }, description = "Iterations")
 		public int iterations = 1;
 
+		@Parameter(names = { "-d", "--maxToDisplay" }, description = "maximum characters of value to display" )
+		public int maxToDisplay = 100 ;
+
 		@Parameter(names = { "-h", "--help" }, description = "Help")
 		public boolean help = false;
 	}
@@ -141,12 +144,14 @@ public class KeyValueDriver {
 		if (keyValue == null) {
 			info("KeyValue: null");
 		} else {
-			info("KeyValue:");
-			info("  key="+keyValue.getKey());
-			info("  value="+new String(keyValue.getValue())); // TODO: not always string!
+			//info("KeyValue:");
+			//info("  key="+keyValue.getKey());
+			//info("  value="+new String(keyValue.getValue())); // TODO: not always string!
+			FormatUtils.print(keyValue,options.maxToDisplay);
 		}
 	}
 
 	void info(Object o) { System.out.println(o);}
 	void error(Object o) { System.out.println("ERROR: "+o);}
 }
+

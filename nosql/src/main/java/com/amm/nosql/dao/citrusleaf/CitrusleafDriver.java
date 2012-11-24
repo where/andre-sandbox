@@ -12,8 +12,6 @@ import net.citrusleaf.CitrusleafInfo;
  */
 public class CitrusleafDriver {
 	private static final Logger logger = Logger.getLogger(CitrusleafDriver.class);
-	private String hostname ;
-	private int port ;
 
 	public static void main(String [] args) throws Exception {
 		(new CitrusleafDriver()).process(args);
@@ -24,14 +22,17 @@ public class CitrusleafDriver {
 			error("Expecting: hostname port");
 			return ;
 		}
-		hostname = args[0];
-		port = Integer.parseInt(args[1]);
+		String hostname = args[0];
+		int port = Integer.parseInt(args[1]);
 		String [] names = new String[0];
 		if (args.length > 2) {
 			names = new String[1];
 			names[0] = args[2];
 		}
+		process(hostname, port, names) ;
+	}
 
+	void process(String hostname, int port, String [] names) throws Exception {
 		Set<String> set = new HashSet<String>();
 		set.add("features");
 		set.add("statistics");
@@ -44,6 +45,7 @@ public class CitrusleafDriver {
 			error("No info");
 			return ;
 		}
+
 		for (Map.Entry<String,String> entry : map.entrySet() ) {
 			String key = entry.getKey();
 			if (key==null) continue;

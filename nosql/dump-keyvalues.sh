@@ -4,7 +4,7 @@
 . ./common.env
 
 CPATH="$CPATH:conf/vtest"
-PGM=com.amm.vtest.plugins.datagen.KeyValueGeneratorDriver
+PGM=com.amm.vtest.plugins.datagen.driver.KeyValueGeneratorDriver
 
 max=10
 if [ $# -gt 0 ] ; then

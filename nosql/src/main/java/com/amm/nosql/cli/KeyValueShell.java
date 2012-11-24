@@ -13,6 +13,9 @@ import com.amm.nosql.data.FormatUtils;
 import com.amm.nosql.dao.KeyValueDao;
 import com.google.common.io.Files;
 
+/**
+ * Ye good ol' shell...
+ */
 public class KeyValueShell {
 	private static final Logger logger = Logger.getLogger(KeyValueShell.class);
 	private Options options = new Options();
@@ -36,6 +39,9 @@ public class KeyValueShell {
 		printHeader();
 		status();
 		String stime = "";
+		//String previousCommand = null ;
+		String [] previousTokens = null ;
+
 		for (;;) {
 			print("\n"+stime+">> ") ;
 			String buf = reader.readLine();
@@ -55,6 +61,12 @@ public class KeyValueShell {
 
 			if (cmd.startsWith("exit") || buf.startsWith("quit"))
 				break ;
+
+			if (CliUtils.isRepeatCommand(cmd)) {
+				tokens = previousTokens;
+				cmd = tokens[0];
+			}
+
 			try {
 				processCommand(cmd, tokens) ;
 			} catch (Exception e) {
@@ -63,6 +75,7 @@ public class KeyValueShell {
 				e.printStackTrace();
 			}
 			stime = ""+(System.currentTimeMillis()-timeStart);
+			previousTokens = tokens;
 		}
 	}
 
@@ -82,6 +95,7 @@ public class KeyValueShell {
 			status();
 		} else {
 			error("Unknown command: "+cmd);
+			//FormatUtils.dump(cmd.getBytes());
 		}
 	}
 
@@ -114,7 +128,7 @@ public class KeyValueShell {
 		String key = getKey(tokens);
 		KeyValue keyValue = keyValueDao.get(key);
 		String sts = keyValue==null ? "NOT FOUND" : "FOUND";
-		FormatUtils.format(keyValue,options.maxToDisplay); 
+		FormatUtils.print(keyValue,options.maxToDisplay); 
 	}
 
 	void delete(String [] tokens) throws Exception { 
@@ -171,24 +185,23 @@ public class KeyValueShell {
         String [] configFiles = new String[2];
         configFiles[0] = ROOT_CONFIG_FILE;
         configFiles[1] = providerConfigFile ;
-        logger.debug("initSpring: configFiles="+Arrays.toString(configFiles));
+        logger.debug("configFiles="+Arrays.toString(configFiles));
 
         ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
         keyValueDao = context.getBean("keyValueDao",KeyValueDao.class);
-        logger.debug("initSpring: keyValueDao="+keyValueDao);
-        logger.debug("initSpring: keyValueDao.class="+keyValueDao.getClass().getName());
+        logger.debug("keyValueDao="+keyValueDao);
+        logger.debug("keyValueDao.class="+keyValueDao.getClass().getName());
 	}
 
 	class Options {
 		@Parameter(names = { "-f", "--file" }, description = "Put file" )
 		public String file = "curl/sample.json" ;
 
-		@Parameter(names = { "-m", "--maxToDisplay" }, description = "maximum characters of value to display" )
+		@Parameter(names = { "-d", "--maxToDisplay" }, description = "maximum characters of value to display" )
 		public int maxToDisplay = 100 ;
 	}
 
 	void print(Object o) { System.out.print(o);}
 	void info(Object o) { System.out.println(o);}
 	void error(Object o) { System.out.println("ERROR: "+ o);}
-
 }
