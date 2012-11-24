@@ -15,7 +15,7 @@ public class PutGetTask extends KeyValueTask {
 
 	public PutGetTask(KeyValueTaskConfig config) throws Exception {
 		super(config);
-		setName("Put");
+		setName("PutGet");
 	}
 
 	public PutGetTask(KeyValueTaskConfig config, String name) throws Exception {
