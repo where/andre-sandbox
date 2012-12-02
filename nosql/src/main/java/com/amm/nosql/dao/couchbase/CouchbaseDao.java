@@ -88,7 +88,7 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		if (!op.get().booleanValue()) {
 			logger.debug("Set failed: " + op.getStatus().getMessage());
 			logger.debug("put: key="+key+" value.length="+value.length +" result= failure " + "timeout="+timeout);
-			String emsg = "Failed to set: key=" +key+" value.length="+value.length + "timeout="+timeout+" Op.status="+op.getStatus().getMessage();
+			String emsg = "Failed to set: key=" +key+" value.length="+value.length + " timeout="+timeout+" Op.status="+op.getStatus().getMessage();
 			throw new NoSqlException(emsg);
 	    }
 		
@@ -103,7 +103,7 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		if (!op.get().booleanValue()) {
 			logger.debug("delete failed: " + op.getStatus().getMessage());
 			logger.debug("delete: key="+key+" result= failure");
-			String emsg = "Failed to delete: key=" +key+ "timeout="+timeout+" Op.status="+op.getStatus().getMessage();
+			String emsg = "Failed to delete: key=" +key+ " timeout="+timeout+" Op.status="+op.getStatus().getMessage();
 	    } 
 		
 		logger.debug("delete: key="+key+" result= success");
