@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.amm.nosql.data.NoSqlEntity;
 import com.amm.nosql.dao.NoSqlDao;
 import com.amm.mapper.ObjectMapper;
+import com.amm.nosql.NoSqlException;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
@@ -66,13 +67,13 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	}
 
 	@SuppressWarnings("unchecked") 
-	public T get(String id) throws Exception {
-		byte [] value = (byte[])client.get(id);
-		logger.debug("get: id="+id+" value="+value);
+	public T get(String key) throws Exception {
+		byte [] value = (byte[])client.get(key);
+		logger.debug("get: key="+key+" value="+value);
 		if (value == null)
 			return null ;
 		T entity = entityMapper.toObject(value);
-        entity.setKey(id);
+        entity.setKey(key);
 		return entity;
 	}
 
@@ -81,29 +82,31 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	public void put(T entity) throws Exception {
 		String key = getKey(entity);
 		final byte [] value = entityMapper.toBytes(entity);
-		logger.debug("put: id="+key+" value.length="+value.length);
-		OperationFuture<Boolean> setOp = client.set(key, expiration, value);
+		logger.debug("put: key="+key+" value.length="+value.length);
+		OperationFuture<Boolean> op = client.set(key, expiration, value);
 		
-		if (!setOp.get().booleanValue()) {
-			logger.debug("Set failed: " + setOp.getStatus().getMessage());
-			logger.debug("put: id="+key+" value.length="+value.length +" result= failure " + "timeout="+timeout);
-			return;
+		if (!op.get().booleanValue()) {
+			logger.debug("Set failed: " + op.getStatus().getMessage());
+			logger.debug("put: key="+key+" value.length="+value.length +" result= failure " + "timeout="+timeout);
+			String emsg = "Failed to set: key=" +key+" value.length="+value.length + "timeout="+timeout+" Op.status="+op.getStatus().getMessage();
+			throw new NoSqlException(emsg);
 	    }
 		
 		//Boolean result = timeout<0?null: future.get(timeout,TimeUnit.MILLISECONDS);
-		logger.debug("put: id="+key+" value.length="+value.length +" result=success " + " timeout="+ timeout);
+		logger.debug("put: key="+key+" value.length="+value.length +" result=success " + " timeout="+ timeout);
 	}
 
-	public void delete(String id) throws Exception {
-		logger.debug("delete: id="+id);
-		OperationFuture<Boolean> delOp = client.delete(id); 
+	public void delete(String key) throws Exception {
+		logger.debug("delete: key="+key);
+		OperationFuture<Boolean> op = client.delete(key); 
 		
-		if (!delOp.get().booleanValue()) {
-			logger.debug("delete failed: " + delOp.getStatus().getMessage());
-			logger.debug("delete: id="+id+" result= failure");
+		if (!op.get().booleanValue()) {
+			logger.debug("delete failed: " + op.getStatus().getMessage());
+			logger.debug("delete: key="+key+" result= failure");
+			String emsg = "Failed to delete: key=" +key+ "timeout="+timeout+" Op.status="+op.getStatus().getMessage();
 	    } 
 		
-		logger.debug("delete: id="+id+" result= success");
+		logger.debug("delete: key="+key+" result= success");
 	}
 
 	private String getKey(T entity) {

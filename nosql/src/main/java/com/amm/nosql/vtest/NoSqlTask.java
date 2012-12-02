@@ -8,6 +8,7 @@ import com.amm.vtest.Task;
 import com.amm.vtest.TaskConfig;
 import com.amm.vtest.plugins.datagen.KeyGenerator;
 import com.amm.vtest.plugins.datagen.ValueGenerator;
+import com.amm.vtest.plugins.datagen.RandomValueGenerator;
 
 /**
  * Base NoSQL task.
@@ -22,8 +23,6 @@ abstract public class NoSqlTask extends BaseTask {
 		this.config = config ;
 		this.valueGenerator = config.getValueGenerator();;
 		this.keyGenerator = config.getKeyGenerator();;
-		//this.checkValue = config.getCheckValue();;
-		//this.checkValue = valueGenerator.canCheckValue();;
 
 		logger.debug("keyGenerator="+keyGenerator);
 		logger.debug("keyGenerator.class="+keyGenerator.getClass().getName());
@@ -50,6 +49,9 @@ abstract public class NoSqlTask extends BaseTask {
 	public ValueGenerator getValueGenerator() { 
 		return valueGenerator; 
 	}
+	public void setValueGenerator(ValueGenerator valueGenerator) { 
+		this.valueGenerator = valueGenerator; 
+	} 
 	public String getValue(String key) { 
 		return valueGenerator.getValue(key, config.getValueSize()); 
 	}
@@ -57,13 +59,18 @@ abstract public class NoSqlTask extends BaseTask {
 		return valueGenerator.getValue() ;
 	}
 
-	public void setValueSeed(int val) { 
-		//valueGenerator.setSeed(val); TODO
+	public boolean getCheckValue() { 
+		return valueGenerator.canCheckValue(); 
 	}
 
-	private String name;
-	public String getName() { return name==null?getClass().getSimpleName():name; }
-	public void setName(String name) { this.name = name; }
-
-	public boolean getCheckValue() { return valueGenerator.canCheckValue(); }
+	@Override
+	public String toString() {
+		return 
+			super.toString()
+			+" keyGenerator.class="+keyGenerator.getClass().getName()
+			+" keyGenerator=["+keyGenerator+"]"
+			+" valueGenerator.class="+valueGenerator.getClass().getName()
+			+" valueGenerator=["+valueGenerator+"]"
+		;
+	}
 }

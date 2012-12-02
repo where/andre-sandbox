@@ -24,6 +24,21 @@ public class CitrusleafDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	private String set ;
 	private String namespace ;
 
+	public CitrusleafDao(String hostnames, String namespace, String set, String bin, ObjectMapper<T> mapper) throws Exception {
+		this.client = new CitrusleafClient();
+		this.set = set ;
+		this.bin = bin ;
+		this.namespace = namespace ;
+		this.mapper = mapper ;
+		logger.debug("client="+client+" namespace="+namespace+" set="+set+" bin="+bin);
+		String [] list = hostnames.split(",");
+		for (String hostname : list) {
+			logger.debug("Adding hostname: "+hostname);
+			//System.out.println(">> ADDING HOST: "+hostname);
+			client.addHost(hostname,3000);
+		}
+	}
+
 	public CitrusleafDao(CitrusleafClient client, String namespace, String set, String bin, ObjectMapper<T> mapper) throws Exception {
 		this.client = client ;
 		this.set = set ;
@@ -79,6 +94,14 @@ public class CitrusleafDao<T extends NoSqlEntity> implements NoSqlDao<T> {
     private String getKey(T entity) {
         return entity.getKey().toString();
     }
+
+	public void setHost(String host) {
+		logger.debug("host="+host);
+		client.addHost(host,3000);
+	}
+
+	//public void setHosts(List<String> hosts) {
+	//}
 
 	@Override 
 	public String toString() {
