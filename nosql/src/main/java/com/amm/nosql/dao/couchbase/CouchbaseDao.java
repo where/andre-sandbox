@@ -24,14 +24,14 @@ import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
  */
 public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	private static final Logger logger = Logger.getLogger(CouchbaseDao.class);
-	private CouchbaseClient client ;
+	protected CouchbaseClient client ;
 	private String hostnames ;
 	private int port = 8091 ;
-	private int expiration ;
-	private long timeout ;
+	protected int expiration ;
+	protected long timeout ;
 	private String bucketname;
 	private String password = "" ;
-	private ObjectMapper<T> entityMapper;
+	protected ObjectMapper<T> entityMapper;
 	private CouchbaseConnectionFactoryBuilder connectionFactoryBuilder = new CouchbaseConnectionFactoryBuilder();
 	
 	public CouchbaseDao(String hostname, int expiration, long timeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException {
@@ -109,7 +109,7 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		logger.debug("delete: key="+key+" result= success");
 	}
 
-	private String getKey(T entity) {
+	protected String getKey(T entity) {
 		return entity.getKey().toString();
 	}
 
