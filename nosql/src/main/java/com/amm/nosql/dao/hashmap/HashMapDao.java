@@ -22,22 +22,31 @@ public class HashMapDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 			: Collections.synchronizedMap(new HashMap<String,T>());
 	}
 
-	public void put(T entity) throws Exception {
-		String key = getKey(entity);
-		cache.put(key, entity);
+	public void put(T obj) throws Exception {
+		String key = getKey(obj);
+		cache.put(key, obj);
 	}
 
 	public T get(String id) throws Exception {
-		T entity = cache.get(id);
-		return entity;
+		T obj = cache.get(id);
+		return obj;
+	}
+
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
+		Map<String,T> map = new HashMap<String,T>();
+		for (String key : keys) {
+			T obj = get(key);
+			map.put(key,obj);
+		}
+		return map;
 	}
 
 	public void delete(String id) throws Exception {
 		cache.remove(id);
 	}
 
-	private String getKey(T entity) {
-		return entity.getKey().toString();
+	private String getKey(T obj) {
+		return obj.getKey().toString();
 	}
 
 	@Override 

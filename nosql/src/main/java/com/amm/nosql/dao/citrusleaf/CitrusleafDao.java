@@ -69,6 +69,13 @@ public class CitrusleafDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		return entity;
 	}
 
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception { // TODO
+/* 
+        ClResult result = client.get(namespace, set, keys, bin, null);
+*/
+		throw new UnsupportedOperationException();
+	}
+
 	public void put(T entity) throws Exception {
 		String key = getKey(entity);
 		final byte [] value = mapper.toBytes(entity);

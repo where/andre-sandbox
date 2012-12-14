@@ -30,7 +30,6 @@ public class MemcachedDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	private ConnectionFactoryBuilder connectionFactoryBuilder = new ConnectionFactoryBuilder();
 
 	public MemcachedDao(MemcachedClient client, int expiration, long timeout, ObjectMapper<T> entityMapper) throws IOException {
-		//debug("CTOR.0: client="+client);
 		this.expiration = expiration ;
 		this.timeout = timeout ;
 		this.entityMapper = entityMapper ;
@@ -40,17 +39,14 @@ public class MemcachedDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 
 	public MemcachedDao(String hostnames, int expiration, long timeout, ObjectMapper<T> entityMapper) throws IOException {
 		this.hostname = hostnames ;
-		//debug("CTOR.1: hostnames="+hostnames);
 		this.expiration = expiration ;
 		this.timeout = timeout ;
 		this.entityMapper = entityMapper ;
 
 		connectionFactoryBuilder.setOpTimeout(timeout);
 		ConnectionFactory connectionFactory = connectionFactoryBuilder.build();
-		//logger.debug("OperationTimeout.2="+connectionFactory.getOperationTimeout());
 
    		List<InetSocketAddress> addresses = AddrUtil.getAddresses(hostnames);
-		//debug("addresses="+addresses);
 
 		client = new MemcachedClient(connectionFactory, addresses);
 	}
@@ -89,6 +85,10 @@ public class MemcachedDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		T entity = entityMapper.toObject(value);
         entity.setKey(id);
 		return entity;
+	}
+
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
+		throw new UnsupportedOperationException(); // TODO
 	}
 
 // If never call future.get, then value is never persisted!

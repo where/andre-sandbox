@@ -1,5 +1,6 @@
 package com.amm.nosql.dao.cassandra;
 
+import java.util.*;
 import org.apache.log4j.Logger;
 import com.amm.nosql.dao.KeyValueDao;
 import com.amm.nosql.data.KeyValue;
@@ -49,6 +50,10 @@ public class CassandraKeyValueDao<X extends KeyValue> implements KeyValueDao {
 		byte [] value = (byte [])column.getValue();
 		KeyValue keyValue = entityMapper.toObject(value);
 		return keyValue ;
+	}
+
+	public Map<String,KeyValue> getBulk(Collection<String> keys) throws Exception {
+		throw new UnsupportedOperationException();
 	}
 
 	public void put(KeyValue entity) throws Exception {

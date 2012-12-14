@@ -77,6 +77,19 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		return entity;
 	}
 
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
+		Map<String,Object> omap = client.getBulk(keys);
+		Map<String,T> tmap = new HashMap<String,T>();
+		for (Map.Entry<String,Object> entry : omap.entrySet() ) {
+			String key = entry.getKey();
+			byte [] value = (byte[])entry.getValue();
+			T entity = entityMapper.toObject(value);
+        	entity.setKey(key);
+			tmap.put(key,entity);
+		}
+		return tmap;
+	}
+
 // If never call future.get, then value is never persisted!
 
 	public void put(T entity) throws Exception {

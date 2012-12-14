@@ -1,5 +1,6 @@
 package com.amm.nosql.dao.mongodb;
 
+import java.util.*;
 import org.apache.log4j.Logger;
 import com.amm.nosql.data.NoSqlEntity;
 import com.amm.nosql.dao.NoSqlDao;
@@ -49,6 +50,15 @@ WriteConcern:
 		DBObject mobj = cursor.next();
 		T entity = entityMapper.toObject(mobj);
 		return entity;
+	}
+
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
+		Map<String,T> map = new HashMap<String,T>();
+		for (String key : keys) {
+			T obj = get(key);
+			map.put(key,obj);
+		}
+		return map;
 	}
 
 	public void put(T entity) throws Exception {

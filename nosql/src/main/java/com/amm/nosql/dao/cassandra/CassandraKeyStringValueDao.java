@@ -1,5 +1,6 @@
 package com.amm.nosql.dao.cassandra;
 
+import java.util.*;
 import org.apache.log4j.Logger;
 import com.amm.nosql.dao.KeyStringValueDao;
 import com.amm.nosql.data.KeyStringValue;
@@ -51,6 +52,9 @@ public class CassandraKeyStringValueDao<X extends KeyStringValue> implements Key
 		return keyValue ;
 	}
 
+	public Map<String,KeyStringValue> getBulk(Collection<String> keys) throws Exception {
+		throw new UnsupportedOperationException();
+	}
 	public void put(KeyStringValue entity) throws Exception {
 		byte [] value = entityMapper.toBytes(entity);
 		HFactory.createMutator(keyspace, serializerKey).insert(

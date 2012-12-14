@@ -1,5 +1,6 @@
 package com.amm.nosql.dao.noop;
 
+import java.util.*;
 import com.amm.nosql.NoSqlException;
 import com.amm.nosql.data.NoSqlEntity;
 import com.amm.nosql.dao.NoSqlDao;
@@ -19,6 +20,11 @@ public class NullNoSqlDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	}
 
 	public T get(String id) throws Exception {
+		sleep();
+		return null;
+	}
+
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
 		sleep();
 		return null;
 	}

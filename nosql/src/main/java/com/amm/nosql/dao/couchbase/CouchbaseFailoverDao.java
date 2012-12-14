@@ -47,7 +47,7 @@ public class CouchbaseFailoverDao<T extends NoSqlEntity> extends CouchbaseDao<T>
 			if (emsg == null) {
 				if (j > 0) {
 					retrySuceededCount.getAndIncrement();
-					System.out.println("RETRY SUCEEDED: key="+getKey(entity)
+					System.out.println("RETRY SUCCEEDED: key="+getKey(entity)
 						+" j="+j+"/"+retryMax
 						+" retryCount="+retryCount
 						+" retryKeyCount="+retryKeyCount

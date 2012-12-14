@@ -43,6 +43,15 @@ public class OracleDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		return object;
 	}
 
+	public Map<String,T> getBulk(Collection<String> keys) throws Exception {
+		Map<String,T> map = new HashMap<String,T>();
+		for (String key : keys) {
+			T obj = get(key);
+			map.put(key,obj);
+		}
+		return map;
+	}
+
 	public void put(T object) throws Exception {
 		String key = getKey(object);
 		byte [] value = objectMapper.toBytes(object);
