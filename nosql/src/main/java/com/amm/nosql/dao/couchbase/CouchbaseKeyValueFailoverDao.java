@@ -8,10 +8,7 @@ import com.amm.nosql.data.KeyValue;
 import com.amm.mapper.ObjectMapper;
 
 public class CouchbaseKeyValueFailoverDao extends CouchbaseFailoverDao<KeyValue> implements KeyValueDao {
-	public CouchbaseKeyValueFailoverDao(String hostname, int port, int expiration, long timeout, String bucketname, ObjectMapper<KeyValue> entityMapper) throws IOException, URISyntaxException {
-		super(hostname, port, expiration, timeout, bucketname, entityMapper) ;
-	}
-	public CouchbaseKeyValueFailoverDao(String hostname, int expiration, long timeout, String bucketname, ObjectMapper<KeyValue> entityMapper) throws IOException, URISyntaxException {
-		super(hostname, expiration, timeout, bucketname, entityMapper) ;
+	public CouchbaseKeyValueFailoverDao(String hostname, int port, int expiration, long opTimeout, long opQueueMaxBlockTime, String bucketname, ObjectMapper<KeyValue> entityMapper) throws IOException, URISyntaxException {
+		super(hostname, port, expiration, opTimeout, opQueueMaxBlockTime, bucketname, entityMapper) ;
 	}
 }

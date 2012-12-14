@@ -30,12 +30,8 @@ public class CouchbaseFailoverDao<T extends NoSqlEntity> extends CouchbaseDao<T>
 	private final static AtomicLong retrySleptTime = new AtomicLong();
 	private final static AtomicLong retrySuceededCount = new AtomicLong();
 
-	public CouchbaseFailoverDao(String hostname, int expiration, long timeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException { 
-		super(hostname, expiration, timeout, bucketname, entityMapper) ;
-	}
-	
-	public CouchbaseFailoverDao(String hostname, int port, int expiration, long timeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException { 
-		super(hostname, expiration, timeout, bucketname, entityMapper) ;
+	public CouchbaseFailoverDao(String hostname, int port, int expiration, long opTimeout, long opQueueMaxBlockTime, String bucketname, ObjectMapper<T> entityMapper) throws IOException { 
+		super(hostname, port, expiration, opTimeout, opQueueMaxBlockTime, bucketname, entityMapper) ;
 	}
 
 	public void put(T entity) throws Exception {

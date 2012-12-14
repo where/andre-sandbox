@@ -17,6 +17,7 @@ import com.amm.nosql.NoSqlException;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
+import net.spy.memcached.ops.OperationQueueFactory;
 
 /**
  * Couchbase implementation.
@@ -28,33 +29,56 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 	private String hostnames ;
 	private int port = 8091 ;
 	protected int expiration ;
-	protected long timeout ;
+	protected long opTimeout ;
+	protected long opQueueMaxBlockTime;
 	private String bucketname;
 	private String password = "" ;
+	private OperationQueueFactory operationQueueFactory ;
 	protected ObjectMapper<T> entityMapper;
 	private CouchbaseConnectionFactoryBuilder connectionFactoryBuilder = new CouchbaseConnectionFactoryBuilder();
 	
-	public CouchbaseDao(String hostname, int expiration, long timeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException {
+/*
+	public CouchbaseDao(String hostname, int expiration, long opTimeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException {
 		this.hostnames = hostname ;
 		this.expiration = expiration ;
-		this.timeout = timeout ;
+		this.opTimeout = opTimeout ;
+		this.bucketname = bucketname;
+		this.entityMapper = entityMapper ;
+		createClient();
+	}
+*/
+
+	public CouchbaseDao(String hostname, int port, int expiration, long opTimeout, long opQueueMaxBlockTime, String bucketname, ObjectMapper<T> entityMapper) throws IOException { 
+		this.hostnames = hostname ;
+		this.port = port ;
+		this.expiration = expiration ;
+		this.opTimeout = opTimeout ;
+		this.opQueueMaxBlockTime = opQueueMaxBlockTime ;
 		this.bucketname = bucketname;
 		this.entityMapper = entityMapper ;
 		createClient();
 	}
 
-	public CouchbaseDao(String hostname, int port, int expiration, long timeout, String bucketname, ObjectMapper<T> entityMapper) throws IOException { 
+	public CouchbaseDao(String hostname, int port, int expiration, long opTimeout, long opQueueMaxBlockTime, String bucketname, ObjectMapper<T> entityMapper, OperationQueueFactory operationQueueFactory) throws IOException { 
 		this.hostnames = hostname ;
 		this.port = port ;
 		this.expiration = expiration ;
-		this.timeout = timeout ;
+		this.opTimeout = opTimeout ;
+		this.opQueueMaxBlockTime = opQueueMaxBlockTime ;
 		this.bucketname = bucketname;
 		this.entityMapper = entityMapper ;
+		this.operationQueueFactory = operationQueueFactory ;
 		createClient();
 	}
 
 	private void createClient() throws IOException {
-		connectionFactoryBuilder.setOpTimeout(timeout);
+		connectionFactoryBuilder.setOpTimeout(opTimeout);
+		connectionFactoryBuilder.setOpQueueMaxBlockTime(opQueueMaxBlockTime);   
+		logger.debug("opTimeout="+opTimeout+" opQueueMaxBlockTime="+opQueueMaxBlockTime);
+		logger.debug("operationQueueFactory="+operationQueueFactory);
+		if (operationQueueFactory != null)
+			connectionFactoryBuilder.setOpQueueFactory(operationQueueFactory);
+
 		String [] serverIPs = hostnames.split(",");
 		List<URI> serverList = new ArrayList<URI>();  
         for (String serverName : serverIPs) {  
@@ -99,14 +123,13 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		OperationFuture<Boolean> op = client.set(key, expiration, value);
 		
 		if (!op.get().booleanValue()) {
-			logger.debug("Set failed: " + op.getStatus().getMessage());
-			logger.debug("put: key="+key+" value.length="+value.length +" result= failure " + "timeout="+timeout);
-			String emsg = "Failed to set: key=" +key+" value.length="+value.length + " timeout="+timeout+" Op.status="+op.getStatus().getMessage();
+			String emsg = "put failed: key=" +key+" value.length="+value.length+" Op.status="+op.getStatus().getMessage();
+			logger.debug(emsg);
 			throw new NoSqlException(emsg);
 	    }
 		
 		//Boolean result = timeout<0?null: future.get(timeout,TimeUnit.MILLISECONDS);
-		logger.debug("put: key="+key+" value.length="+value.length +" result=success " + " timeout="+ timeout);
+		logger.debug("put: key="+key+" value.length="+value.length +" result=success");
 	}
 
 	public void delete(String key) throws Exception {
@@ -114,12 +137,11 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		OperationFuture<Boolean> op = client.delete(key); 
 		
 		if (!op.get().booleanValue()) {
-			logger.debug("delete failed: " + op.getStatus().getMessage());
-			logger.debug("delete: key="+key+" result= failure");
-			String emsg = "Failed to delete: key=" +key+ " timeout="+timeout+" Op.status="+op.getStatus().getMessage();
+			String emsg = "Failed to delete: key=" +key+ " Op.status="+op.getStatus().getMessage();
+			logger.debug(emsg);
+			return;
 	    } 
-		
-		logger.debug("delete: key="+key+" result= success");
+		logger.debug("delete: key="+key+" result=success");
 	}
 
 	protected String getKey(T entity) {
@@ -130,18 +152,15 @@ public class CouchbaseDao<T extends NoSqlEntity> implements NoSqlDao<T> {
 		this.expiration = seconds ;
 	}
 
-    public void setTimeout(long timeout) {
-		this.timeout = timeout ;
-	}
-
-
 	@Override 
 	public String toString() {
 		return 
 			"hostname="+hostnames
 			+" port="+port
 			+" expiration="+expiration
-			+" timeout="+timeout
+			+" opTimeout="+opTimeout
+			+" opQueueMaxBlockTime="+opQueueMaxBlockTime
+			+" operationQueueFactory="+operationQueueFactory
 		;
 	}
 }
