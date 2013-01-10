@@ -2,7 +2,7 @@
 
 <!-- ====================================================================== -->
 <!--                                                                        -->
-<!-- build.xml - PPHere sample JAX-RS                           07 jul 2012 -->
+<!-- build.xml - PPHere sample JAX-RS                           10 jan 2013 -->
 <!--                                                                        -->
 <!-- ====================================================================== -->
 
@@ -13,7 +13,7 @@
 
 <!-- ============================================================== -->
 
-<project name="pphere" default="all" basedir=".">
+<project name="jaxrs-sample" default="all" basedir=".">
   <property file="build.properties"  />
   <property file="user.properties"  />
 
@@ -31,8 +31,8 @@
   <!-- All                                                     -->
   <!-- ======================================================= -->
 
-  <target name="all" depends="init,compile,build.jar,build.common.jar,build.war,deploy.war"
-          description="init,compile,build.war,test" >
+  <target name="all" depends="clean,compile,build.jar,build.common.jar,build.war,deploy.war"
+          description="clean,compile,build.war,test" >
     <echo message="rest.vendor = ${rest.vendor}" />
   </target>
 
@@ -61,7 +61,7 @@
   <!-- Compile                                                 -->
   <!-- ======================================================= -->
   
-  <target name="compile" depends="init,copy.jaxb.files"
+  <target name="compile" depends="clean,copy.jaxb.files"
           description="Compile Java files" >
     <javac
         debug="on"
@@ -99,7 +99,7 @@
     </jar>
   </target>
 
-  <target name="init" >
+  <target name="clean" >
     <delete dir="${build.dir}" />
     <mkdir dir="${build.dir}" />
     <mkdir dir="${build.classes.dir}" />
