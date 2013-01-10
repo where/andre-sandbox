@@ -21,8 +21,13 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
     <jaxrs:providers>
       <ref bean="exceptionMapper.WebApplication"/>
       <ref bean="javaSerializedReaderWriter"/>
+
+      <!-- JAXB Provider customization -->
       <ref bean="jaxbProvider"/>
+
+      <!-- Jackson instead of default Jettison  -->
       <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+
     </jaxrs:providers>
 
     <jaxrs:serviceBeans>
@@ -30,9 +35,11 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
       <ref bean="offerResource" />
     </jaxrs:serviceBeans>
 
+    <!-- Validation -->
     <jaxrs:schemaLocations>
        <jaxrs:schemaLocation>classpath:schema.xsd</jaxrs:schemaLocation>
     </jaxrs:schemaLocations>
+
   </jaxrs:server>
 
   <!-- only works for XML (pretty print will be slower) - TODO: find for JSON -->
@@ -62,9 +69,8 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
      <constructor-arg ref="offerDao" />
   </bean >
 
-  <bean id="exceptionMapper.Validation" class="com.andre.rest.cxf.ValidationExceptionMapper" />
   <bean id="exceptionMapper.WebApplication" class="com.andre.rest.cxf.WebApplicationExceptionMapper" />
-  <bean id="exceptionMapper.Default" class="com.andre.rest.cxf.DefaultExceptionMapper" />
+
   <bean id="javaSerializedReaderWriter" class="com.andre.rest.JavaSerializedReaderWriter" />
 
   <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
