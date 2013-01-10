@@ -26,6 +26,8 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 	private static final Logger logger = Logger.getLogger(WebApplicationExceptionMapper.class);
 	private static final String SAXParseException = "org.xml.sax.SAXParseException" ;
 	private static final String WstxUnexpectedCharException = "com.ctc.wstx.exc.WstxUnexpectedCharException" ;
+	private static final String HEADER_APP_ERROR_CODE = "X-app-error-code" ;
+	private static final String HEADER_APP_ERROR_MESSAGE = "X-app-error-message" ;
 
 	public Response toResponse(WebApplicationException ex) {
 		logger.debug("-------------------");
@@ -55,19 +57,28 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 			status = 400 ; 
 
 		// XML
-		} if (status == 400 && cause != null ) {
+		} else if (status == 400 && cause != null ) {
 			if (cause instanceof SAXParseException) {
 				appError = ApplicationErrors.VALIDATION_FAILED ;
 			} else if (cause instanceof WstxUnexpectedCharException) {
 				appError = ApplicationErrors.ILLEGAL_SYNTAX ;
 			}
+
+		// Java Serialized: if send illegal input
+		} else if (status == 500 && (cause instanceof java.io.StreamCorruptedException)) {
+			status = 400 ; 
+			appError = ApplicationErrors.ILLEGAL_SYNTAX ;
 		}
+
 		String emsg = ex.getMessage();
 		logger.debug("status.2="+status+" appError="+appError+" msg="+emsg);
 		Error error = new Error(status, emsg, appError);
 		Response.ResponseBuilder rb = Response.status(status);
-		if (appError != null) 
+		if (appError != null) {
+			rb.header(HEADER_APP_ERROR_CODE,appError);
+			rb.header(HEADER_APP_ERROR_MESSAGE,emsg);
 			rb.entity(error);
+		}
 		//rb.type(MediaType.APPLICATION_XML); // HACK: http://www.mail-archive.com/users@cxf.apache.org/msg08310.html
 		return rb.build();
 	}

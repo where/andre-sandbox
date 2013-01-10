@@ -11,7 +11,7 @@ import com.andre.pphere.data.*;
  */
 public class Utils {
 
-	public static StoreList createStoreList(String name) {
+	public static StoreList createStoreList() {
 		StoreList list = new StoreList();
 		list.add(createStore("ems"));
 		list.add(createStore("rei"));
@@ -24,8 +24,8 @@ public class Utils {
 		store.setAccountId("accountId");
 		store.setPhoneNumber("617 123-1234");
 		Location location = new Location();
-		location.setStreet1("Main st");
-		location.setStreet2("Test st");
+		location.setStreet1("TEST: Main st");
+		location.setStreet2("TEST: Test st");
 		store.setLocation(location);
 		return store;
 	}

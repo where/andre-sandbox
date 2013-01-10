@@ -8,9 +8,11 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-      /WEB-INF/classes/appContext.xml
-    </param-value>
+    <param-value>/WEB-INF/classes/appContext.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>pphere</param-value>
   </context-param>
 
   <listener>

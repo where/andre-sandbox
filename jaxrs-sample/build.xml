@@ -2,7 +2,7 @@
 
 <!-- ====================================================================== -->
 <!--                                                                        -->
-<!-- build.xml - PPHere sample JAX-RS                           20 jun 2012 -->
+<!-- build.xml - PPHere sample JAX-RS                           07 jul 2012 -->
 <!--                                                                        -->
 <!-- ====================================================================== -->
 
@@ -31,7 +31,7 @@
   <!-- All                                                     -->
   <!-- ======================================================= -->
 
-  <target name="all" depends="init,compile,build.jar,build.war,deploy.war"
+  <target name="all" depends="init,compile,build.jar,build.common.jar,build.war,deploy.war"
           description="init,compile,build.war,test" >
     <echo message="rest.vendor = ${rest.vendor}" />
   </target>
@@ -84,6 +84,13 @@
   <!-- ======================================================= -->
   <!-- Build                                                   -->
   <!-- ======================================================= -->
+
+  <target name="build.common.jar" depends="compile" description="build common rest jar" >
+    <mkdir dir="${build.dist.dir}" />
+    <jar destfile="${build.dist.dir}/${common.jar.name}.jar">
+       <fileset dir="${build.classes.dir}" includes="com/andre/rest/**/*" />
+    </jar>
+  </target>
 
   <target name="build.jar" depends="compile" >
     <mkdir dir="${build.dist.dir}" />

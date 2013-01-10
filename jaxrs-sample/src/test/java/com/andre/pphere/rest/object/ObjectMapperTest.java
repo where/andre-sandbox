@@ -32,7 +32,7 @@ public class ObjectMapperTest extends BaseTest {
 
 	@Test(dataProvider = "objectMappers")
 	public void storeList(ObjectMapper mapper) throws Exception {
-		StoreList obj1 = Utils.createStoreList("foo");
+		StoreList obj1 = Utils.createStoreList();
 		String str = mapper.toString(obj1);
 		StoreList obj2 = (StoreList)mapper.toObject(str,StoreList.class);
 	}

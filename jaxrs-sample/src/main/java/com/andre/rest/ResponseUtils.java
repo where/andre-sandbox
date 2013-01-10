@@ -11,7 +11,8 @@ import java.util.*;
  * @author amesarovic
  */
 public class ResponseUtils {
-	//public static final String HEADER_APP_ERROR = "X-app-errror" ;
+	public static final String HEADER_APP_ERROR_CODE = "X-app-errror" ;
+	public static final String HEADER_APP_ERROR_MESSAGE = "X-app-errror-message" ;
 	public static final String HEADER_LOCATION = "Location" ;
 
 	public static Response createGet(Object entity) {
@@ -57,22 +58,33 @@ public class ResponseUtils {
 		return r;
 	}
 
+	public static Response createClientError(String msg) {
+		return createClientError(null, msg, Response.Status.BAD_REQUEST);
+	}
 	public static Response createClientError(String applicationCode, String msg) {
 		return createClientError(applicationCode, msg, Response.Status.BAD_REQUEST);
 	}
 	public static Response createClientError(String applicationCode, String msg, Response.Status status) {
 		Response.ResponseBuilder rb = Response.status(status);
 
-		Error error = new Error(Response.Status.BAD_REQUEST.getStatusCode(),applicationCode,msg);
+		Error error = new Error(Response.Status.BAD_REQUEST.getStatusCode(),msg);
+		if (null != applicationCode) {
+			error.setApplicationCode(applicationCode);
+			rb.header(HEADER_APP_ERROR_CODE, applicationCode);
+		}
 		rb.entity(error);
-		//rb.header(HEADER_APP_ERROR, msg);
+		rb.header(HEADER_APP_ERROR_MESSAGE, msg);
 		Response r = rb.build();
 		return r ;
 	}
 
 	public static Response createServerError(String msg) {
 		Response.ResponseBuilder rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
-		//rb.header(HEADER_APP_ERROR, msg);
+		rb.header(HEADER_APP_ERROR_MESSAGE, msg);
+
+		Error error = new Error(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),msg);
+		rb.entity(error);
+
 		Response r = rb.build();
 		return r ;
 	}

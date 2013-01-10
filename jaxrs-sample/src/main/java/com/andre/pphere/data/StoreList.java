@@ -2,27 +2,31 @@ package com.andre.pphere.data;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 import java.util.*;
 import com.andre.rest.data.PagedList;
 
 @XmlRootElement(name="stores")
-//public class StoreList extends PagedList {
-public class StoreList {
-	private List<Store> stores = new ArrayList<Store>();
-
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "StoreList", propOrder = {
+	"count",
+	"links",
+	"stores",
+})  
+public class StoreList extends PagedList<Store> {
+	
 	public StoreList() {
 	}
-
+		
 	public StoreList(List<Store> stores) {
-		this.stores = stores;
+		super(stores);
 	}
-
+	
 	@XmlElement(name="store")
-	public List<Store> getStores() {
-		return stores;
+	public List<Store> getStores() { 
+		return getList();
 	}
+} 
 
-	public void add(Store store) {
-		stores.add(store);
-	}
-}

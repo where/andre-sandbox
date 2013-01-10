@@ -84,13 +84,9 @@ public class StoreResource {
 		@Description(value = "Requested Store", target = DocTarget.RETURN),
 		})
 	public Response create(Store obj, @Context HttpHeaders headers) {
-		try {
-			long id = dao.createStore(obj);
-			obj.setId(id);
-			return ResponseUtils.createPost(""+uriInfo.getAbsolutePath(), ""+id,obj);
-		} catch (Exception e) {
-		 	return ResponseUtils.createServerError(""+e) ;
-		}
+		long id = dao.createStore(obj);
+		obj.setId(id);
+		return ResponseUtils.createPost(""+uriInfo.getAbsolutePath(), ""+id,obj);
 	}
 
 	@PUT

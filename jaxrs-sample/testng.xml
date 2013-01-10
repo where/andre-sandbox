@@ -8,12 +8,13 @@
       </run>
     </groups>
     <classes>
-      <class name="com.andre.pphere.rest.object.ObjectMapperTest" />
+      <class name="com.andre.pphere.rest.object.JsonMapperTest" />
       <class name="com.andre.pphere.rest.object.ObjectTest" />
+      <class name="com.andre.pphere.rest.object.ObjectMapperTest" />
       <class name="com.andre.pphere.rest.string.StringTest" />
       <class name="com.andre.pphere.rest.string.NegativeTest" />
+
 <!--
-      <class name="com.andre.pphere.rest.object.JaxbTest" />
       <class name="com.andre.pphere.rest.cxf.CxfClientTest" />
 -->
     </classes>

@@ -12,17 +12,17 @@ import com.andre.pphere.data.StoreList;
 import com.andre.pphere.data.*;
 import com.andre.rest.ApplicationErrors;
 import com.andre.mapper.ObjectMapper;
-import com.andre.pphere.rest.BaseTest;
 
 /**
  * For now, only using XML content - JSON under way.
  * JSON marashalling fails - plain Jackson doesn't match CXF Jackson provider with JAXB.
  */
-public class ObjectTest extends BaseTest {
+public class ObjectTest extends ObjectBaseTest {
 	private static final Logger logger = Logger.getLogger(ObjectTest.class);
 	private long key = makeUniqueKey();
 	private String lastPostUrl  ;
 
+	// JSON: fails since JAXB/Jackson emits 'store' instead of 'stores' which plain Jackson expects
 	@Test(dataProvider = "objectMappers")
 	public void getStores(ObjectMapper mapper) throws Exception {
 		String contentType = mapper.getContentType();
@@ -91,39 +91,22 @@ public class ObjectTest extends BaseTest {
 		Assert.assertEquals(location.getStreet2(),location2.getStreet2());
 	}
 
-	@Test(dataProvider = "objectMappers")
-	public void testPost_ValidationFailure_RequiredField(ObjectMapper mapper) throws Exception {
-		String contentType = mapper.getContentType();
-		Store store = Utils.createStore(null); // Name is required per schema - this will cause validation failure
-		String content = mapper.toString(store);
-		RestHttpClient.Result result = post(storeUrl,content,contentType);
+    @Test(dataProvider = "objectMappers", dependsOnMethods="testPut_Get")
+    public void testDelete_Get(ObjectMapper mapper) throws Exception {
+        String contentType = mapper.getContentType();
+        RestHttpClient.Result result ;
+        String url = lastPostUrl;
 
-		int statusCode = 400 ;
-		Assert.assertEquals(result.statusCode,statusCode);
-		String sresponse = new String(result.response);
-		Error error = convertError(contentType, result.response);
-		Assert.assertEquals(error.getHttpStatusCode(),statusCode);
-		Assert.assertEquals(error.getApplicationCode(),ApplicationErrors.VALIDATION_FAILED);
-	}
+        result = httpClient.get(url,makeHeaders(contentType));
+        assertStatus(result);
 
-	@Test(dataProvider = "objectMappers")
-	public void testPost_ValidationFailure_BadValue(ObjectMapper mapper) throws Exception {
-		String contentType = mapper.getContentType();
-		Store store = Utils.createStore("foo"); 
-		
-		long value = random.nextLong();
-		store.setId(value);
-		String content = mapper.toString(store);
-		content = content.replace(""+value,"\"NON_NUMERIC\"");
-		RestHttpClient.Result result = post(storeUrl,content,contentType);
+        result = httpClient.delete(url);
+        assertStatus(result);
 
-		int statusCode = 400 ;
-		Assert.assertEquals(result.statusCode,statusCode);
-		String sresponse = new String(result.response);
-		Error error = convertError(contentType, result.response);
-		Assert.assertEquals(error.getHttpStatusCode(),statusCode);
-		Assert.assertEquals(error.getApplicationCode(),ApplicationErrors.VALIDATION_FAILED);
-	}
+        result = httpClient.get(url,makeHeaders(contentType));
+        Assert.assertEquals(result.method.getStatusCode(), 404);
+    } 
+
 
 	@Test(dataProvider = "objectMappers")
 	public void testPost_IllegalSyntax(ObjectMapper mapper) throws Exception {
@@ -139,42 +122,19 @@ public class ObjectTest extends BaseTest {
 		Assert.assertEquals(error.getApplicationCode(),ApplicationErrors.ILLEGAL_SYNTAX);
 	}
 
-	private Store convertStore(String contentType, byte [] content) throws Exception {
-		String scontent = new String(content); 
-		Object obj = readObject(contentType, scontent,Store.class); // NOTE: Works for Jackson JSON but not for default JSON provider
-		Assert.assertTrue(obj instanceof Store);
-		return (Store)obj;
+	@Test
+	public void testPost_UnsupportedMedia() throws Exception {
+		String contentType = "text/plain" ;
+		String content = "North End Church" ;
+		RestHttpClient.Result result = post(storeUrl,content,contentType);
+        Assert.assertEquals(result.statusCode,406);
 	}
 
-	private Error convertError(String contentType, byte [] content) throws Exception {
-		String scontent = new String(content); 
-		Object obj = readObject(contentType, scontent, Error.class); // TODO: HACK to fix
-		Assert.assertTrue(obj instanceof Error);
-		return (Error)obj;
-	}
-
-	public Long extractId(String url) {
-		String [] toks =  url.split("/");
-		return Long.parseLong(toks[toks.length-1]);
-	}
-
-	@AfterClass
-	void afterClass() throws Exception {
-		for (String url : urlsPosted) {
-			logger.debug(">> url="+url);
-			RestHttpClient.Result result = httpClient.delete(url) ;
-			Assert.assertEquals(result.statusCode,200);
-		}
-	}
-
-	private List<String> urlsPosted = new ArrayList<String>();
-
-	private RestHttpClient.Result post(String storeUrl, String content, String contentType) throws Exception {
-		RestHttpClient.Result result = httpClient.post(storeUrl,content.getBytes(),makeHeaders(contentType));
-        String locationUrl = result.getHeaderValue("Location");
-		logger.debug(">> locationUrl="+locationUrl);
-		if (locationUrl != null)
-			urlsPosted.add(locationUrl);
-		return result ;
+	@Test
+	public void testPost_IllegalAcceptHeader() throws Exception {
+		String content = "North End Church" ;
+		String contentType = "foobar";
+		RestHttpClient.Result result = post(storeUrl,content,contentType);
+        Assert.assertEquals(result.statusCode,406);
 	}
 }

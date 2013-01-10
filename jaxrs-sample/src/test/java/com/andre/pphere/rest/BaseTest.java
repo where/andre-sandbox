@@ -11,7 +11,7 @@ import org.apache.commons.httpclient.Header;
 import com.andre.http.RestHttpClient;
 
 import com.andre.mapper.jaxb.JaxbObjectMapper;
-import com.andre.mapper.jackson.JsonObjectMapper;
+import com.andre.mapper.jackson.JacksonObjectMapper;
 import com.andre.mapper.ObjectMapper;
 
 public class BaseTest {
@@ -44,7 +44,7 @@ public class BaseTest {
  		Class clazz = com.andre.pphere.data.Store.class ;
 		logger.debug("baseUrl="+baseUrl);
 
-		jsonMapper = new JsonObjectMapper();
+		jsonMapper = new JacksonObjectMapper();
 		xmlMapper = new JaxbObjectMapper(schemaFile);
 		objectMappers.put("application/json",jsonMapper);
 		objectMappers.put("application/xml",xmlMapper);
@@ -98,6 +98,9 @@ public class BaseTest {
 		Assert.assertTrue(!isError(result.statusCode),msg);
 	}
 
+    public static void assertStatus(RestHttpClient.Result result, int statusCode) {
+        Assert.assertEquals(result.statusCode, statusCode);
+    }
 
 	public static boolean isError(int statusCode) {
 		return statusCode < 200 || statusCode > 299 ;
@@ -110,6 +113,7 @@ public class BaseTest {
 		return headers ;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object readObject(String contentType, String content, Class clazz) throws Exception {
 		ObjectMapper objectMapper = objectMappers.get(contentType);
 		if (null == objectMapper)
