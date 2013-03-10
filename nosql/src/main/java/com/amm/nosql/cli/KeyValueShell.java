@@ -23,6 +23,7 @@ public class KeyValueShell {
     private static final String ROOT_CONFIG_FILE = "appContext.xml" ;
     private static final String PROPERTY_PROVIDER_CONFIG_FILE = "providerConfigFile";
     private KeyValueDao keyValueDao;
+    private Map<String,KeyValueDao> keyValueDaos;
 
 	public static void main(String [] args) throws IOException {
 		(new KeyValueShell()).process(args);
@@ -188,9 +189,17 @@ public class KeyValueShell {
         logger.debug("configFiles="+Arrays.toString(configFiles));
 
         ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
+
         keyValueDao = context.getBean("keyValueDao",KeyValueDao.class);
         logger.debug("keyValueDao="+keyValueDao);
         logger.debug("keyValueDao.class="+keyValueDao.getClass().getName());
+
+/* AMM 9 mar 2013
+        //keyValueDaos = context.getBean("keyValueDao",Map<String,KeyValueDao>.class);
+        keyValueDaos = (Map<String,KeyValueDao>) context.getBean("keyValueDao");
+        logger.debug("keyValueDaos="+keyValueDaos);
+        logger.debug("keyValueDaos.class="+keyValueDaos.getClass().getName());
+*/
 	}
 
 	class Options {
