@@ -9,6 +9,8 @@ public class FormatUtils {
 		print(keyValue,-1);
 	}
 	public static void print(KeyValue keyValue, int maxToDisplay) {
+		if (maxToDisplay < 0)
+			maxToDisplay = Integer.MAX_VALUE;
 		if (keyValue == null) {
 			info("KeyValue: null");
 		} else {
@@ -18,16 +20,17 @@ public class FormatUtils {
 			String str = new String(value);
 			if (maxToDisplay > -1 && str.length() > maxToDisplay)
 				str = str.substring(0,maxToDisplay)+"...";
-			print(str,value);
+			print(str,value,keyValue.getKey());
 		}
 	}
 
-	public static void print(String str) {
-		print(str,str.getBytes());
-	}
-	public static void print(String str, byte [] value) {
+	//private static void print(String str) {
+		//print(str,str.getBytes());
+	//}
+	private static void print(String str, byte [] value, String key) {
 		if (isAsciiPrintable(str)) {
-			info("  #valueBytes="+value.length);
+			info("  keySize="+key.length()+" valueSize="+value.length);
+			//info("  #bytes="+value.length);
 			info("  value="+str);
 		} else {
 			info("  value: #bytes="+value.length);

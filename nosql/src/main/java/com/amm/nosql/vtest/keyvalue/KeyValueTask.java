@@ -17,4 +17,5 @@ abstract public class KeyValueTask extends NoSqlTask {
 	}
 
 	public KeyValueDao getKeyValueDao() { return keyValueDao ; }
+
 }

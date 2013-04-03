@@ -2,7 +2,6 @@ package com.amm.nosql.dao.couchbase;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 import com.amm.nosql.dao.KeyValueDao;
 import com.amm.nosql.data.KeyValue;
 import com.amm.mapper.ObjectMapper;

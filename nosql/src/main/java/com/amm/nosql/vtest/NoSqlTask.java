@@ -63,6 +63,10 @@ abstract public class NoSqlTask extends BaseTask {
 		return valueGenerator.canCheckValue(); 
 	}
 
+	public NoSqlTaskConfig getNoSqlTaskConfig() {
+		return config;
+	}
+
 	@Override
 	public String toString() {
 		return 
