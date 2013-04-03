@@ -10,16 +10,23 @@
         <constructor-arg value="${hosts}" />
         <constructor-arg value="${couchbase.port}" />
         <constructor-arg value="${couchbase.expiration}" />
-        <constructor-arg value="${couchbase.timeout}" />
+        <constructor-arg value="${couchbase.opTimeout}" />
+        <constructor-arg value="${couchbase.opQueueMaxBlockTime}" />
         <constructor-arg value="${couchbase.bucketname}" />
         <constructor-arg ref="keyValueMapper" />
+        <constructor-arg ref="customQueueFactory" />
+    </bean>
+
+    <bean id="customQueueFactory" class="com.amm.nosql.dao.couchbase.CustomQueueFactory">
+        <constructor-arg value="${couchbase.opQueueSize}" />
     </bean>
 
     <bean id="_keyValueDao" class="com.amm.nosql.dao.couchbase.CouchbaseKeyValueFailoverDao">
         <constructor-arg value="${hosts}" />
         <constructor-arg value="${couchbase.port}" />
         <constructor-arg value="${couchbase.expiration}" />
-        <constructor-arg value="${couchbase.timeout}" />
+        <constructor-arg value="${couchbase.opTimeout}" />
+        <constructor-arg value="${couchbase.opQueueMaxBlockTime}" />
         <constructor-arg value="${couchbase.bucketname}" />
         <constructor-arg ref="keyValueMapper" />
         <property name="retryMax"       value="${couchbase.retryMax}" />
