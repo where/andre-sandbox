@@ -1,0 +1,2 @@
+
+du /opt/citrusleaf/data
