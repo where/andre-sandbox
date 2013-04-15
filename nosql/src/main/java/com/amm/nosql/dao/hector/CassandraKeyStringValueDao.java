@@ -35,15 +35,15 @@ public class CassandraKeyStringValueDao<X extends KeyStringValue> implements Key
 		logger.debug("keyspace="+keyspace+" columnFamilyName="+columnFamilyName);
 	}
 
-	public KeyStringValue get(String id) throws Exception { 
+	public KeyStringValue get(String key) throws Exception { 
 		ColumnQuery<String, String, Object> query = HFactory.createColumnQuery(keyspace,
 			serializerKey, serializerKey, serializerValue);
-		query.setKey(id);
+		query.setKey(key);
 		query.setName(VALUE_COLUMN_NAME);
 		query.setColumnFamily(columnFamilyName);
 		QueryResult<HColumn<String, Object>> result = query.execute();
 		HColumn<String, Object> column = result.get();
-		logger.debug("key="+id+" columnName="+VALUE_COLUMN_NAME+" result="+column);
+		logger.debug("key="+key+" columnName="+VALUE_COLUMN_NAME+" result="+column);
 		if (column == null)
 			return null ;
 
