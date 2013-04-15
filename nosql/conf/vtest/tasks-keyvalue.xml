@@ -7,12 +7,21 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
   >
 
+  <import resource="classpath:datagen.xml" />
+
 <!-- ** Task Config ***************************** -->
 
   <bean id="taskConfig" class="com.amm.nosql.vtest.keyvalue.KeyValueTaskConfig" scope="prototype" >
     <constructor-arg ref="keyValueDao" />
     <property name="keyGenerator"   ref="${cfg.keyGenerator}" />
     <property name="valueGenerator" ref="${cfg.valueGenerator}" />
+    <property name="valueSize"      value="${cfg.valueSize}" />
+  </bean>
+
+  <bean id="update.taskConfig" class="com.amm.nosql.vtest.keyvalue.KeyValueTaskConfig" scope="prototype" >
+    <constructor-arg ref="keyValueDao" />
+    <property name="keyGenerator"   ref="${cfg.keyGenerator}" />
+    <property name="valueGenerator" ref="randomValueSize2Generator.seed2" />
     <property name="valueSize"      value="${cfg.valueSize}" />
   </bean>
 
@@ -43,19 +52,9 @@
 
   <util:list id="put-get-update-get.job"  >
     <ref bean="put.task" />
-    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task">
-       <constructor-arg value="Get1" />
-    </bean>
-    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task">
-       <constructor-arg value="Get2" />
-    </bean>
+    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task"> <constructor-arg value="Get1" /> </bean>
     <ref bean="update.task" />
-    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task">
-       <constructor-arg value="Get3" />
-    </bean>
-    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task">
-       <constructor-arg value="Get4" />
-    </bean>
+    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task"> <constructor-arg value="Get2" /> </bean>
   </util:list>
 
   <util:list id="get-update-get.job"  >
@@ -68,6 +67,11 @@
     <bean parent="get.task"> <constructor-arg value="Get4" /> </bean>
     <bean parent="get.task"> <constructor-arg value="Get5" /> </bean>
     <bean parent="get.task"> <constructor-arg value="Get6" /> </bean>
+  </util:list>
+
+  <util:list id="putOrGet-get.job" >
+    <ref bean="putOrGet.task" />
+    <bean class="com.amm.nosql.vtest.keyvalue.GetTask" parent="get.task"> <constructor-arg value="Get" /> </bean>
   </util:list>
 
 <!-- ** Tasks ***************************** -->
@@ -85,7 +89,8 @@
 
   <bean id="put.task" class="com.amm.nosql.vtest.keyvalue.PutTask" scope="prototype" parent="base.task"/>
   
-  <bean id="update.task" class="com.amm.nosql.vtest.keyvalue.PutTask" scope="prototype" parent="base.task" >
+  <bean id="update.task" class="com.amm.nosql.vtest.keyvalue.PutTask" scope="prototype" >
+    <constructor-arg ref="update.taskConfig" />
     <constructor-arg value="Update" />
   </bean>
 
@@ -95,6 +100,10 @@
 
   <bean id="putGet.task" class="com.amm.nosql.vtest.keyvalue.PutGetTask" scope="prototype" parent="base.task">
     <property name="checkValue" value="${cfg.getTask.checkValue}" />
+  </bean>
+
+  <bean id="putOrGet.task" class="com.amm.nosql.vtest.keyvalue.PutOrGetTask" scope="prototype" parent="base.task">
+    <property name="modulo" value="3" />
   </bean>
 
   <bean id="getFail.task" class="com.amm.nosql.vtest.keyvalue.GetFailTask" scope="prototype" parent="base.task"/>
@@ -108,5 +117,25 @@
     <constructor-arg ref="taskConfig" />
   </bean>
 -->
+<!-- ** XX ***************************** -->
+
+  <bean id="put2.task" class="com.amm.nosql.vtest.keyvalue.PutTask" scope="prototype" >
+    <constructor-arg ref="taskConfig77" />
+  </bean>
+
+  <bean id="taskConfig77" class="com.amm.nosql.vtest.keyvalue.KeyValueTaskConfig" scope="prototype" >
+    <constructor-arg ref="keyValueDao" />
+    <property name="keyGenerator"   ref="${cfg.keyGenerator77}" />
+    <property name="valueGenerator" ref="${cfg.valueGenerator}" />
+    <property name="valueSize"      value="${cfg.valueSize}" />
+  </bean>
+
+<!-- ** Task Factories ***************************** -->
+
+  <bean id="factory" class="com.amm.nosql.vtest.keyvalue.factory.MyFactory" scope="prototype" >
+    <constructor-arg ref="put.task" />
+    <constructor-arg ref="get.task" />
+    <constructor-arg value="4" />
+  </bean>
 
 </beans>

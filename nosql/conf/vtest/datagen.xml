@@ -24,25 +24,16 @@
      <property name="doReset" value="${cfg.randomKeyGenerator.reset}" />
   </bean>
 
-  <bean id="randomKeyGeneratorFail" 
-        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="prototype">
+  <bean id="randomKeyGenerator77" 
+        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="singleton">
      <constructor-arg value="${cfg.keyGenerator.size}" />
-     <constructor-arg value="918273645" />
+     <constructor-arg value="${cfg.key.seed77}" />
+     <property name="cycleMax" value="${cfg.randomGenerator.cycleMax}" />
+     <property name="doReset" value="${cfg.randomKeyGenerator.reset}" />
   </bean>
 
   <bean id="uuidKeyGenerator" 
         class="com.amm.vtest.plugins.datagen.UuidKeyGenerator" scope="prototype">
-  </bean>
-
-  <bean id="MD5KeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.MD5KeyGenerator" scope="prototype">
-     <constructor-arg value="${cfg.key.seed}" />
-  </bean>
-
-  <bean id="skipKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.SkipKeyGenerator" scope="prototype">
-     <constructor-arg ref="randomKeyGenerator" />
-     <constructor-arg value="5" />
   </bean>
 
 <!-- ** Value Generators ****************** -->
@@ -79,19 +70,5 @@
      <constructor-arg value="${cfg.random.valueGenerator.variation}" />
   </bean>
 
-<!-- TBD: not yet fully debugged
-  <bean id="randomValueSizePerfectGenerator" 
-        class="com.amm.vtest.plugins.datagen.RandomValueSizePerfectGenerator" scope="prototype">
-     <constructor-arg value="${cfg.value.seed}" />
-     <constructor-arg value="${cfg.random.valueGenerator.meanSize}" />
-     <constructor-arg value="${cfg.random.valueGenerator.variation}" />
-  </bean>
--->
-
-  <bean id="skipValueGenerator" 
-        class="com.amm.vtest.plugins.datagen.SkipValueGenerator" scope="prototype">
-     <constructor-arg ref="randomValueSize2Generator" />
-     <constructor-arg value="5" />
-  </bean>
 
 </beans>
