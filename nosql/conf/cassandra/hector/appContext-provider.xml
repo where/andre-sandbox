@@ -8,7 +8,7 @@
 
 <!-- **** KeyValueDao **** -->
 
-  <bean id="keyValueDao" class="com.amm.nosql.dao.cassandra.CassandraKeyValueDao" >
+  <bean id="keyValueDao" class="com.amm.nosql.dao.cassandra.hector.CassandraKeyValueDao" >
     <constructor-arg ref="keyspace.keyValue" />
     <constructor-arg value="${cassandra.columnFamily.keyValue}" />
     <constructor-arg ref="keyValueMapper" />
@@ -21,7 +21,7 @@
 
 <!-- **** KeyStringValueDao **** -->
 
-  <bean id="keyStringValueDao" class="com.amm.nosql.dao.cassandra.CassandraKeyStringValueDao" >
+  <bean id="keyStringValueDao" class="com.amm.nosql.dao.cassandra.hector.CassandraKeyStringValueDao" >
     <constructor-arg ref="keyspace.keyStringValue" />
     <constructor-arg value="${cassandra.columnFamily.keyStringValue}" />
     <constructor-arg ref="keyStringValueMapper" />
