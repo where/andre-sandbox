@@ -180,6 +180,7 @@ public class KeyValueShell {
 	private String [] configFiles = { "appContext.xml" } ;
 
     private void initSpring() {
+/* AMM 15 apr 2013
         String providerConfigFile = System.getProperty(PROPERTY_PROVIDER_CONFIG_FILE);
         if (providerConfigFile == null)
             throw new RuntimeException("Missing application context for system property: "+PROPERTY_PROVIDER_CONFIG_FILE);
@@ -187,6 +188,7 @@ public class KeyValueShell {
         configFiles[0] = ROOT_CONFIG_FILE;
         configFiles[1] = providerConfigFile ;
         logger.debug("configFiles="+Arrays.toString(configFiles));
+*/
 
         ApplicationContext context = new ClassPathXmlApplicationContext(configFiles);
 
