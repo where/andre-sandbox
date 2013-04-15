@@ -9,6 +9,7 @@
 #*******************************************************
 
 rm -rf logs/*
+#rm log-*.json 
 
 CPATH="$CPATH:conf/vtest"
 
@@ -16,7 +17,8 @@ CPATH="$CPATH:conf/vtest"
 
 PGM=com.amm.vtest.VTestDriver
 
-daoConfigFile=tasks-keyvalue.xml
+tasksConfigFile=tasks-keyvalue77.xml
+tasksConfigFile=tasks-keyvalue.xml
 
 job=put-get.job
 iterations=1
@@ -41,11 +43,11 @@ while getopts $opts opt
     i) iterations=$OPTARG ;;
     s) seedKey=$OPTARG ;;
     S) seedValue=$OPTARG ;;
-    p) providerConfigFile=appContext-$OPTARG.xml 
-       PROPS="$PROPS -DproviderConfigFile=$providerConfigFile"
-       ;;
-    d) daoConfigFile=$OPTARG.xml 
-       PROPS="$PROPS -DdaoConfigFile=$daoConfigFile"
+#    p) providerDir=$OPTARG
+#       PROPS="$PROPS -Dprovider=$providerDir"
+#       ;;
+    d) tasksConfigFile=$OPTARG.xml 
+       PROPS="$PROPS -DtasksConfigFile=$tasksConfigFile"
        ;;
     \?) echo $USAGE " Error"
         exit;;
@@ -72,8 +74,8 @@ PROPS="$PROPS -Dcfg.keyGenerator.size=$keySize"
 PROPS="$PROPS -Dcfg.key.seed=$seedKey"
 PROPS="$PROPS -Dcfg.value.seed=$seedValue"
 PROPS="$PROPS -Dcfg.randomGenerator.cycleMax=$cycleMax"
-PROPS="$PROPS -DproviderConfigFile=$providerConfigFile"
-PROPS="$PROPS -DdaoConfigFile=$daoConfigFile"
+#PROPS="$PROPS -Dprovider=$provider"
+PROPS="$PROPS -DtasksConfigFile=$tasksConfigFile"
 PROPS="$PROPS -Dcfg.logModulo=$logModulo"
 
 echo "keySize=$keySize valueSize=$valueSize"
@@ -86,12 +88,13 @@ time -p java $XPROPS $PROPS -cp $CPATH $PGM $* \
   --job $job \
   | tee log.txt
 
-echo "valueSize=$valueSize" >> log.txt
+echo "provider=$provider" >> log.txt
 echo "LOGDIR=$logdir" >> log.txt
 echo "LOGDIR=$logdir"
 echo "PROPS=$PROPS"
-echo "providerConfigFile=$providerConfigFile"
-echo "daoConfigFile=$daoConfigFile"
+echo "provider=$provider"
+echo "tasksConfigFile=$tasksConfigFile"
 
 cp -p log.txt $logdir
-mv log-*.xml log-*.json $logdir
+# mv log-*.xml log-*.json $logdir
+mv log-*.json $logdir
