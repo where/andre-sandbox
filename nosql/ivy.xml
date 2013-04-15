@@ -24,8 +24,11 @@
 		<dependency org="com.google.code.simple-spring-memcached" name="spymemcached-provider" rev="3.0.2"/>
 		<dependency org="org.hectorclient" name="hector" rev="1.1-3"/>
         <dependency org="redis.clients" name="jedis" rev="2.1.0"/>
-<!--
 		<dependency org="me.prettyprint" name="hector" rev="1.0-5"/>
+        <dependency org="com.netflix.astyanax" name="astyanax" rev="1.56.34"/>
+
+<!--
+		<dependency org="me.prettyprint" name="hector" rev="1.1-3"/>
 -->
 
   </dependencies>
