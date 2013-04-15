@@ -14,6 +14,7 @@
     <property name="locations" >
       <list>
         <value>classpath:nosql.properties</value>
+        <value>classpath:provider.properties</value>
         <value>classpath:user.properties</value>
       </list>
     </property>
