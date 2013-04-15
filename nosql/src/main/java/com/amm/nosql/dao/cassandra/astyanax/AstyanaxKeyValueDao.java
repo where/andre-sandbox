@@ -1,4 +1,4 @@
-package com.amm.nosql.dao.cass.astyanax;
+package com.amm.nosql.dao.cassandra.astyanax;
 
 import java.util.*;
 import java.nio.ByteBuffer;
