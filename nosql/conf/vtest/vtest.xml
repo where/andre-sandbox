@@ -23,10 +23,8 @@
 
   <!-- NOTE: must pass in from command line with System properties -->
 
-  <import resource="${providerConfigFile}"/>
-  <import resource="${daoConfigFile}"/>
+  <import resource="${tasksConfigFile}"/>
   <import resource="classpath:appContext-nosql.xml" />
-  <import resource="classpath:datagen.xml" />
 
 <!-- ** VTest **************** -->
 
@@ -35,29 +33,27 @@
     <constructor-arg ref="executor" />
     <constructor-arg ref="callStatsReporter" />
     <property name="warmup"          ref="${cfg.warmup}" />
-    <property name="logDetails"      value="true" />
-    <property name="logDetailsAsXml" value="true" />
-    <property name="logSummaryAsXml" value="true" />
+
+    <property name="logDetails"            value="true" />
+    <property name="writeDetailsToLogFile" value="true" />
+    <property name="logSummary"            value="true" />
   </bean>
 
-  <bean id="callStatsReporter" 
+  <bean id="callStatsReporter"
         class="com.amm.vtest.services.callstats.CallStatsReporter" scope="prototype">
-    <constructor-arg ref="callStatsWriter" />
-    <constructor-arg ref="logWriter" />
+    <constructor-arg>
+      <bean class="com.amm.vtest.services.callstats.CallStatsWriter" scope="prototype"/>
+    </constructor-arg>
+    <constructor-arg ref="${cfg.callStatsLogWriter}" />
     <property name="properties" ref="configProperties" />
+    <property name="directory" value="${cfg.log.directory}" />
   </bean>
 
-  <alias alias="logWriter" name="nullLogWriter" />
-  <bean id="nullLogWriter"
-        class="com.amm.vtest.services.callstats.NullLogWriter" scope="prototype" />
-  <bean id="jsonLogWriter"
-        class="com.amm.vtest.services.callstats.JsonLogWriter" scope="prototype" />
-  <bean id="xmlLogWriter"
-        class="com.amm.vtest.services.callstats.XmlLogWriter" scope="prototype" />
+  <bean id="json.callStatsLogWriter"
+        class="com.amm.vtest.services.callstats.logger.json.JsonLogWriter" scope="prototype" />
 
   <bean id="callStatsWriter"
         class="com.amm.vtest.services.callstats.CallStatsWriter" scope="prototype">
-    <property name="showRatio" value="false" />
     <property name="showMean" value="true" />
     <property name="showStdDev" value="false" />
     <property name="labelErrors" value="Err" />
@@ -71,8 +67,7 @@
 
   <util:map id="configProperties">
     <entry key="hosts" value="${hosts}" />
-    <entry key="providerConfigFile" value="${providerConfigFile}" />
-    <entry key="daoConfigFile" value="${daoConfigFile}" />
+    <entry key="tasksConfigFile" value="${tasksConfigFile}" />
     <entry key="requests" value="${cfg.requests}" />
     <entry key="threadPoolSize" value="${cfg.threadPoolSize}" />
 
@@ -81,6 +76,7 @@
     <entry key="keyGenerator.size" value="${cfg.keyGenerator.size}" />
     <entry key="key.seed" value="${cfg.key.seed}" />
 <!--
+    <entry key="providerConfigFile" value="${providerConfigFile}" />
     <entry key="value.seed" value="${cfg.value.seed}" />
     <entry key="valueSize" value="${cfg.valueSize}" />
 -->
