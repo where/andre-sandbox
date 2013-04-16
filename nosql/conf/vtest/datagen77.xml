@@ -17,29 +17,28 @@
   </bean>
 
   <bean id="randomKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="prototype">
+        class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="singleton">
      <constructor-arg value="${cfg.keyGenerator.size}" />
      <constructor-arg value="${cfg.key.seed}" />
+<!--
      <property name="cycleMax" value="${cfg.randomGenerator.cycleMax}" />
      <property name="doReset" value="${cfg.randomKeyGenerator.reset}" />
+-->
   </bean>
 
   <bean id="randomKeyGenerator77" 
         class="com.amm.vtest.plugins.datagen.RandomKeyGenerator" scope="singleton">
      <constructor-arg value="${cfg.keyGenerator.size}" />
      <constructor-arg value="${cfg.key.seed77}" />
+     <property name="doReset" value="false" />
+<!--
      <property name="cycleMax" value="${cfg.randomGenerator.cycleMax}" />
      <property name="doReset" value="${cfg.randomKeyGenerator.reset}" />
+-->
   </bean>
 
   <bean id="uuidKeyGenerator" 
         class="com.amm.vtest.plugins.datagen.UuidKeyGenerator" scope="prototype">
-  </bean>
-
-  <bean id="skipKeyGenerator" 
-        class="com.amm.vtest.plugins.datagen.SkipKeyGenerator" scope="prototype">
-     <constructor-arg ref="randomKeyGenerator" />
-     <constructor-arg value="5" />
   </bean>
 
 <!-- ** Value Generators ****************** -->
