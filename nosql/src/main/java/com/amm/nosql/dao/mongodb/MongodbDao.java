@@ -102,9 +102,11 @@ WriteConcern:
 			"[class="+this.getClass().getName()
 			+" DBcollection="+dbcoll.getName()
 			+" Mongo={"+dbcoll.getDB().getMongo()+"}"
-			//+" entityMapper="+entityMapper.getClass().getName()
-			+" entityMapper={"+entityMapper+"}"
+			+" Mongo.readPreference="+dbcoll.getDB().getMongo().getReadPreference() 
+			//+" Mongo.replicaStatus="+dbcoll.getDB().getMongo().getReplicaStatus() 
 			+" writeConcern="+writeConcern
+			+" entityMapper={"+entityMapper+"}"
+			//+" entityMapper="+entityMapper.getClass().getName()
 			+"]";
 	}
 }

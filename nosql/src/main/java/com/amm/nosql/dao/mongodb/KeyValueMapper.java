@@ -20,7 +20,7 @@ public class KeyValueMapper implements MongodbObjectMapper<KeyValue> {
 		this.columnValueName = columnValueName ;
 	}
 
-    public KeyValue toObject(DBObject dbobj) throws Exception {
+	public KeyValue toObject(DBObject dbobj) throws Exception {
 		KeyValue kv = new KeyValue();
 		kv.setKey((String)dbobj.get(COLUMN_ID));
 		//kv.setValue((String)dbobj.get(columnValueName)); // TODO: mongo binary type
@@ -30,7 +30,7 @@ public class KeyValueMapper implements MongodbObjectMapper<KeyValue> {
 		return kv;
 	}
 
-    public DBObject fromObject(KeyValue entity) throws Exception {
+	public DBObject fromObject(KeyValue entity) throws Exception {
 		BasicDBObject dbobj = new BasicDBObject();
 		dbobj.put(COLUMN_ID, entity.getKey());
 		dbobj.put(columnValueName, entity.getValue());

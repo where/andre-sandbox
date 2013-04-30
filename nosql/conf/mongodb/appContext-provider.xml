@@ -15,8 +15,6 @@
   <bean id="keyValueDao" class="com.amm.nosql.dao.mongodb.MongodbKeyValueDao">
     <constructor-arg ref="keyValue.collectionFactory" />
     <constructor-arg ref="mongo.keyValueMapper" />
-<!--
--->
     <property name="writeConcern" ref="writeConcern"  />
   </bean>
 
@@ -34,11 +32,10 @@
 
 <!-- MongoDB Object Mappers  -->
 
-  <!-- KeyValue -->
   <bean id="mongo.keyValueMapper" class="com.amm.nosql.dao.mongodb.KeyValueMapper" />
   <bean id="mongo.keyStringValueMapper" class="com.amm.nosql.dao.mongodb.KeyStringValueMapper" />
 
-<!-- Mongo config  -->
+<!-- Mongo Collection Factory  -->
 
   <bean id="keyValue.collectionFactory" lazy-init="false"
       factory-bean="keyValue.collectionFactory2"
@@ -47,7 +44,6 @@
      <constructor-arg ref="${mongodb.mongo}" />
      <constructor-arg value="${mongodb.database}" />
      <constructor-arg value="${mongodb.collection.keyValue}" />
-     <constructor-arg value="${mongodb.slaveOk}" />
   </bean>
 
   <bean id="keyStringValue.collectionFactory" lazy-init="false"
@@ -57,18 +53,22 @@
      <constructor-arg ref="${mongodb.mongo}" />
      <constructor-arg value="${mongodb.database}" />
      <constructor-arg value="${mongodb.collection.keyStringValue}" />
-     <constructor-arg value="${mongodb.slaveOk}" />
   </bean>
+
+<!-- mongo client - standard one node  -->
 
   <bean id="mongo" class="com.mongodb.Mongo" scope="prototype" >
      <constructor-arg value="${mongodb.host}" />
      <constructor-arg value="${mongodb.port}" />
   </bean>
 
-<!--
+<!-- mongo client - 3 machine replica set  -->
+
   <bean id="mongo.replica" class="com.mongodb.Mongo" scope="prototype" lazy-init="true" >
      <constructor-arg ref="replicaSet" />
+     <property name="readPreference" value="${cfg.readPreference}" />
   </bean>
+
   <util:list id="replicaSet"  >
      <bean class="com.mongodb.ServerAddress" >
        <constructor-arg value="${mongodb.host1}" />
@@ -80,11 +80,13 @@
        <constructor-arg value="${mongodb.host3}" />
      </bean>
   </util:list>
--->
+
+<!-- mongo client - 3 server replica set on one machine -->
 
   <bean id="mongo.replica.local" class="com.mongodb.Mongo" scope="prototype" lazy-init="true" >
      <constructor-arg ref="replicaSet.local" />
   </bean>
+
   <util:list id="replicaSet.local"  >
      <bean class="com.mongodb.ServerAddress" >
        <constructor-arg value="${mongodb.host}" />

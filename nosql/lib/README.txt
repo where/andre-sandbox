@@ -1,4 +1,3 @@
 
-Citrusleaf 
-  citrusleaf.jar 
-  gnu-crypto.jar
+kvclient*jar - Oracle NoSQL
+
