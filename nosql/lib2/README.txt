@@ -1,3 +1,0 @@
-
-kvclient*jar - Oracle NoSQL
-
