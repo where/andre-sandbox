@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
-  
-<suite name="Andre Common Test Suite" >
-  <test name="Andre Common Tests"   >
-    <classes>
-      <class name="com.andre.mapper.ObjectMapperTest" />
-    </classes>
-  </test>
-</suite>
